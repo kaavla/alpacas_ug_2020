@@ -45,7 +45,7 @@ public class testbotManual extends testbotUtility{
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
             } else {
-                telemetry.addData("not", "pressed");
+                robot.stopAllMotors();
             }
 
             telemetry.update();
