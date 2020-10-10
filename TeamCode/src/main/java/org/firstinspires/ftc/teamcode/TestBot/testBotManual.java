@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.TestBot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "testbotManual", group = "Linear Opmode")
-public class testbotManual extends testbotUtility{
+public class testBotManual extends testBotUtility {
     @Override
     public void runOpMode() {
         //This is where we set our motor powers

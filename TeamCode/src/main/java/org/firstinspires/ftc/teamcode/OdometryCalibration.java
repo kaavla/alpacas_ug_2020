@@ -59,7 +59,7 @@ public class OdometryCalibration extends LinearOpMode {
         initHardwareMap(rfName, rbName, lfName, lbName, verticalLeftEncoderName, verticalRightEncoderName, horizontalEncoderName);
 
         //Initialize IMU hardware map value. PLEASE UPDATE THIS VALUE TO MATCH YOUR CONFIGURATION
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
 
         //Initialize IMU parameters
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -70,7 +70,7 @@ public class OdometryCalibration extends LinearOpMode {
         parameters.loggingTag          = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
-        telemetry   .addData("Odometry System Calibration Status", "IMU Init Complete");
+        telemetry.addData("Odometry System Calibration Status", "IMU Init Complete");
         telemetry.clear();
 
         //Odometry System Calibration Init Complete

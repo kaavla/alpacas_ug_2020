@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.JARVISAutonomousBase;
 
 import java.util.List;
 
-public class testbotUtility extends LinearOpMode {
+public class testBotUtility extends LinearOpMode {
 
     public enum Direction {
         FORWARD, BACKWARD, STRAFE_RIGHT, STRAFE_LEFT, SLIDE_UP, SLIDE_DOWN, SLIDE_IN, SLIDE_OUT, DIAGONAL_LEFT, DIAGONAL_RIGHT;
@@ -40,7 +40,7 @@ public class testbotUtility extends LinearOpMode {
     // public direction;
     public double ref_angle = 0;
 
-    public testbotUtility.Direction direction;
+    public testBotUtility.Direction direction;
 
     public double distance_traveled = 0;
 

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
-public class testbotHW {
+public class testBotHW {
     public DcMotor leftMotor = null;
     public DcMotor rightMotor = null;
     public DcMotor backrightMotor = null;
