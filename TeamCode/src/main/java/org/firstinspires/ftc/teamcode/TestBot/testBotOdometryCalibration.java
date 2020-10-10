@@ -1,23 +1,21 @@
 package org.firstinspires.ftc.teamcode.TestBot;
+eiihcckgbrrrvkbcbtgjvlijutgrulgvludkrlivvkvv
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.ReadWriteFile;
 
 import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 
 import java.io.File;
-public abstract class testBotOdometryCalibration extends testBotUtility{
+
+@TeleOp(name = "testBotOdometryCalibration", group = "Linear Opmode")
+public class testBotOdometryCalibration extends testBotUtility{
     final double PIVOT_SPEED = 0.4;
 
-    //The amount of encoder ticks for each inch the robot moves. THIS WILL CHANGE FOR EACH ROBOT AND NEEDS TO BE UPDATED HERE
+    //The amount of encoder ticks for each inch the robot moves.
+    // THIS WILL CHANGE FOR EACH ROBOT AND NEEDS TO BE UPDATED HERE
     final double COUNTS_PER_INCH = 307.699557;
-
 
     ElapsedTime timer = new ElapsedTime();
 

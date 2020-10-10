@@ -36,18 +36,19 @@ public class testbotHW {
     public void init(HardwareMap ahwMap) {
         RobotLog.ii("CAL", "Enter - init");
 
+        verticalLeft = ahwMap.get(DcMotor.class, "M1");;
+        verticalRight = ahwMap.get(DcMotor.class, "M2");;
+        horizontal = ahwMap.get(DcMotor.class, "M3");;
+        RobotLog.ii("CAL", "Enter - Encoder  Initialized");
+
         leftMotor = ahwMap.get(DcMotor.class, "M1");
         rightMotor = ahwMap.get(DcMotor.class, "M2");
         backleftMotor = ahwMap.get(DcMotor.class, "M3");
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
+        RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
-        verticalLeft = hardwareMap.dcMotor.get("M1");
-        verticalRight = hardwareMap.dcMotor.get("M2");
-        horizontal = hardwareMap.dcMotor.get("M3");
 
-        //markerServo = ahwMap.get(Servo.class, "MServo");
-
-        imu = ahwMap.get(BNO055IMU.class, "imu 1");
+        imu = ahwMap.get(BNO055IMU.class, "imu");
 
         //initialize the IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -58,17 +59,22 @@ public class testbotHW {
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
+        RobotLog.ii("CAL", "Enter - IMU  Initialized");
 
         //Invert direction for left motors
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backleftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        RobotLog.ii("CAL", "Enter -Directions reversed");
 
         // Set all motors to zero power
         stopAllMotors();
+        RobotLog.ii("CAL", "Stop all motors");
 
         initMotorNoEncoders();
+        RobotLog.ii("CAL", "No encoders");
 
         initOdodmetryEncoders();
+        RobotLog.ii("CAL", "init  encoders");
 
         RobotLog.ii("CAL", "Exit - init");
 
