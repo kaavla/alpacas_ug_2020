@@ -5,6 +5,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -25,7 +26,7 @@ public class testBotHW {
 
     public BNO055IMU imu = null;
 
-    DcMotor verticalLeft, verticalRight, horizontal;
+    DcMotorEx verticalLeft, verticalRight, horizontal;
 
     Orientation lastAngles = new Orientation();  //?
     double globalAngle, power = .40, correction;  //?
@@ -36,10 +37,6 @@ public class testBotHW {
     public void init(HardwareMap ahwMap) {
         RobotLog.ii("CAL", "Enter - init");
 
-        verticalLeft = ahwMap.get(DcMotor.class, "M1");
-        verticalRight = ahwMap.get(DcMotor.class, "M2");
-        horizontal = ahwMap.get(DcMotor.class, "M3");
-        RobotLog.ii("CAL", "Enter - Encoder  Initialized");
 
         leftMotor = ahwMap.get(DcMotor.class, "M1");
         rightMotor = ahwMap.get(DcMotor.class, "M2");
@@ -47,6 +44,10 @@ public class testBotHW {
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
+        verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
+        verticalRight = ahwMap.get(DcMotorEx.class, "M2");
+        horizontal = ahwMap.get(DcMotorEx.class, "M3");
+        RobotLog.ii("CAL", "Enter - Encoder  Initialized");
 
         imu = ahwMap.get(BNO055IMU.class, "imu");
 
