@@ -10,6 +10,12 @@ public class PurePursuitPath {
     List<Waypoint> Points = new ArrayList<Waypoint>();
     //UPath stands for Updated Path, a list for the new and user defined points
     List<Waypoint> UPath = new ArrayList<Waypoint>();
+    //SPath stands for Smoothed Path, a list for the points that have been smoothed out
+    List<Waypoint> SPath = new ArrayList<Waypoint>();
+
+    public enum whichArray {
+        Points, UPath, SPath
+    }
 
     //This is a function that adds user defined points to the list Points
     public void addUserWaypoint(double x, double y) {
@@ -23,6 +29,12 @@ public class PurePursuitPath {
         //creates a waypoint P1
         Waypoint P1 = new Waypoint(x, y, userInserted);
         UPath.add(P1);
+    }
+
+    public void addSmoothingWaypoint(double x, double y, boolean userInserted) {
+        //creates a waypoint P1
+        Waypoint P1 = new Waypoint(x, y, userInserted);
+        SPath.add(P1);
     }
 
     public void ToString() {
@@ -70,23 +82,43 @@ public class PurePursuitPath {
     }
 
     //This function applies the Curvature function for all points in the array
-    public void computeCurvatureForAllPoints() {
+    public void computeCurvatureForAllPoints(whichArray arrayChoice) {
         Waypoint Previous;
         Waypoint Current;
         Waypoint Next;
+
+        if (arrayChoice == whichArray.UPath) {
         //the for loop applies the same steps to every point in the UPath list
-        for (int i = 0; i < UPath.size(); i++) {
-            //for the first and last point, there is no point before, or after, meaning that the
-            //curvature will be = 0. We make the curvature of these points = 0 manually.
-            if (i == 0 || i == UPath.size() - 1) {
-                UPath.get(i).curvature = 0;
-                continue;
+            for (int i = 0; i < UPath.size(); i++) {
+                //for the first and last point, there is no point before, or after, meaning that the
+                //curvature will be = 0. We make the curvature of these points = 0 manually.
+                if (i == 0 || i == UPath.size() - 1) {
+                    UPath.get(i).curvature = 0;
+                    continue;
+                }
+                Previous = UPath.get(i - 1);
+                Current = UPath.get(i);
+                Next = UPath.get(i + 1);
+                //uses the curvature function to find the curvature of all of the points
+                UPath.get(i).curvature = computeCurvatureForPoint(Current, Previous, Next);
             }
-            Previous = UPath.get(i - 1);
-            Current = UPath.get(i);
-            Next = UPath.get(i + 1);
-            //uses the curvature function to find the curvature of all of the points
-            UPath.get(i).curvature = computeCurvatureForPoint(Current, Previous, Next);
+        }
+
+        if (arrayChoice == whichArray.SPath) {
+            //the for loop applies the same steps to every point in the UPath list
+            for (int i = 0; i < SPath.size(); i++) {
+                //for the first and last point, there is no point before, or after, meaning that the
+                //curvature will be = 0. We make the curvature of these points = 0 manually.
+                if (i == 0 || i == SPath.size() - 1) {
+                    SPath.get(i).curvature = 0;
+                    continue;
+                }
+                Previous = SPath.get(i - 1);
+                Current = SPath.get(i);
+                Next = SPath.get(i + 1);
+                //uses the curvature function to find the curvature of all of the points
+                SPath.get(i).curvature = computeCurvatureForPoint(Current, Previous, Next);
+            }
         }
     }
 
@@ -142,6 +174,10 @@ public class PurePursuitPath {
 
     void pathSmoothing(double weight_data, double weight_smooth, double tolerance) {
         //Todo
+        double a = weight_data;
+        double b = weight_smooth;
+        double change = tolerance;
+
     }
 
 }
