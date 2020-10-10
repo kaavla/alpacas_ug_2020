@@ -36,9 +36,9 @@ public class testbotHW {
     public void init(HardwareMap ahwMap) {
         RobotLog.ii("CAL", "Enter - init");
 
-        verticalLeft = ahwMap.get(DcMotor.class, "M1");;
-        verticalRight = ahwMap.get(DcMotor.class, "M2");;
-        horizontal = ahwMap.get(DcMotor.class, "M3");;
+        verticalLeft = ahwMap.get(DcMotor.class, "M1");
+        verticalRight = ahwMap.get(DcMotor.class, "M2");
+        horizontal = ahwMap.get(DcMotor.class, "M3");
         RobotLog.ii("CAL", "Enter - Encoder  Initialized");
 
         leftMotor = ahwMap.get(DcMotor.class, "M1");
