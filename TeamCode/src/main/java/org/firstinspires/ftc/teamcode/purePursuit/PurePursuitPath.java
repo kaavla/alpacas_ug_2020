@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.purePursuit;
 
 import java.util.ArrayList;
 import java.util.List;
-// import javax.swing;
-import java.awt.*;
+// import javax.swing.*;
+// import java.awt.*;
 
 public class PurePursuitPath {
     //Creates a list for the user defined points
@@ -13,7 +13,7 @@ public class PurePursuitPath {
     //SPath stands for Smoothed Path, a list for the points that have been smoothed out
     List<Waypoint> SPath = new ArrayList<Waypoint>();
 
-    public enum whichArray {
+    public enum ArrayLS {
         Points, UPath, SPath
     }
 
@@ -82,12 +82,12 @@ public class PurePursuitPath {
     }
 
     //This function applies the Curvature function for all points in the array
-    public void computeCurvatureForAllPoints(whichArray arrayChoice) {
+    public void computeCurvatureForAllPoints(ArrayLS arrayChoice) {
         Waypoint Previous;
         Waypoint Current;
         Waypoint Next;
 
-        if (arrayChoice == whichArray.UPath) {
+        if (arrayChoice == ArrayLS.UPath) {
         //the for loop applies the same steps to every point in the UPath list
             for (int i = 0; i < UPath.size(); i++) {
                 //for the first and last point, there is no point before, or after, meaning that the
@@ -104,7 +104,7 @@ public class PurePursuitPath {
             }
         }
 
-        if (arrayChoice == whichArray.SPath) {
+        if (arrayChoice == ArrayLS.SPath) {
             //the for loop applies the same steps to every point in the UPath list
             for (int i = 0; i < SPath.size(); i++) {
                 //for the first and last point, there is no point before, or after, meaning that the

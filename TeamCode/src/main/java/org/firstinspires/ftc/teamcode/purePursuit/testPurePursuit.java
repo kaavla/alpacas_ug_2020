@@ -12,7 +12,7 @@ public class testPurePursuit extends PurePursuitPath{
 
         debugPath.pointInsertion(5);
 
-        debugPath.computeCurvatureForAllPoints();
+        debugPath.computeCurvatureForAllPoints(ArrayLS.UPath);
 
         debugPath.ToString();
     }
