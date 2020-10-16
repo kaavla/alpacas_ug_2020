@@ -25,6 +25,10 @@ public class MyOdometryOpmode extends testBotUtility {
 
     OdometryGlobalCoordinatePosition globalPositionUpdate;
 
+    double motor_power = 0.3;
+
+    float leftX, leftY, rightZ;
+
     @Override
     public void runOpMode() {
         //Initialize hardware map values. PLEASE UPDATE THESE VALUES TO MATCH YOUR CONFIGURATION
@@ -42,9 +46,34 @@ public class MyOdometryOpmode extends testBotUtility {
         //globalPositionUpdate.reverseRightEncoder();
         //globalPositionUpdate.reverseNormalEncoder();
 
-        //gotoPosition(36*COUNTS_PER_INCH, 0*COUNTS_PER_INCH, 0.5,0,1);
+        //gotoPosition(24*COUNTS_PER_INCH, 0*COUNTS_PER_INCH, 0.3,0,1);
+        //sleep(2000);
+        //gotoPosition(24*COUNTS_PER_INCH, 24*COUNTS_PER_INCH, 0.3,0,1);
+        //sleep(2000);
+        //gotoPosition(0*COUNTS_PER_INCH, 0*COUNTS_PER_INCH, 0.3,0,1);
 
         while(opModeIsActive()){
+            if ((gamepad1.left_stick_y != 0) || (gamepad1.left_stick_x != 0) || (gamepad1.right_stick_x != 0)) {
+                leftY = gamepad1.left_stick_y;
+                leftX = gamepad1.left_stick_x * -1;
+                rightZ = gamepad1.right_stick_x * -1;
+                robot.moveHolonomic(leftX, leftY, rightZ);
+            } else if (gamepad1.dpad_down) {
+                //forward
+                robot.moveHolonomic(0, motor_power * 1, 0);
+            } else if (gamepad1.dpad_up) {
+                //backwards
+                robot.moveHolonomic(0, motor_power * -1, 0);
+            } else if (gamepad1.dpad_left) {
+                //rotate counter-clockwise
+                robot.moveHolonomic(0, 0, motor_power * 1);
+            } else if (gamepad1.dpad_right) {
+                //rotate clockwise
+                robot.moveHolonomic(0, 0, motor_power * -1);
+            } else {
+                robot.stopAllMotors();
+            }
+
             //Display Global (x, y, theta) coordinates
             telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
             telemetry.addData("Y Position", globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH);
@@ -64,7 +93,7 @@ public class MyOdometryOpmode extends testBotUtility {
     }
 
 
-/*    public void gotoPosition(double targetX, double targetY, double power, double finalOrientation, double allowableDistanceError)
+    public void gotoPosition(double targetX, double targetY, double power, double finalOrientation, double allowableDistanceError)
     {
         double distanceToXTarget = targetX - globalPositionUpdate.returnXCoordinate();
         double distanceToYTarget = targetY - globalPositionUpdate.returnYCoordinate();
@@ -82,32 +111,41 @@ public class MyOdometryOpmode extends testBotUtility {
             double pivotCorrection = finalOrientation - globalPositionUpdate.returnOrientation();
 
             //Move Robot
-            moveHolonomic(robotMovmentYComponent,robotMovmentXComponent,pivotCorrection);
+            robot.moveHolonomic(robotMovmentYComponent,robotMovmentXComponent,pivotCorrection);
 
             distance = Math.hypot(distanceToXTarget, distanceToYTarget);
         }
+        telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
+        telemetry.addData("Y Position", globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH);
+        telemetry.addData("Orientation (Degrees)", globalPositionUpdate.returnOrientation());
+        telemetry.addData("Vertical left encoder position", robot.verticalLeft.getCurrentPosition());
+        telemetry.addData("Vertical right encoder position", robot.verticalRight.getCurrentPosition());
+        telemetry.addData("horizontal encoder position", robot.horizontal.getCurrentPosition());
+        telemetry.update();
+
+
     }
 
- */
+
     /**
      * Calculate the power in the x direction
      * @param desiredAngle angle on the x axis
      * @param speed robot's speed
      * @return the x vector
      */
-    /*
+
     private double calculateX(double desiredAngle, double speed) {
         return Math.sin(Math.toRadians(desiredAngle)) * speed;
     }
-*/
+
     /**
      * Calculate the power in the y direction
      * @param desiredAngle angle on the y axis
      * @param speed robot's speed
      * @return the y vector
      */
-  /*  private double calculateY(double desiredAngle, double speed) {
+    private double calculateY(double desiredAngle, double speed) {
         return Math.cos(Math.toRadians(desiredAngle)) * speed;
     }
-*/
+
 }
