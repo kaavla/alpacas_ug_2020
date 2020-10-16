@@ -35,7 +35,7 @@ public class testBotOdometryCalibration extends testBotUtility{
 
         while(getZAngle() < 90 && opModeIsActive()){
 
-            robot.setPowerAll(PIVOT_SPEED, PIVOT_SPEED, PIVOT_SPEED, PIVOT_SPEED);
+            robot.setPowerAll(1*PIVOT_SPEED, -1*PIVOT_SPEED, 1*PIVOT_SPEED, -1*PIVOT_SPEED);
 
             telemetry.addData("IMU Angle", getZAngle());
             telemetry.update();
