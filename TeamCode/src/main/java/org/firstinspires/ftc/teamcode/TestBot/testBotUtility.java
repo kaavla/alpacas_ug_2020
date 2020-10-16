@@ -33,7 +33,7 @@ public class testBotUtility extends LinearOpMode {
         USE_LEFT, USE_RIGHT;
     }
 
-    public testbotHW robot = new testbotHW();
+    public testBotHW robot = new testBotHW();
     public ElapsedTime runtime = new ElapsedTime();
     private Orientation lastAngles = new Orientation();
     private double globalAngle = 0;
