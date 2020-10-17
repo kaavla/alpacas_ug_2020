@@ -55,28 +55,6 @@ public class OdometryCalibration extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //Initialize hardware map values. PLEASE UPDATE THESE VALUES TO MATCH YOUR CONFIGURATION
-        initHardwareMap(rfName, rbName, lfName, lbName, verticalLeftEncoderName, verticalRightEncoderName, horizontalEncoderName);
-
-        //Initialize IMU hardware map value. PLEASE UPDATE THIS VALUE TO MATCH YOUR CONFIGURATION
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-
-        //Initialize IMU parameters
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
-        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-        imu.initialize(parameters);
-        telemetry   .addData("Odometry System Calibration Status", "IMU Init Complete");
-        telemetry.clear();
-
-        //Odometry System Calibration Init Complete
-        telemetry.addData("Odometry System Calibration Status", "Init Complete");
-        telemetry.update();
-
         waitForStart();
 
         //Begin calibration (if robot is unable to pivot at these speeds, please adjust the constant at the top of the code
