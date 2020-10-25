@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.purePursuit;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+
 import java.util.ArrayList;
 import java.util.List;
-// import javax.swing.*;
-// import java.awt.*;
 
 public class PurePursuitPath {
+
     //Creates a list for the user defined points
     List<Waypoint> Points = new ArrayList<Waypoint>();
     //UPath stands for Updated Path, a list for the new and user defined points
@@ -13,6 +16,7 @@ public class PurePursuitPath {
     //SPath stands for Smoothed Path, a list for the points that have been smoothed out
     List<Waypoint> SPath = new ArrayList<Waypoint>();
 
+    // Creates a list of the different arrays which can be chosen as parameters
     public enum ArrayLS {
         Points, UPath, SPath
     }
@@ -37,10 +41,26 @@ public class PurePursuitPath {
         SPath.add(P1);
     }
 
-    public void ToString() {
-        for (int i = 0; i < UPath.size(); i++) {
-            Waypoint Point = UPath.get(i);
-            System.out.println(Point.ToString());
+    public void ToString(ArrayLS array) {
+        if(array == ArrayLS.Points) {
+            for (int i = 0; i < Points.size(); i++) {
+                Waypoint Point = Points.get(i);
+                System.out.println(ConsoleColors.YELLOW + (i + 1) + ": " + Point.ToString() + ConsoleColors.RESET);
+            }
+        }
+
+        if(array == ArrayLS.UPath) {
+            for (int i = 0; i < UPath.size(); i++) {
+                Waypoint Point = UPath.get(i);
+                System.out.println(ConsoleColors.PURPLE + (i + 1) + ": " + Point.ToString() + ConsoleColors.RESET);
+            }
+        }
+
+        if(array == ArrayLS.SPath) {
+            for (int i = 0; i < SPath.size(); i++) {
+                Waypoint Point = SPath.get(i);
+                System.out.println(ConsoleColors.GREEN + (i + 1) + ": " + Point.ToString() + ConsoleColors.RESET);
+            }
         }
     }
 
@@ -69,13 +89,14 @@ public class PurePursuitPath {
         //Computations
         k1 = (Math.pow(x1, 2) + Math.pow(y1, 2) - Math.pow(x2, 2) - Math.pow(y2, 2)) / (2 * (x1 - x2));
         k2 = (y1 - y2) / (x1 - x2);
-        circleCenterY = (Math.pow(x3, 2) + Math.pow(y3, 2) - Math.pow(x2, 2) - Math.pow(y2, 2) - (2 * k1 * (x3 - x2))) / (2 * (y3 - y2 - (k2 * x3) + (k2 * x2)));
+        circleCenterY = (Math.pow(x3, 2) + Math.pow(y3, 2) - Math.pow(x2, 2) - Math.pow(y2, 2) -
+                (2 * k1 * (x3 - x2))) / (2 * (y3 - y2 - (k2 * x3) + (k2 * x2)));
         circleCenterX = k1 - (circleCenterY * k2);
 
         radius = Math.sqrt(Math.pow(x1 - circleCenterX, 2) + Math.pow(y1 - circleCenterY, 2));
         curvature = 1 / radius;
 
-        System.out.println("radius = " + radius);
+        // System.out.println("radius = " + radius);
 
         //enters the value of curvature and sets the double "computeCurvatureForPoint" equal to that value
         return curvature;
@@ -101,6 +122,8 @@ public class PurePursuitPath {
                 Next = UPath.get(i + 1);
                 //uses the curvature function to find the curvature of all of the points
                 UPath.get(i).curvature = computeCurvatureForPoint(Current, Previous, Next);
+                double curvature = UPath.get(i).curvature;
+                System.out.println((i+1) + ": radius = " + (1/curvature));
             }
         }
 
@@ -118,6 +141,8 @@ public class PurePursuitPath {
                 Next = SPath.get(i + 1);
                 //uses the curvature function to find the curvature of all of the points
                 SPath.get(i).curvature = computeCurvatureForPoint(Current, Previous, Next);
+                double curvature = SPath.get(i).curvature;
+                System.out.println((i+1) + ": radius = " + (1/curvature));
             }
         }
     }
@@ -151,8 +176,8 @@ public class PurePursuitPath {
             addProcessedWaypoint(Current.xCoord, Current.yCoord, Current.userDefined);
 
             //This finds out how many points can fit between the two points with the needed spacing
-            numPointsThatFit = (int) Math.floor(distanceFormula(Current.xCoord, Current.yCoord, Next.xCoord, Next.yCoord) /
-                    spacing);
+            numPointsThatFit = (int) Math.floor(distanceFormula(Current.xCoord, Current.yCoord,
+                    Next.xCoord, Next.yCoord) / spacing);
 
             //This finds the change in x and change in y to get from point A to B
             double ChangeInXStart = Next.xCoord - Current.xCoord;
@@ -173,12 +198,60 @@ public class PurePursuitPath {
     }
 
     void pathSmoothing(double weight_data, double weight_smooth, double tolerance) {
-        //Todo
+        //Todo find out why this works
         double a = weight_data;
         double b = weight_smooth;
-        double change = tolerance;
+        double changeX = tolerance;
+        double changeY = tolerance;
+        a = 1-b;
 
+        // Copies the UPath Array to the SPath Array
+        for(int i = 0; i < UPath.size(); i++) {
+            addSmoothingWaypoint(UPath.get(i).xCoord, UPath.get(i).yCoord, false);
+        }
+
+        // The part that smooths the path
+        while(changeX >= tolerance && changeY >= tolerance) {
+            changeX = 0;
+            changeY = 0;
+
+            for(int i = 1; i < SPath.size() - 1; i++) {
+                // Looks at 3 consecutive points: Prev(Previous), Temp(Temporary), and Next
+                // The value of the temporary placeholder is stored in auxX and auxY to be compared
+                //      to the now changed TempX and TempY
+                double PrevX = SPath.get(i-1).xCoord;
+                double PrevY = SPath.get(i-1).yCoord;
+                double TempX = SPath.get(i).xCoord;
+                double TempY = SPath.get(i).yCoord;
+                double NextX = SPath.get(i+1).xCoord;
+                double NextY = SPath.get(i+1).yCoord;
+                double auxX = TempX;
+                double auxY = TempY;
+
+                // I have to change the X and Y separately from each other
+                // x coordinate side of the equation
+                TempX += a * (UPath.get(i).xCoord - TempX) + b * (PrevX + NextX - (2 * TempX));
+
+                // y coordinate side of the equation
+                TempY += a * (UPath.get(i).yCoord - TempY) + b * (PrevY + NextY - (2 * TempY));
+
+                // Replaces the corresponding waypoint with the new X and Y values that were created
+                Waypoint P1 = new Waypoint(TempX, TempY, false);
+                SPath.set(i, P1);
+
+                // Calculates how much the point was changed and uses it to see if the point needs
+                //      to be changed more.
+                changeX += Math.abs(auxX - TempX);
+                changeY += Math.abs(auxY - TempY);
+
+            }
+        }
     }
 
+    public double targetVelocity(Waypoint Point) {
+        //TODO Figure out Velocity for each Waypoint
+        double targVel = 0;
+        return targVel;
+    }
 }
 
