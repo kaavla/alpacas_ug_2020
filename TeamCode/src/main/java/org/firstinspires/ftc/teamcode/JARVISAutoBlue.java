@@ -11,7 +11,7 @@ public class JARVISAutoBlue extends JARVISAutonomousBase {
     @Override
     public void runOpMode() {
         RobotLog.ii("CAL", "Enter  - runOpMode - JARVIS Autonomous 1");
-        initHW(); //initialize hardware
+         initHW(); //initialize hardware
         ref_angle = getAngle(); //get the current angle and make it the reference angle for the rest of the program
 
         // Send a telemetry message to signifyrobot waiting;
