@@ -49,7 +49,7 @@ public class testBotHW {
         horizontal = ahwMap.get(DcMotorEx.class, "M3");
         RobotLog.ii("CAL", "Enter - Encoder  Initialized");
 
-        imu = ahwMap.get(BNO055IMU.class, "imu");
+        imu = ahwMap.get(BNO055IMU.class, "imu 1");
 
         //initialize the IMU
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
