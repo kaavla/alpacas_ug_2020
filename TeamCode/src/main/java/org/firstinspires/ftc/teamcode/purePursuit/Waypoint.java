@@ -5,6 +5,7 @@ public class Waypoint {
     public double xCoord;
     public double yCoord;
     public double curvature;
+    public double maxVel;
     public double velocity;
     public boolean userDefined = false;
 

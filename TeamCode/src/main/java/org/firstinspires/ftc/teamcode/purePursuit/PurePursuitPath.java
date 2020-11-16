@@ -248,10 +248,44 @@ public class PurePursuitPath {
         }
     }
 
-    public double targetVelocity(Waypoint Point) {
-        //TODO Figure out Velocity for each Waypoint
-        double targVel = 0;
-        return targVel;
+
+    // Calculates the target velocity at a defined point
+    public void targetVelocity(ArrayLS arrayChoice, double k) {
+        // Sets the max velocity for the path(the value is just a placeholder).
+        final double pathMaxVel = 10;
+
+        // Sets max acceleration for the path(the value is just a placeholder).
+        //      Calling it "a" to keep the equations short
+        final double a = 4;
+
+        int lastP = SPath.size();
+        SPath.get(lastP).velocity = 0;
+        for(int i = (SPath.size() - 1); i > 0; i--) {
+            // defines the waypoint name
+            Waypoint Point = SPath.get(i);
+            Waypoint APoint = SPath.get(i+1);
+
+            // Takes PathMaxVal and k/curvature and outputs the smallest of the two as the max velocity
+            //      for the point.
+            Point.maxVel = Math.min(pathMaxVel, k / Point.curvature);
+
+            // Calculates the distance between the two points.
+            double Dist;
+            Dist = distanceFormula(APoint.xCoord, APoint.yCoord, Point.xCoord, Point.yCoord);
+
+            // Sets the old velocity at the point(Not quite sure about this or what it does so I'm
+            //      setting a placeholder here for now).
+            double oldTargVel = 3;
+
+            // Sets the target velocity.
+            Point.velocity = Math.min(oldTargVel, Math.sqrt(Math.pow(APoint.velocity, 2) + 2 * a * Dist));
+
+            // Ensures that the target velocity is always <= the max velocity set for the point.
+            if(Point.velocity > Point.maxVel) {
+                Point.velocity = Point.maxVel;
+            }
+
+        }
     }
 }
 
