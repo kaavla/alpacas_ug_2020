@@ -23,6 +23,7 @@ public class testBotHW {
     public DcMotor rightMotor = null;
     public DcMotor backrightMotor = null;
     public DcMotor backleftMotor = null;
+    public DcMotor testMotor = null;
 
     public BNO055IMU imu = null;
 
@@ -42,6 +43,7 @@ public class testBotHW {
         rightMotor = ahwMap.get(DcMotor.class, "M2");
         backleftMotor = ahwMap.get(DcMotor.class, "M3");
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
+        testMotor = ahwMap.get(DcMotor.class, "M5");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
@@ -104,6 +106,7 @@ public class testBotHW {
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backrightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        testMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         RobotLog.ii("CAL", "Exit -  initMotorNoEncoders");
@@ -169,6 +172,7 @@ public class testBotHW {
         rightMotor.setPower(fr_power);
         backleftMotor.setPower(bl_power);
         backrightMotor.setPower(br_power);
+
 
     }
     //extra motions to move slowly go in case we are in a situation like that

@@ -40,8 +40,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.BASE_CONSTRAINTS;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_RPM;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TICKS_PER_REV;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.getMotorVelocityF;
@@ -223,8 +225,8 @@ public class  SampleMecanumDrive extends MecanumDrive {
 
         packet.put("mode", mode);
 
-        packet.put("x", currentPose.getX());
-        packet.put("y", currentPose.getY());
+        packet.put("SHANKx", currentPose.getX());
+        packet.put("SHANKy", currentPose.getY());
         packet.put("heading", currentPose.getHeading());
 
         packet.put("xError", lastError.getX());
@@ -327,6 +329,13 @@ public class  SampleMecanumDrive extends MecanumDrive {
             ));
         }
     }
+    public void setPIDFCoefficients(DcMotor.RunMode runMode, PIDFCoefficients coefficients) {
+        for (DcMotorEx motor : motors) {
+            motor.setPIDFCoefficients(runMode, new PIDFCoefficients(
+                    coefficients.p, coefficients.i, coefficients.d, coefficients.f
+            ));
+        }
+    }
 
     public void setWeightedDrivePower(Pose2d drivePower) {
         Pose2d vel = drivePower;
@@ -353,7 +362,8 @@ public class  SampleMecanumDrive extends MecanumDrive {
     public List<Double> getWheelPositions() {
         List<Double> wheelPositions = new ArrayList<>();
         for (DcMotorEx motor : motors) {
-            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+            //wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+            wheelPositions.add(0.0);
         }
         return wheelPositions;
     }
@@ -362,7 +372,8 @@ public class  SampleMecanumDrive extends MecanumDrive {
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
-            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
+            //wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
+            wheelVelocities.add(0.0);
         }
         return wheelVelocities;
     }

@@ -44,9 +44,16 @@ public class testBotManual extends testBotUtility {
             } else if (gamepad1.dpad_right) {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
-            } else {
-                robot.stopAllMotors();
             }
+            else if (gamepad1.a){
+                robot.testMotor.setPower(0.5);
+            }
+            else {
+                robot.stopAllMotors();
+                robot.testMotor.setPower(0);
+            }
+
+
 
             telemetry.update();
         }

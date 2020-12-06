@@ -43,7 +43,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.9685; // in
     public static double GEAR_RATIO = 0.5; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 16; // in
+    public static double TRACK_WIDTH = 9; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -100,7 +100,7 @@ public class DriveConstants {
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
             20, 40, 0,
-            Math.toRadians(360), Math.toRadians(360), 0.0
+            Math.toRadians(90), Math.toRadians(180), 0.0
     );
 
 
