@@ -23,7 +23,9 @@ public class testBotHW {
     public DcMotor rightMotor = null;
     public DcMotor backrightMotor = null;
     public DcMotor backleftMotor = null;
-    public DcMotor testMotor = null;
+    public DcMotor collectMotor = null;
+    public DcMotor shootMotorRight = null;
+    public DcMotor shootMotorLeft = null;
 
     public BNO055IMU imu = null;
 
@@ -43,7 +45,9 @@ public class testBotHW {
         rightMotor = ahwMap.get(DcMotor.class, "M2");
         backleftMotor = ahwMap.get(DcMotor.class, "M3");
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
-        testMotor = ahwMap.get(DcMotor.class, "M5");
+        collectMotor = ahwMap.get(DcMotor.class, "M5");
+        shootMotorRight = ahwMap.get(DcMotor.class, "M6");
+        shootMotorLeft = ahwMap.get(DcMotor.class, "M7");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
@@ -67,6 +71,7 @@ public class testBotHW {
         //Invert direction for left motors
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backleftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shootMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         RobotLog.ii("CAL", "Enter -Directions reversed");
 
         // Set all motors to zero power
@@ -90,6 +95,8 @@ public class testBotHW {
         rightMotor.setPower(0);
         backleftMotor.setPower(0);
         backrightMotor.setPower(0);
+        shootMotorLeft.setPower(0);
+        shootMotorRight.setPower(0);
     }
 
     public void initMotorNoEncoders() {
@@ -101,12 +108,17 @@ public class testBotHW {
         backleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         //Set zero power behavior to braking
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backrightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        testMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shootMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         RobotLog.ii("CAL", "Exit -  initMotorNoEncoders");
