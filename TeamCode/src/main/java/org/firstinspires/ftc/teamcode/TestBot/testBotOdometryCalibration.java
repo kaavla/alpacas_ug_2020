@@ -14,7 +14,11 @@ public class testBotOdometryCalibration extends testBotUtility{
 
     //The amount of encoder ticks for each inch the robot moves.
     // THIS WILL CHANGE FOR EACH ROBOT AND NEEDS TO BE UPDATED HERE
-    final double COUNTS_PER_INCH = 307.699557;
+    final double COUNTS_PER_ENC_REV  = 8192;
+    final double WHEEL_DIAMETER_INCHES = 1.37795;
+    final double COUNTS_PER_INCH       = (COUNTS_PER_ENC_REV ) / (WHEEL_DIAMETER_INCHES * 3.1415);
+
+    //final double COUNTS_PER_INCH = 307.699557;
 
     ElapsedTime timer = new ElapsedTime();
 

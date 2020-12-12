@@ -54,6 +54,9 @@ public class testBotHW {
         verticalRight = ahwMap.get(DcMotorEx.class, "M2");
         horizontal = ahwMap.get(DcMotorEx.class, "M3");
         RobotLog.ii("CAL", "Enter - Encoder  Initialized");
+        //verticalRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //eiihcckgbrrrbreucrhbfdiigeenglcfehcefhcjfegn
+        // horizontal.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = ahwMap.get(BNO055IMU.class, "imu 1");
 
