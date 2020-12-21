@@ -23,9 +23,9 @@ public class testBotHW {
     public DcMotor rightMotor = null;
     public DcMotor backrightMotor = null;
     public DcMotor backleftMotor = null;
-    public DcMotor M5 = null;
-    public DcMotor M6 = null;
-    public DcMotor M7 = null;
+    public DcMotor collectMotor = null;
+    public DcMotor shootMotorRight = null;
+    public DcMotor shootMotorLeft = null;
 
     public BNO055IMU imu = null;
 
@@ -45,16 +45,18 @@ public class testBotHW {
         rightMotor = ahwMap.get(DcMotor.class, "M2");
         backleftMotor = ahwMap.get(DcMotor.class, "M3");
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
-        M5 = ahwMap.get(DcMotor.class, "M5");
-        M6 = ahwMap.get(DcMotor.class, "M6");
-        M7 = ahwMap.get(DcMotor.class, "M7");
-
+        collectMotor = ahwMap.get(DcMotor.class, "M5");
+        shootMotorRight = ahwMap.get(DcMotor.class, "M6");
+        shootMotorLeft = ahwMap.get(DcMotor.class, "M7");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
         verticalRight = ahwMap.get(DcMotorEx.class, "M2");
         horizontal = ahwMap.get(DcMotorEx.class, "M3");
         RobotLog.ii("CAL", "Enter - Encoder  Initialized");
+        //verticalRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //eiihcckgbrrrbreucrhbfdiigeenglcfehcefhcjfegn
+        // horizontal.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = ahwMap.get(BNO055IMU.class, "imu 1");
 
@@ -72,6 +74,7 @@ public class testBotHW {
         //Invert direction for left motors
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backleftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shootMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         RobotLog.ii("CAL", "Enter -Directions reversed");
 
         // Set all motors to zero power
@@ -95,9 +98,8 @@ public class testBotHW {
         rightMotor.setPower(0);
         backleftMotor.setPower(0);
         backrightMotor.setPower(0);
-        M5.setPower(0);
-        M6.setPower(0);
-        M7.setPower(0);
+        shootMotorLeft.setPower(0);
+        shootMotorRight.setPower(0);
     }
 
     public void initMotorNoEncoders() {
@@ -108,18 +110,19 @@ public class testBotHW {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        M5.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        M6.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        M7.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //Set zero power behavior to braking
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backrightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        M5.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        M6.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        M7.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shootMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         RobotLog.ii("CAL", "Exit -  initMotorNoEncoders");
     }
@@ -160,16 +163,17 @@ public class testBotHW {
 */
 
 
-    public void moveHolonomic(double x, double y, double z) {
+    public void moveHolonomic(double x, double y , double z)
+    {
         double max_power = 0.6;
-        double min_power = -1 * max_power;
+        double min_power = -1*max_power;
 
         double fl_power = Range.clip(y + x - z, min_power, max_power);
         double fr_power = Range.clip(y - x + z, min_power, max_power);
         double br_power = Range.clip(y + x + z, min_power, max_power);
         double bl_power = Range.clip(y - x - z, min_power, max_power);
         RobotLog.ii("CAL", "moveHolonomic - Enter x(%f), y(%f), z(%f)", x, y, z);
-        RobotLog.ii("CAL", "moveHolonomic - Enter fl(%f), fr(%f), bl(%f), br(%f)", fl_power, fr_power, bl_power, br_power);
+        RobotLog.ii("CAL", "moveHolonomic - Enter fl(%f), fr(%f), bl(%f), br(%f)", fl_power,fr_power, bl_power, br_power );
 
         // Sets the power of the motors to the power defined above
 
@@ -178,14 +182,14 @@ public class testBotHW {
 
     }
 
-    public void setPowerAll(double fl_power, double fr_power, double bl_power, double br_power) {
+    public void setPowerAll(double fl_power, double fr_power, double bl_power, double br_power){
         leftMotor.setPower(fl_power);
         rightMotor.setPower(fr_power);
         backleftMotor.setPower(bl_power);
         backrightMotor.setPower(br_power);
 
-    }
 
+    }
     //extra motions to move slowly go in case we are in a situation like that
     public void forwardSlow() {
         leftMotor.setPower(Range.clip(leftMotor.getPower() + 0.01, 0.3, 1.0));
@@ -201,14 +205,4 @@ public class testBotHW {
         backrightMotor.setPower(Range.clip(backrightMotor.getPower() - 0.01, -0.3, -1.0));
     }
 
-    public void setM5(double power) {
-        M5.setPower(power);
-    }
-
-    public void setM6(double power) {
-        M6.setPower(power);
-    }
-    public void setM7 (double power) {
-        M7.setPower(power);
-    }
 }
