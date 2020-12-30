@@ -46,20 +46,24 @@ public class testBotManual extends testBotUtility {
                 robot.moveHolonomic(0, 0, motor_power * -1);
             }
             else if (gamepad1.y){
-                robot.collectMotor.setPower(0.5);
+                robot.collectMotor.setPower(0.8);
             }
             else if (gamepad1.a){
                 robot.collectMotor.setPower(-0.5);
             }
             else if (gamepad1.b){
-                robot.shootMotorLeft.setPower(1);
-                robot.shootMotorRight.setPower(1);
-                robot.collectMotor.setPower(0.6);
+                robot.shootMotorLeft.setPower(0.7);
+                robot.shootMotorRight.setPower(0.6);
+                robot.collectMotor.setPower(0.8);
             }
             else if (gamepad1.right_bumper){
-                robot.shootMotorLeft.setPower(0);
+                robot.shootMotorLeft.setPower(0.6);
                 robot.shootMotorRight.setPower(0);
                 robot.collectMotor.setPower(0);
+                robot.grabber.setPosition(0);
+            }
+            else if (gamepad1.left_bumper){
+                robot.grabber.setPosition(0.5);
             }
             else {
                 robot.stopAllMotors();
