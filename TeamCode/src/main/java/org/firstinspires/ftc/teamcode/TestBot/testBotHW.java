@@ -26,7 +26,7 @@ public class testBotHW {
     public DcMotor collectMotor = null;
     public DcMotor shootMotorRight = null;
     public DcMotor shootMotorLeft = null;
-
+    public Servo grabber = null;
     public BNO055IMU imu = null;
 
     DcMotorEx verticalLeft, verticalRight, horizontal;
@@ -48,6 +48,7 @@ public class testBotHW {
         collectMotor = ahwMap.get(DcMotor.class, "M5");
         shootMotorRight = ahwMap.get(DcMotor.class, "M6");
         shootMotorLeft = ahwMap.get(DcMotor.class, "M7");
+        grabber = ahwMap.get(Servo.class, "grabber");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
@@ -96,7 +97,7 @@ public class testBotHW {
         RobotLog.ii("CAL", "Stopping All motors");
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-        backleftMotor.setPower(0);
+      backleftMotor.setPower(0); collectMotor.setPower(0);
         backrightMotor.setPower(0);
         shootMotorLeft.setPower(0);
         shootMotorRight.setPower(0);
