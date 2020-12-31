@@ -1,8 +1,19 @@
 package org.firstinspires.ftc.teamcode.TestBot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.RobotLog;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
-@TeleOp(name = "testbotManual", group = "Linear Opmode")
+@TeleOp(name = "testbotManual SK", group = "Linear Opmode")
 public class testBotManual extends testBotUtility {
     @Override
     public void runOpMode() {
