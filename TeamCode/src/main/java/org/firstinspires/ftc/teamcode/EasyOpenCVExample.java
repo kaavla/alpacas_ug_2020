@@ -19,7 +19,7 @@
  * SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -83,7 +83,7 @@ public class EasyOpenCVExample extends LinearOpMode
         /*
          * An enum to define the skystone position
          */
-        public enum RingPosition
+     /*   public enum RingPosition
         {
             FOUR,
             ONE,
@@ -92,7 +92,7 @@ public class EasyOpenCVExample extends LinearOpMode
 
         /*
          * Some color constants
-         */
+
         static final Scalar BLUE = new Scalar(0, 0, 255);
         static final Scalar GREEN = new Scalar(0, 255, 0);
 
@@ -103,7 +103,7 @@ public class EasyOpenCVExample extends LinearOpMode
         //line 1) changes the location (top left corner of it I think(?))
         //line 2) changes the width of the green box
         //line 3) changes the height of the green box
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181,98);
+       /* static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(181,98);
         static final int REGION_WIDTH = 35;
         static final int REGION_HEIGHT = 25;
 
@@ -119,7 +119,7 @@ public class EasyOpenCVExample extends LinearOpMode
 
         /*
          * Working variables
-         */
+
         Mat region1_Cb;
         Mat YCrCb = new Mat();
         Mat Cb = new Mat();
@@ -131,7 +131,7 @@ public class EasyOpenCVExample extends LinearOpMode
         /*
          * This function takes the RGB frame, converts to YCrCb,
          * and extracts the Cb channel to the 'Cb' variable
-         */
+
         void inputToCb(Mat input)
         {
             Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
@@ -146,7 +146,7 @@ public class EasyOpenCVExample extends LinearOpMode
             region1_Cb = Cb.submat(new Rect(region1_pointA, region1_pointB));
         }
 
-        @Override
+         @Override
         public Mat processFrame(Mat input)
         {
             inputToCb(input);
@@ -184,4 +184,5 @@ public class EasyOpenCVExample extends LinearOpMode
             return avg1;
         }
     }
-}
+    }
+        */
