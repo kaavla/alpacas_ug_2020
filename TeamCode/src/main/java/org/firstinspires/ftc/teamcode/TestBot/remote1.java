@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TestBot;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import java.util.List;
 
     @Autonomous(group = "drive")
-    public class remote1 extends LinearOpMode {
+    public class remote1 extends testBotAutonomousBase {
         @Override
 
         public void runOpMode() throws InterruptedException {
