@@ -46,12 +46,14 @@ public class testBotManual extends testBotUtility {
                 robot.moveHolonomic(0, 0, motor_power * -1);
             }
             else if (gamepad1.y){
-                robot.collectMotor.setPower(0.8);
+                //robot.collectMotor.setPower(0.8);
+                robot.wobbleMotor.setPower(0.4);
             }
-            else if (gamepad1.a){
-                robot.collectMotor.setPower(-0.5);
+            else if (gamepad1.a) {
+                //robot.collectMotor.setPower(-0.5);
+                robot.wobbleMotor.setPower(-0.4);
             }
-            else if (gamepad1.b){
+            else if (gamepad1.left_bumper){
                 robot.shootMotorLeft.setPower(0.6);
                 robot.shootMotorRight.setPower(0.6);
                 robot.collectMotor.setPower(0.8);
@@ -62,8 +64,11 @@ public class testBotManual extends testBotUtility {
                 robot.collectMotor.setPower(0);
                 //robot.grabber.setPosition(0);
             }
-            else if (gamepad1.left_bumper){
-                //robot.grabber.setPosition(0.5);
+            else if (gamepad1.x) {
+                robot.wobbleServo.setPosition(-0.2);
+            }
+            else if (gamepad1.b) {
+                robot.wobbleServo.setPosition(0.2);
             }
             else {
                 robot.stopAllMotors();

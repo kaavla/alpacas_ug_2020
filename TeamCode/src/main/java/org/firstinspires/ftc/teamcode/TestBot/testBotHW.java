@@ -26,6 +26,9 @@ public class testBotHW {
     public DcMotor collectMotor = null;
     public DcMotor shootMotorRight = null;
     public DcMotor shootMotorLeft = null;
+    public DcMotor wobbleMotor = null;
+    public Servo wobbleServo = null;
+
     //public Servo grabber = null;
     public BNO055IMU imu = null;
 
@@ -48,6 +51,8 @@ public class testBotHW {
         collectMotor = ahwMap.get(DcMotor.class, "M5");
         shootMotorRight = ahwMap.get(DcMotor.class, "M6");
         shootMotorLeft = ahwMap.get(DcMotor.class, "M7");
+        wobbleMotor = ahwMap.get(DcMotor.class, "M8");
+        wobbleServo = ahwMap.get(Servo.class, "wobbleServo");
         //grabber = ahwMap.get(Servo.class, "grabber");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
@@ -101,6 +106,7 @@ public class testBotHW {
         backrightMotor.setPower(0);
         shootMotorLeft.setPower(0);
         shootMotorRight.setPower(0);
+        wobbleMotor.setPower(0);
     }
 
     public void initMotorNoEncoders() {
@@ -115,6 +121,7 @@ public class testBotHW {
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //Set zero power behavior to braking
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -123,6 +130,7 @@ public class testBotHW {
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shootMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        wobbleMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         RobotLog.ii("CAL", "Exit -  initMotorNoEncoders");

@@ -70,6 +70,10 @@ public class MyOdometryOpmode extends testBotUtility {
             } else if (gamepad1.dpad_right) {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
+            } else if (gamepad1.b){
+                    robot.shootMotorLeft.setPower(0.6);
+                    robot.shootMotorRight.setPower(0.6);
+                    robot.collectMotor.setPower(0.8);
             } else {
                 robot.stopAllMotors();
             }
