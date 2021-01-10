@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-@TeleOp(name = "testbotManual SK", group = "Linear Opmode")
+@TeleOp(name = "testbotManualvv SK", group = "Linear Opmode")
 public class testBotManual extends testBotUtility {
     @Override
     public void runOpMode() {
@@ -56,7 +56,7 @@ public class testBotManual extends testBotUtility {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
             }
-            else if (gamepad1.y){
+            else if (gamepad1.right_trigger > 0){
                 robot.collectMotor.setPower(0.8);
             }
             else if (gamepad1.a){
