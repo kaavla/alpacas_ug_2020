@@ -27,7 +27,7 @@ import java.util.List;
 
 
             Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-24, -34), Math.toRadians(0))
+                    .splineTo(new Vector2d(-24, -36), Math.toRadians(0))
                     .build();
             drive.followTrajectory(traj1);
 
@@ -50,7 +50,7 @@ import java.util.List;
             //traj3 in position to shoot rings into the upper target, and then return to get wobble
             Trajectory traj3 = drive.trajectoryBuilder(traj1.end())
                     //exact position to shoot rings into the upper goal
-                    .splineTo(new Vector2d(9, 22), Math.toRadians(202))
+                    .splineTo(new Vector2d(0, -22), Math.toRadians(202))
                     .build();
             drive.followTrajectory(traj3);
 
@@ -58,6 +58,8 @@ import java.util.List;
                     .splineTo(new Vector2d(-30, -4), Math.toRadians(-90))
                     .build();
             drive.followTrajectory(traj4);
+            sleep(1000);
+            myWobbleGoal(Direction.SLIDE_DOWN,0.5,1,4,SensorsToUse.NONE);
 
         }
 
