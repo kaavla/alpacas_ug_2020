@@ -595,7 +595,7 @@ public class JARVISAutonomousBase extends LinearOpMode {
         robot.slide_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 */
-    public void myEncoderSlide1(Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
+    public void mywobbleGoal (Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
         int newLeftTarget = 0;
         int newRightTarget = 0;
         RobotLog.ii("CAL", "Enter - myEncoderSlide -  speed=%f, Inches=%f, timeout=%f",

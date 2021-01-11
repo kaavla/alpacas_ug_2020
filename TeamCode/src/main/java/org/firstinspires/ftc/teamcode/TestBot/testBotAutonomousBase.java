@@ -57,13 +57,13 @@ public class testBotAutonomousBase extends LinearOpMode {
     public static final double TICKS_PER_REV = 383.6;
     public static final double MAX_RPM = 435;
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
-    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    static final double WHEEL_DIAMETER_INCHES = 1.9685*2;     // For figuring circumference
     static final double COUNTS_PER_INCH = (TICKS_PER_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
-    static final double INOUT_COUNTS_PER_INCH = (19.2 * 28) / (2 * 3.1415); //gobilda 5202 117 rpm motors
+    static final double PULLEY_COUNTS_PER_INCH = (19.2 * 28) / (1 * 3.1415); //gobilda 5202 312 rpm motors
+    //static final double INOUT_COUNTS_PER_INCH = (19.2 * 28) / (2 * 3.1415); //gobilda 5202 117 rpm motors
     public static double WHEEL_RADIUS = 1.9685; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 17.66; // in
+    //public static double TRACK_WIDTH = 17.66; // in
     static final double DRIVE_SPEED = 0.3;
     static final double TURN_SPEED = 0.7;
 
@@ -80,6 +80,7 @@ public class testBotAutonomousBase extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Empty Function
     }
+
 
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
             40.0, 40.0, 0.0,
@@ -542,78 +543,6 @@ public class testBotAutonomousBase extends LinearOpMode {
             }
         }
 
-
-
-    /*
-    public void myEncoderSlide(Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
-        int newLeftTarget = 0;
-        int newRightTarget = 0;
-        RobotLog.ii("CAL", "Enter - myEncoderSlide -  speed=%f, Inches=%f, timeout=%f",
-                speed, Inches, timeoutS);
-
-        robot.slide_1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.slide_1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.slide_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //robot.slide_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Reset the encoder
-
-        // Ensure that the op mode is still active
-        if (opModeIsActive() && !isStopRequested()) {
-
-            // Determine new target position, and pass to motor controller
-            if (direction == Direction.SLIDE_UP) {
-                //Go forward
-                newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-                newRightTarget = robot.slide_2.getCurrentPosition() + (int) (1*Inches * PULLEY_COUNTS_PER_INCH);
-
-            } else if (direction == Direction.SLIDE_DOWN) {
-                //Go backward
-                newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (-1 * Inches * PULLEY_COUNTS_PER_INCH);
-                newRightTarget = robot.slide_2.getCurrentPosition() + (int) (-1* Inches * PULLEY_COUNTS_PER_INCH);
-            } else {
-                Inches = 0;
-                newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-                newRightTarget = robot.slide_2.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-            }
-
-
-            robot.slide_1.setTargetPosition(newLeftTarget);
-            robot.slide_2.setTargetPosition(newRightTarget);
-
-            // Turn On RUN_TO_POSITION
-            robot.slide_1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.slide_2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // reset the timeout time and start motion.
-            runtime.reset();
-
-            robot.slide_1.setPower(Math.abs(speed));
-            robot.slide_2.setPower(Math.abs(speed));
-
-            while (opModeIsActive() && !isStopRequested() &&
-                    (runtime.seconds() < timeoutS) &&
-                    (robot.slide_1.isBusy())) {
-
-
-                // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                telemetry.addData("Path2", "Running at %7d :%7d",
-                        robot.slide_1.getCurrentPosition(),
-                        robot.slide_2.getCurrentPosition());
-                telemetry.update();
-            }
-        }
-
-        // Stop all motion;
-        robot.slide_1.setPower(0);
-        robot.slide_2.setPower(0);
-
-        // Turn off RUN_TO_POSITION
-        robot.slide_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.slide_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-*/
             public void myWobbleGoal (Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
                 int newLeftTarget = 0;
                 int newRightTarget = 0;
@@ -624,7 +553,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                 robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 robot.wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 //robot.slide_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+                RobotLog.ii("CAL", "Enter -  line 556");
                 // Ensure that the op mode is still active
                 if (opModeIsActive() && !isStopRequested()) {
 
@@ -644,7 +573,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         //newRightTarget = robot.slide_2.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
                     }
 
-
+                    RobotLog.ii("CAL", "Enter -  line 576");
                     robot.wobbleMotor.setTargetPosition(newLeftTarget);
                     //robot.slide_2.setTargetPosition(newRightTarget);
 
@@ -662,6 +591,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         //robot.slide_2.setPower((1*speed));
 
                     }
+                    RobotLog.ii("CAL", "Enter -  line 594");
 
                     while (opModeIsActive() && !isStopRequested() &&
                             (runtime.seconds() < timeoutS) &&
@@ -676,7 +606,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         telemetry.update();
                     }
                 }
-
+                RobotLog.ii("CAL", "Enter -  line 609");
                 // Stop all motion;
                 robot.wobbleMotor.setPower(0);
                 //robot.slide_2.setPower(0);
@@ -685,131 +615,79 @@ public class testBotAutonomousBase extends LinearOpMode {
                 robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //robot.slide_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
-    /*
-        public void myEncoderSlide2(Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
-            int newLeftTarget = 0;
-            int newRightTarget = 0;
-            RobotLog.ii("CAL", "Enter - myEncoderSlide -  speed=%f, Inches=%f, timeout=%f",
-                    speed, Inches, timeoutS);
 
-            //Reset the encoder
-            robot.slide_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            //robot.slide_1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            robot.slide_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            // Ensure that the op mode is still active
-            if (opModeIsActive() && !isStopRequested()) {
-
-                // Determine new target position, and pass to motor controller
-                if (direction == Direction.SLIDE_UP) {
-                    //Go forward
-                    //newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-                    newRightTarget = robot.slide_2.getCurrentPosition() + (int) (1*Inches * PULLEY_COUNTS_PER_INCH);
-
-                } else if (direction == Direction.SLIDE_DOWN) {
-                    //Go backward
-                    //newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (-1 * Inches * PULLEY_COUNTS_PER_INCH);
-                    newRightTarget = robot.slide_2.getCurrentPosition() + (int) (-1* Inches * PULLEY_COUNTS_PER_INCH);
-                } else {
-                    Inches = 0;
-                    //newLeftTarget = robot.slide_1.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-                    newRightTarget = robot.slide_2.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
-                }
-
-
-                //robot.slide_1.setTargetPosition(newLeftTarget);
-                robot.slide_2.setTargetPosition(newRightTarget);
-
-                // Turn On RUN_TO_POSITION
-                //robot.slide_1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.slide_2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-                // reset the timeout time and start motion.
-                runtime.reset();
-
-                robot.slide_2.setPower(Math.abs(speed));
-
-                while (opModeIsActive() && !isStopRequested() &&
-                        (runtime.seconds() < timeoutS) &&
-                        (robot.slide_2.isBusy())) {
-
-
-                    // Display it for the driver.
-                    telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
-                    telemetry.addData("Path2", "Running at %7d :%7d",
-                            robot.slide_1.getCurrentPosition(),
-                            robot.slide_2.getCurrentPosition());
-                    telemetry.update();
-                }
-            }
-
-            // Stop all motion;
-            //robot.slide_1.setPower(0);
-            robot.slide_2.setPower(0);
-
-            // Turn off RUN_TO_POSITION
-            //robot.slide_1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.slide_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-
-    public void myEncoderInOutSlide(Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
+    public void shootTheRings (Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
         int newLeftTarget = 0;
-        RobotLog.ii("CAL", "Enter - myEncoderInOutSlide -  speed=%f, Inches=%f, timeout=%f",
+        int newRightTarget = 0;
+        RobotLog.ii("CAL", "Enter - myEncoderSlide -  speed=%f, Inches=%f, timeout=%f",
                 speed, Inches, timeoutS);
 
-        robot.slide_3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.slide_3.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //Reset the encoder
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.slide_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Ensure that the op mode is still active
         if (opModeIsActive() && !isStopRequested()) {
 
             // Determine new target position, and pass to motor controller
-            if (direction == Direction.SLIDE_IN) {
+            if (direction == Direction.SLIDE_UP) {
                 //Go forward
-                newLeftTarget = robot.slide_3.getCurrentPosition() + (int) (Inches * INOUT_COUNTS_PER_INCH);
+                newLeftTarget = robot.shootMotorLeft.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
+                //newRightTarget = robot.slide_2.getCurrentPosition() + (int) (1*Inches * PULLEY_COUNTS_PER_INCH);
 
-            } else if (direction == Direction.SLIDE_OUT) {
+            } else if (direction == Direction.SLIDE_DOWN) {
                 //Go backward
-                newLeftTarget = robot.slide_3.getCurrentPosition() + (int) (-1 * Inches * INOUT_COUNTS_PER_INCH);
+                newLeftTarget = robot.shootMotorLeft.getCurrentPosition() + (int) (-1 * Inches * PULLEY_COUNTS_PER_INCH);
+                //newRightTarget = robot.slide_2.getCurrentPosition() + (int) (-1* Inches * PULLEY_COUNTS_PER_INCH);
             } else {
                 Inches = 0;
-                newLeftTarget = robot.slide_3.getCurrentPosition() + (int) (Inches * INOUT_COUNTS_PER_INCH);
+                newLeftTarget = robot.shootMotorLeft.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
+                //newRightTarget = robot.slide_2.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
             }
 
 
-            robot.slide_3.setTargetPosition(newLeftTarget);
+            robot.shootMotorLeft.setTargetPosition(newLeftTarget);
+            //robot.slide_2.setTargetPosition(newRightTarget);
 
             // Turn On RUN_TO_POSITION
-            robot.slide_3.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //robot.slide_2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
 
-            robot.slide_3.setPower(Math.abs(speed));
+            robot.shootMotorLeft.setPower(Math.abs(speed));
+            if (direction == Direction.SLIDE_DOWN) {
+                //robot.slide_2.setPower((-1*speed));
+            } else {
+                //robot.slide_2.setPower((1*speed));
+
+            }
 
             while (opModeIsActive() && !isStopRequested() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.slide_3.isBusy())) {
+                    (robot.shootMotorLeft.isBusy())) {
 
 
                 // Display it for the driver.
-                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newLeftTarget);
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
                 telemetry.addData("Path2", "Running at %7d :%7d",
-                        robot.slide_3.getCurrentPosition(),
-                        robot.slide_3.getCurrentPosition());
+                        robot.shootMotorLeft.getCurrentPosition(),
+                        robot.shootMotorLeft.getCurrentPosition());
                 telemetry.update();
             }
         }
 
         // Stop all motion;
-        robot.slide_3.setPower(0);
+        robot.shootMotorLeft.setPower(0);
+        //robot.slide_2.setPower(0);
 
         // Turn off RUN_TO_POSITION
-        robot.slide_3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.slide_2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-     */
 //SONIA AND REESA PLEASE ADD YOUR TENSORFLOW STUFF HERE
             /*
     public void myTFOD(double timeoutS) {
@@ -901,7 +779,7 @@ public class testBotAutonomousBase extends LinearOpMode {
     }
 
              */
-            //SONIA AND REESA PLEASE DELETE THIS IF YOU DON'T NEED IT
+    //SONIA AND REESA PLEASE DELETE THIS IF YOU DON'T NEED IT
             /*
     public boolean myTFOD2(double timeoutS) {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
@@ -947,17 +825,6 @@ public class testBotAutonomousBase extends LinearOpMode {
         return false;
     }
 
-    public void moveFoundationServoDown () {
-        // Checks if the servos are = null or not because that is what causes the
-        // "null pointer exception". Once it is checked, the servos will run.
-        robot.moveFoundationServoDown();
-        /*
-        if (robot.FLServo != null) {
-            robot.FLServo.setPosition(0.21);
-        }
-        if (robot.FRServo != null) {
-            robot.FRServo.setPosition(0.21);
-        }
          */
         }
     
