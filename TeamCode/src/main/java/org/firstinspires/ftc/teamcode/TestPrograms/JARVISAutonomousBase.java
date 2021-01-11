@@ -1,13 +1,9 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TestPrograms;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -22,7 +18,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
-import java.util.Locale;
 
 //@Disabled
 public class JARVISAutonomousBase extends LinearOpMode {
@@ -600,7 +595,7 @@ public class JARVISAutonomousBase extends LinearOpMode {
         robot.slide_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 */
-    public void myEncoderSlide1(Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
+    public void mywobbleGoal (Direction direction, double speed, double Inches, double timeoutS, SensorsToUse sensors_2_use) {
         int newLeftTarget = 0;
         int newRightTarget = 0;
         RobotLog.ii("CAL", "Enter - myEncoderSlide -  speed=%f, Inches=%f, timeout=%f",
