@@ -50,7 +50,7 @@ import java.util.List;
             //traj3 in position to shoot rings into the upper target, and then return to get wobble
             Trajectory traj3 = drive.trajectoryBuilder(traj1.end())
                     //exact position to shoot rings into the upper goal
-                    .splineTo(new Vector2d(9, 22), Math.toRadians(202))
+                    .splineTo(new Vector2d(-9, -22), Math.toRadians(202))
                     .build();
             drive.followTrajectory(traj3);
 

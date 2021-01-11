@@ -4,9 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.teamcode.JARVISAutonomousBase;
-import org.firstinspires.ftc.teamcode.JARVISHW;
-
 @Autonomous(name="ZZZZZ2", group="JARVIS")
 @Disabled
 public class JARVISAutoBLDBlueParkMiddle extends JARVISAutonomousBase {
