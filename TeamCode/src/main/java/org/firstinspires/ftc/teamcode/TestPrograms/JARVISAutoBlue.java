@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TestPrograms;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.RobotLog;
 
-import java.util.List;
 @Autonomous(name="Jarvis Auto Blue", group="JARVIS")
 
 public class JARVISAutoBlue extends JARVISAutonomousBase {
