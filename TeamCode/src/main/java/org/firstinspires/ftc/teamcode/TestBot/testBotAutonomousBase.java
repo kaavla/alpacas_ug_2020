@@ -57,13 +57,13 @@ public class testBotAutonomousBase extends LinearOpMode {
     public static final double TICKS_PER_REV = 383.6;
     public static final double MAX_RPM = 435;
     static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
-    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    static final double WHEEL_DIAMETER_INCHES = 1.9685*2;     // For figuring circumference
     static final double COUNTS_PER_INCH = (TICKS_PER_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
-    static final double INOUT_COUNTS_PER_INCH = (19.2 * 28) / (2 * 3.1415); //gobilda 5202 117 rpm motors
+    static final double PULLEY_COUNTS_PER_INCH = (19.2 * 28) / (1 * 3.1415); //gobilda 5202 312 rpm motors
+    //static final double INOUT_COUNTS_PER_INCH = (19.2 * 28) / (2 * 3.1415); //gobilda 5202 117 rpm motors
     public static double WHEEL_RADIUS = 1.9685; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 17.66; // in
+    //public static double TRACK_WIDTH = 17.66; // in
     static final double DRIVE_SPEED = 0.3;
     static final double TURN_SPEED = 0.7;
 
@@ -80,6 +80,7 @@ public class testBotAutonomousBase extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Empty Function
     }
+
 
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
             40.0, 40.0, 0.0,
@@ -552,7 +553,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                 robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 robot.wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 //robot.slide_2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+                RobotLog.ii("CAL", "Enter -  line 556");
                 // Ensure that the op mode is still active
                 if (opModeIsActive() && !isStopRequested()) {
 
@@ -572,7 +573,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         //newRightTarget = robot.slide_2.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
                     }
 
-
+                    RobotLog.ii("CAL", "Enter -  line 576");
                     robot.wobbleMotor.setTargetPosition(newLeftTarget);
                     //robot.slide_2.setTargetPosition(newRightTarget);
 
@@ -590,6 +591,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         //robot.slide_2.setPower((1*speed));
 
                     }
+                    RobotLog.ii("CAL", "Enter -  line 594");
 
                     while (opModeIsActive() && !isStopRequested() &&
                             (runtime.seconds() < timeoutS) &&
@@ -604,7 +606,7 @@ public class testBotAutonomousBase extends LinearOpMode {
                         telemetry.update();
                     }
                 }
-
+                RobotLog.ii("CAL", "Enter -  line 609");
                 // Stop all motion;
                 robot.wobbleMotor.setPower(0);
                 //robot.slide_2.setPower(0);

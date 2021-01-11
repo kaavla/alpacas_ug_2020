@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 import java.util.List;
 
-    @Autonomous(group = "drive")
+    @Autonomous(name="Autonomous remote casper",  group = "drive")
     public class AutonomousRemote extends testBotAutonomousBase {
         @Override
 
@@ -55,7 +55,7 @@ import java.util.List;
             drive.followTrajectory(traj3);
 
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(-30, -4), Math.toRadians(-90))
+                    .splineTo(new Vector2d(-28, -4), Math.toRadians(-90))
                     .build();
             drive.followTrajectory(traj4);
             sleep(1000);

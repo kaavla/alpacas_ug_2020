@@ -119,7 +119,7 @@ public class testBotHW {
         backrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -128,7 +128,7 @@ public class testBotHW {
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backrightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shootMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         wobbleMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
