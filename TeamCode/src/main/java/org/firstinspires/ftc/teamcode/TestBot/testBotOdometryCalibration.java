@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestBot;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.ReadWriteFile;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import java.io.File;
 
 @TeleOp(name = "testBotOdometryCalibration", group = "Linear Opmode")
+@Disabled
 public class testBotOdometryCalibration extends testBotUtility{
     final double PIVOT_SPEED = 0.4;
 

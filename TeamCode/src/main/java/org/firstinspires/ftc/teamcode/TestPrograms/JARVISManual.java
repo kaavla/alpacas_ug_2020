@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.TestPrograms;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 @TeleOp(name = "JARVIS Manual", group = "Linear Opmode")
-//@Disabled
-
+@Disabled
 public class JARVISManual extends JARVISAutonomousBase {
     @Override
     public void runOpMode() {

@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.TestBot;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "testbotManual", group = "Linear Opmode")
+@Disabled
 public class testBotManual extends testBotUtility {
     @Override
     public void runOpMode() {

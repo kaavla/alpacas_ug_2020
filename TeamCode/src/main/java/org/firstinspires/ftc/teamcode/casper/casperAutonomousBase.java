@@ -12,7 +12,7 @@ public class casperAutonomousBase extends LinearOpMode {
     }
     static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
 
-    public casperMecanumDrive robot = new casperMecanumDrive(hardwareMap);
+    public casperMecanumDrive robot;
     public ElapsedTime runtime = new ElapsedTime();
 
     @Override

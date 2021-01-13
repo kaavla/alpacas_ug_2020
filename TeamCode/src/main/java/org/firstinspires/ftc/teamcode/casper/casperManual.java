@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.TestBot.testBotUtility;
 public class casperManual extends casperAutonomousBase {
     @Override
     public void runOpMode() {
+        robot = new casperMecanumDrive(hardwareMap);
         //This is where we set our motor powers
         double motor_power = 0.3;
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TestBot;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.TestBot.OdometryGlobalCoordinatePosition;
  * Created by Sarthak on 10/4/2019.
  */
 @TeleOp(name = "Manav's Odometry OpMode")
+@Disabled
 public class MyOdometryOpmode extends testBotUtility {
     final double PIVOT_SPEED = 0.4;
 
