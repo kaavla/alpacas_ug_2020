@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.casper;
 
 import androidx.annotation.NonNull;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
@@ -36,6 +39,9 @@ import com.qualcomm.robotcore.util.RobotLog;
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +108,18 @@ public class casperMecanumDrive extends MecanumDrive {
     //
     public DcMotor wobbleMotor    = null;
     public Servo wobbleServo      = null;
+
+    //Vuforia and tensor flow related stuff
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "four";
+    private static final String LABEL_SECOND_ELEMENT = "one";
+
+    private static final String VUFORIA_KEY =
+            "AY0y2mP/////AAABmRBpRSmlcU6Ik0FmegT70aZhUO+NRrfEi8GAx3XU/ef5ZwelX2zkEQQjBFSGsEWufV2iTZrLRySfVjbTIR8OxiTDi2/nSf67wajbE4ZON1Iq23RJ2jTM2AtCqZfWnOhRQGNyAKMZsegqsqqbmbhlk0xmRBv1iE7m/t+221v07x/Dcwwwwz5sXWfU5ENfQ+Cu5ZgGd/EfD52m4ESLhxdFOl9lmX/eR2NYVrYL1sb+Y/v1SAlojZzIQtsEXJQpG5wniWYQyZed1/PV6QbwItr7e/6Hkqu4kED80rGQzq+0oM8BuvLXxHem/FX03gNw2Q3OLLiyVJ1sm0sP8W/A8QmhKkx/8tDCjpjwyZq0wff8kvPC";
+
+    private VuforiaLocalizer vuforia;
+
+    private TFObjectDetector tfod;
 
     public casperMecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
@@ -182,6 +200,21 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        //Vuforia initializatio
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
+
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
+        vparameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
+
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
         RobotLog.ii("CASPER", "...");
 
     }
@@ -391,7 +424,7 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelPositions;
     }
 
-    @Override
+
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
@@ -400,7 +433,6 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelVelocities;
     }
 
-    @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
         leftFront.setPower(v);
         leftRear.setPower(v1);

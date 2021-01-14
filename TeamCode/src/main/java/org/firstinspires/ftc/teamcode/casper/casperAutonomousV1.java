@@ -5,17 +5,31 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
 
 @Autonomous(group = "robot")
 public class casperAutonomousV1 extends casperAutonomousBase {
-    @Override
 
+
+    @Override
     public void runOpMode() throws InterruptedException {
         Pose2d startPose = new Pose2d(-60, -24, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
 
 
         waitForStart();
+        /////
+        /////
         int position = 0;
 
         if (isStopRequested()) return;
@@ -57,4 +71,6 @@ public class casperAutonomousV1 extends casperAutonomousBase {
     }
 
 }
+
+
 
