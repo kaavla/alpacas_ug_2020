@@ -3,6 +3,11 @@ package org.firstinspires.ftc.teamcode.casper;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
+
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+
+import java.util.List;
 
 public class casperAutonomousBase extends LinearOpMode {
 
@@ -74,6 +79,36 @@ public class casperAutonomousBase extends LinearOpMode {
         }
 
     }
+
+    public int getNumRings(double timeoutmS) {
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < timeoutmS))
+        {
+            RobotLog.ii("CASPER", "enter - getnumrings");
+            if (robot.tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    // step through the list of recognitions and display boundary info.
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        RobotLog.ii("CASPER", "size = %d", updatedRecognitions.size());
+                        if (recognition.getLabel().equals(robot.LABEL_FIRST_ELEMENT)) {
+                            RobotLog.ii("CASPER", "4 rings");
+                            return 4;
+                        }
+                        if (recognition.getLabel().equals(robot.LABEL_SECOND_ELEMENT)) {
+                            RobotLog.ii("CASPER", "1 rings");
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
 
 }
 

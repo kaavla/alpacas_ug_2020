@@ -5,21 +5,30 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
+
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
 
 @Autonomous(group = "robot")
 public class casperAutonomousV1 extends casperAutonomousBase {
+
     @Override
 
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 
+        robot.initVuforia(hardwareMap);
+        robot.initTfod(hardwareMap);
+
         Pose2d startPose = new Pose2d(-56, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
-        //starting position down red (-60, -48, 90)eiihcckgbrrrdceejeclblbtjjcbgjgfugtelhjbitek
+        //starting position down red (-60, -48, 90)
 
         //rings red located at (-24, -36)
         //position for shooting at (-12, -51)
@@ -27,12 +36,16 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 
         waitForStart();
 
-        //int position = 4;
-
+        //int position = 4;7
         if (isStopRequested()) return;
-
-
-
+        //detecting the rings sonia reesa code
+        //while (opModeIsActive()) {
+           int pos = getNumRings(1000); //ms
+            telemetry.addData(">", "Num of rings = %d", pos);
+            telemetry.update();
+            sleep(5000);
+        //}
+/*
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
@@ -85,7 +98,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
                 .lineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)))
                 .build();
         robot.followTrajectory(traj6);
-
+*/
         //robot.stopAllMotors();
 /*
         if (position == 0) {
@@ -116,6 +129,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
                 .build();
         robot.followTrajectory(traj4);
 */
+        robot.deinitTfod();
     }
 
 }

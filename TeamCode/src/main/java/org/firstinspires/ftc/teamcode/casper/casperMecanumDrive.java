@@ -30,10 +30,16 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
@@ -103,6 +109,47 @@ public class casperMecanumDrive extends MecanumDrive {
     //
     public DcMotor wobbleMotor    = null;
     public Servo wobbleServo      = null;
+
+    ///TFOD related stuff
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    public static final String LABEL_FIRST_ELEMENT = "four";
+    public static final String LABEL_SECOND_ELEMENT = "one";
+
+    private static final String VUFORIA_KEY =
+            "AY0y2mP/////AAABmRBpRSmlcU6Ik0FmegT70aZhUO+NRrfEi8GAx3XU/ef5ZwelX2zkEQQjBFSGsEWufV2iTZrLRySfVjbTIR8OxiTDi2/nSf67wajbE4ZON1Iq23RJ2jTM2AtCqZfWnOhRQGNyAKMZsegqsqqbmbhlk0xmRBv1iE7m/t+221v07x/Dcwwwwz5sXWfU5ENfQ+Cu5ZgGd/EfD52m4ESLhxdFOl9lmX/eR2NYVrYL1sb+Y/v1SAlojZzIQtsEXJQpG5wniWYQyZed1/PV6QbwItr7e/6Hkqu4kED80rGQzq+0oM8BuvLXxHem/FX03gNw2Q3OLLiyVJ1sm0sP8W/A8QmhKkx/8tDCjpjwyZq0wff8kvPC";
+
+    private VuforiaLocalizer vuforia;
+    public TFObjectDetector tfod;
+
+    public void initVuforia(HardwareMap hardwareMap) {
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    public void deinitTfod() {
+        if (tfod != null) {
+            tfod.shutdown();
+        }
+    }
+    public void initTfod(HardwareMap hardwareMap) {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+        if (tfod != null) {
+            tfod.activate();
+        }
+
+    }
 
     public casperMecanumDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
