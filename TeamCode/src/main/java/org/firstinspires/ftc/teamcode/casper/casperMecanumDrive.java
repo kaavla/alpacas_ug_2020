@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.casper;
 
 import androidx.annotation.NonNull;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
@@ -43,6 +46,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -230,6 +236,21 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        //Vuforia initializatio
+        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
+
+        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
+        vparameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
+
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
         RobotLog.ii("CASPER", "...");
 
     }
@@ -439,7 +460,7 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelPositions;
     }
 
-    @Override
+
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
@@ -448,7 +469,6 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelVelocities;
     }
 
-    @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
         leftFront.setPower(v);
         leftRear.setPower(v1);
