@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
@@ -430,8 +431,22 @@ public class casperMecanumDrive extends MecanumDrive {
         setMotorPowers(0,0,0,0);
         shootMotorLeft.setPower(0);
         wobbleMotor.setPower(0);
+        collectMotor.setPower(0);
     }
 
+    public void openWobbleClaw() {
+        wobbleServo.setPosition(-0.4);
+    }
 
+    public void  closeWobbleClaw() {
+        wobbleServo.setPosition(0.2);
+
+    }
+
+    public void  autonomousShoot() {
+        shootMotorLeft.setPower(0.7);
+        collectMotor.setPower(0.6);
+
+    }
 
 }

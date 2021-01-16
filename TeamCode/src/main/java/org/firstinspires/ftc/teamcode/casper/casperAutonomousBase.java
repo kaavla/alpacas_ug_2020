@@ -24,7 +24,7 @@ public class casperAutonomousBase extends LinearOpMode {
         int newTargetPosition = 0;
 
         double speed   = 0.3;  //Speed with which to move the wobble goal
-        double Inches   = 6;   //Inches to move the goal
+        double Inches   = 1;   //Inches to move the goal
         double timeoutS = 3;   //Timeout
 
         //Reset the encoder
@@ -66,6 +66,13 @@ public class casperAutonomousBase extends LinearOpMode {
         robot.wobbleMotor.setPower(0);
         // Turn off RUN_TO_POSITION
         robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        if (m == wobbleGoalMode.WOBBLE_GOAL_DOWN) {
+            robot.openWobbleClaw();
+        }else{
+            robot.closeWobbleClaw();
+        }
+
     }
 
 }
