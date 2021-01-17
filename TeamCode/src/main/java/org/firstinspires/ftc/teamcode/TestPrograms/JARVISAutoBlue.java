@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.TestPrograms;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.RobotLog;
 
 @Autonomous(name="Jarvis Auto Blue", group="JARVIS")
-
+@Disabled
 public class JARVISAutoBlue extends JARVISAutonomousBase {
     static final int SIDE = 0; //Left side claw
 

@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.TestBot.testBotUtility;
 public class casperManual extends casperAutonomousBase {
     @Override
     public void runOpMode() {
+        robot = new casperMecanumDrive(hardwareMap);
         //This is where we set our motor powers
         double motor_power = 0.3;
 
@@ -56,20 +57,24 @@ public class casperManual extends casperAutonomousBase {
                 //robot.collectMotor.setPower(-0.5);
                 robot.wobbleMotor.setPower(-0.4);
             }
-            else if (gamepad1.left_bumper){
-                robot.shootMotorLeft.setPower(0.6);
-                robot.collectMotor.setPower(0.8);
+            else if (gamepad1.left_stick_button){
+                robot.collectMotor.setPower(-0.3);
+            }
+            else if (gamepad1.right_stick_button){
+                robot.collectMotor.setPower(0);
             }
             else if (gamepad1.right_bumper){
-                robot.shootMotorLeft.setPower(0.65);
-                robot.collectMotor.setPower(0);
+                robot.collectMotor.setPower(0.6);
                 //robot.grabber.setPosition(0);
             }
+            else if (gamepad1.left_bumper){
+                robot.shootMotorLeft.setPower(0.65);
+            }
             else if (gamepad1.x) {
-                robot.wobbleServo.setPosition(-0.2);
+                robot.closeWobbleClaw();
             }
             else if (gamepad1.b) {
-                robot.wobbleServo.setPosition(0.2);
+                robot.openWobbleClaw();
             }
             else {
                 robot.stopAllMotors();

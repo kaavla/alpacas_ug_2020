@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.TestPrograms;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.RobotLog;
 
 @Autonomous(name="JARVIS Auto Park Near", group="JARVIS")
-
+@Disabled
 public class JARVISAutoParkNear extends JARVISAutonomousBase {
 
     JARVISHW robotJARVIS = new JARVISHW();

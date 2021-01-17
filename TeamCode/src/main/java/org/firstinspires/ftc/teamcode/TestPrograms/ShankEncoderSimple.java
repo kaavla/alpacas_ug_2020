@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "ShankEncoder Simple", group = "Concept")
-//@Disabled
+@Disabled
 public class ShankEncoderSimple extends LinearOpMode {
 
     // Declare OpMode members.

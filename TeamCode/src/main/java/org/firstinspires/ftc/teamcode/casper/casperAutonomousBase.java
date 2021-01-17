@@ -3,6 +3,11 @@ package org.firstinspires.ftc.teamcode.casper;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.RobotLog;
+
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+
+import java.util.List;
 
 public class casperAutonomousBase extends LinearOpMode {
 
@@ -12,7 +17,7 @@ public class casperAutonomousBase extends LinearOpMode {
     }
     static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
 
-    public casperMecanumDrive robot = new casperMecanumDrive(hardwareMap);
+    public casperMecanumDrive robot;
     public ElapsedTime runtime = new ElapsedTime();
 
     @Override
@@ -24,7 +29,7 @@ public class casperAutonomousBase extends LinearOpMode {
         int newTargetPosition = 0;
 
         double speed   = 0.3;  //Speed with which to move the wobble goal
-        double Inches   = 6;   //Inches to move the goal
+        double Inches   = 1;   //Inches to move the goal
         double timeoutS = 3;   //Timeout
 
         //Reset the encoder
@@ -66,7 +71,44 @@ public class casperAutonomousBase extends LinearOpMode {
         robot.wobbleMotor.setPower(0);
         // Turn off RUN_TO_POSITION
         robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        if (m == wobbleGoalMode.WOBBLE_GOAL_DOWN) {
+            robot.openWobbleClaw();
+        }else{
+            robot.closeWobbleClaw();
+        }
+
     }
+
+    public int getNumRings(double timeoutmS) {
+        runtime.reset();
+        while (opModeIsActive() && (runtime.milliseconds() < timeoutmS))
+        {
+            RobotLog.ii("CASPER", "enter - getnumrings");
+            if (robot.tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    // step through the list of recognitions and display boundary info.
+                    int i = 0;
+                    for (Recognition recognition : updatedRecognitions) {
+                        RobotLog.ii("CASPER", "size = %d", updatedRecognitions.size());
+                        if (recognition.getLabel().equals(robot.LABEL_FIRST_ELEMENT)) {
+                            RobotLog.ii("CASPER", "4 rings");
+                            return 4;
+                        }
+                        if (recognition.getLabel().equals(robot.LABEL_SECOND_ELEMENT)) {
+                            RobotLog.ii("CASPER", "1 rings");
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
 
 }
 
