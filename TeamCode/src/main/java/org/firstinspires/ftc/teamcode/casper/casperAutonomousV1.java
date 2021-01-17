@@ -19,7 +19,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
         Pose2d startPose = new Pose2d(-56, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
-        //starting position down red (-60, -48, 90)eiihcckgbrrrdceejeclblbtjjcbgjgfugtelhjbitek
+        //starting position down red (-60, -48, 90)
 
         //rings red located at (-24, -36)
         //position for shooting at (-12, -51)
