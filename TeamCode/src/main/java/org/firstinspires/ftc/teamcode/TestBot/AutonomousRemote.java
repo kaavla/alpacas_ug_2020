@@ -1,4 +1,4 @@
-wpackage org.firstinspires.ftc.teamcode.TestBot;
+package org.firstinspires.ftc.teamcode.TestBot;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
