@@ -27,7 +27,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
-
+//start position    
         Pose2d startPose = new Pose2d(-56, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
@@ -38,7 +38,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
         // position 4 square at (58, -58)
 
         waitForStart();
-
+//detecting rings
         //int position = 4;7
         if (isStopRequested()) return;
         //detecting the rings sonia reesa code
@@ -48,6 +48,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
             telemetry.update();
             sleep(5000);
         //}
+//moving to drop the wobble goal?
 /*
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
@@ -58,7 +59,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 
         moveWobbleGoal(WOBBLE_GOAL_DOWN);
         moveWobbleGoal(WOBBLE_GOAL_UP);
-
+//moving behind the start (white line) to shoot the rings?
      Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(-12, -51), Math.toRadians(170))
@@ -68,7 +69,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
         robot.autonomousShoot();
         sleep(5000);
         robot.stopAllMotors();
-
+//picking up the 2nd wobble goal?
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
