@@ -27,7 +27,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
-//start position    
+//start position
         Pose2d startPose = new Pose2d(-56, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
@@ -41,13 +41,9 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 //detecting rings
         //int position = 4;7
         if (isStopRequested()) return;
-        //detecting the rings sonia reesa code
-        //while (opModeIsActive()) {
-           int pos = getNumRings(1000); //ms
-            telemetry.addData(">", "Num of rings = %d", pos);
-            telemetry.update();
-            sleep(5000);
-        //}
+        int pos = getNumRings(1000); //ms
+        telemetry.addData(">", "Num of rings = %d", pos);
+        telemetry.update();
 //moving to drop the wobble goal?
 /*
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
