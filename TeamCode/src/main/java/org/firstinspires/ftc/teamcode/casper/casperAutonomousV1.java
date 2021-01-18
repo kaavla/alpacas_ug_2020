@@ -17,6 +17,9 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
+import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
+import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
+
 @Autonomous(group = "robot")
 public class casperAutonomousV1 extends casperAutonomousBase {
 
@@ -25,8 +28,8 @@ public class casperAutonomousV1 extends casperAutonomousBase {
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 
-        robot.initVuforia(hardwareMap);
-        robot.initTfod(hardwareMap);
+        //robot.initVuforia(hardwareMap);
+        //robot.initTfod(hardwareMap);
 //start position
         Pose2d startPose = new Pose2d(-56, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
@@ -41,11 +44,12 @@ public class casperAutonomousV1 extends casperAutonomousBase {
 //detecting rings
         //int position = 4;7
         if (isStopRequested()) return;
-        int pos = getNumRings(1000); //ms
+        //int pos = getNumRings(1000); //ms
+        int pos = 4; //ms
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
 //moving to drop the wobble goal?
-/*
+
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
@@ -98,7 +102,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
                 .lineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)))
                 .build();
         robot.followTrajectory(traj6);
-*/
+
         //robot.stopAllMotors();
 /*
         if (position == 0) {
@@ -129,7 +133,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
                 .build();
         robot.followTrajectory(traj4);
 */
-        robot.deinitTfod();
+        //robot.deinitTfod();
     }
 
 }

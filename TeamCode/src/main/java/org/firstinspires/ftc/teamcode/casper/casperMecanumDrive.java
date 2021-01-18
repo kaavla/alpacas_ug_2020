@@ -122,7 +122,7 @@ public class casperMecanumDrive extends MecanumDrive {
     public static final String LABEL_SECOND_ELEMENT = "one";
 
     private static final String VUFORIA_KEY =
-            "AY0y2mP/////AAABmRBpRSmlcU6Ik0FmegT70aZhUO+NRrfEi8GAx3XU/ef5ZwelX2zkEQQjBFSGsEWufV2iTZrLRySfVjbTIR8OxiTDi2/nSf67wajbE4ZON1Iq23RJ2jTM2AtCqZfWnOhRQGNyAKMZsegqsqqbmbhlk0xmRBv1iE7m/t+221v07x/Dcwwwwz5sXWfU5ENfQ+Cu5ZgGd/EfD52m4ESLhxdFOl9lmX/eR2NYVrYL1sb+Y/v1SAlojZzIQtsEXJQpG5wniWYQyZed1/PV6QbwItr7e/6Hkqu4kED80rGQzq+0oM8BuvLXxHem/FX03gNw2Q3OLLiyVJ1sm0sP8W/A8QmhKkx/8tDCjpjwyZq0wff8kvPC";
+            "AY/AUN//////AAABmVbi/b+9l03Ztj22S8r5KL51YUKjzeHFFVTztDTYL4ZnIgmpuhfzO0h5kq8zWekYvuW0dgzs4RERLM1p90fWs9qjrwuky3AsghiBUiyOxfJgTEPK41svlx+shPOes+hDlFA97dhsFi7Jdj0PfQj/kzj846HP3TEDBVmJ+KM/C6TjYjd756+Rd726MeyfZmQqXV8o/tXwsVNl/rRAN3LdVe0R/cFsBSVXGKjoid3n29xMkXJv7BT5mR/nQWATQY1VYrEkm1r8FfYZXUveCRzCPPdjEMjY+g/kz13p+kVmjJZjSgwucF5Yq33Idwj1ACabCwBTDGYWp5EPjYY0AeBK28wxZBiukQyDTNVns515t5ku";
 
     private VuforiaLocalizer vuforia;
     public TFObjectDetector tfod;
@@ -236,21 +236,6 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //Vuforia initializatio
-        VuforiaLocalizer.Parameters vparameters = new VuforiaLocalizer.Parameters();
-
-        vparameters.vuforiaLicenseKey = VUFORIA_KEY;
-        vparameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(vparameters);
-
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.8f;
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
         RobotLog.ii("CASPER", "...");
 
     }
@@ -506,7 +491,8 @@ public class casperMecanumDrive extends MecanumDrive {
     }
 
     public void  closeWobbleClaw() {
-        wobbleServo.setPosition(0.2);
+        wobbleServo.setPosition(0.25);
+        //set to 0.2
 
     }
 
