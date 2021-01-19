@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.casper;
-
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.teamcode.TestBot.testBotUtility;
 
 
 @TeleOp(name = "Casper - Manual Control", group = "Linear Opmode")
@@ -48,6 +45,32 @@ public class casperManual extends casperAutonomousBase {
             } else if (gamepad1.dpad_right) {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
+            } else if(gamepad1.right_stick_button) {
+                //insert code to make the robot align to shooting position
+            } else if(gamepad1.left_bumper) {
+                //strafe left
+            } else if (gamepad1.right_bumper) {
+                //strafe right
+            }
+
+            else if (gamepad2.dpad_up) {
+                robot.collectMotor.setPower(0.7);
+            } else if (gamepad2.dpad_down) {
+                robot.collectMotor.setPower(-0.);
+            }
+            else if (gamepad2.right_bumper){
+                robot.collectMotor.setPower(0.8);
+                robot.shootMotorLeft.setPower(0.7);
+                //robot.grabber.setPosition(0);
+            }
+            else if (gamepad2.left_bumper){
+                robot.shootMotorLeft.setPower(0.7);
+            }
+            else if (gamepad2.x) {
+                robot.closeWobbleClaw();
+            }
+            else if (gamepad2.b) {
+                robot.openWobbleClaw();
             }
             else if (gamepad2.y){
                 //robot.collectMotor.setPower(0.8);
@@ -57,40 +80,9 @@ public class casperManual extends casperAutonomousBase {
                 //robot.collectMotor.setPower(-0.5);
                 robot.wobbleMotor.setPower(-0.4);
             }
-            else if (gamepad2.left_stick_button){
-                robot.collectMotor.setPower(-0.3);
-            }
-            else if (gamepad2.right_stick_button){
-                robot.collectMotor.setPower(0);
-            }
-            else if (gamepad2.right_bumper){
-                robot.collectMotor.setPower(0.6);
-                //robot.grabber.setPosition(0);
-            }
-            else if (gamepad2.left_bumper){
-                robot.shootMotorLeft.setPower(0.7);
-            }
-
-            else if (gamepad2.b) {
-                robot.openWobbleClaw();
-            }
-            else if (gamepad2.x) {
-                robot.shootMotorLeft.setPower(0.7);
-                robot.openWobbleClaw();
-            }
-            else if (gamepad2.b) {
-                robot.shootMotorLeft.setPower(0.7);
-                robot.closeWobbleClaw();
-            }
-            else if (gamepad2.left_bumper) {
-                robot.shootMotorLeft.setPower(0.7);
-            }
             else {
                 robot.stopAllMotors();
             }
-
-
-
             telemetry.update();
         }
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -98,4 +90,3 @@ public class casperManual extends casperAutonomousBase {
 
     }
 }
-
