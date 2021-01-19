@@ -47,14 +47,6 @@ public class casperManual extends casperAutonomousBase {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
             }
-            else if (gamepad1.y){
-                //robot.collectMotor.setPower(0.8);
-                robot.wobbleMotor.setPower(0.4);
-            }
-            else if (gamepad1.a) {
-                //robot.collectMotor.setPower(-0.5);
-                robot.wobbleMotor.setPower(-0.4);
-            }
             else if (gamepad1.left_stick_button){
                 robot.collectMotor.setPower(-0.3);
             }
@@ -85,6 +77,14 @@ public class casperManual extends casperAutonomousBase {
             }
             else if (gamepad2.left_bumper) {
                 robot.shootMotorLeft.setPower(0.7);
+            }
+            else if (gamepad1.y){
+                //robot.collectMotor.setPower(0.8);
+                robot.wobbleMotor.setPower(0.4);
+            }
+            else if (gamepad1.a) {
+                //robot.collectMotor.setPower(-0.5);
+                robot.wobbleMotor.setPower(-0.4);
             }
             else {
                 robot.stopAllMotors();
