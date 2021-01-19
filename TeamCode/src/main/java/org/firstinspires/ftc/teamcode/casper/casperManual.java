@@ -56,7 +56,7 @@ public class casperManual extends casperAutonomousBase {
             else if (gamepad2.dpad_up) {
                 robot.collectMotor.setPower(0.7);
             } else if (gamepad2.dpad_down) {
-                robot.collectMotor.setPower(-0.);
+                robot.collectMotor.setPower(-0.7);
             }
             else if (gamepad2.right_bumper){
                 robot.collectMotor.setPower(0.8);
