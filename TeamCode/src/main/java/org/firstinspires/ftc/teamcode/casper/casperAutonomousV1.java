@@ -50,6 +50,7 @@ public class casperAutonomousV1 extends casperAutonomousBase {
         telemetry.update();
 //moving to drop the wobble goal?
 
+
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(-36, -55), Math.toRadians(0))

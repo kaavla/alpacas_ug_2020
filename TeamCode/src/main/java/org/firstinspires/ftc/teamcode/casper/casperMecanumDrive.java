@@ -491,7 +491,7 @@ public class casperMecanumDrive extends MecanumDrive {
     }
 
     public void  closeWobbleClaw() {
-        wobbleServo.setPosition(0.25);
+        wobbleServo.setPosition(0.4);
         //set to 0.2
 
     }

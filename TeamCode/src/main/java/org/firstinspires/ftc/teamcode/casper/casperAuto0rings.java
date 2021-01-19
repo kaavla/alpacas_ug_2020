@@ -32,11 +32,11 @@ public class casperAuto0rings extends casperAutonomousBase {
         if (isStopRequested()) return;
 
 
-
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
-                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
+                //.splineTo(new Vector2d(-36, -55), Math.toRadians(0)) //coordinate to avoid collision of rings
+                //.splineTo(new Vector2d(0, -50), Math.toRadians(45)) //initial spline used
+                .strafeLeft(50)
                 .build();
         robot.followTrajectory(traj1);
 

@@ -30,6 +30,9 @@ public class casperAuto1ring extends casperAutonomousBase {
         //int position = 4;
 
         if (isStopRequested()) return;
+        int pos = 1; //ms
+        telemetry.addData(">", "Num of rings = %d", pos);
+        telemetry.update();
 
 
 
