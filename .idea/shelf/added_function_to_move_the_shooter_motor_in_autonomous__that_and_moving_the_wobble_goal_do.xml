@@ -1,0 +1,4 @@
+<changelist name="added_function_to_move_the_shooter_motor_in_autonomous,_that_and_moving_the_wobble_goal_do" date="1610844476903" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/added_function_to_move_the_shooter_motor_in_autonomous,_that_and_moving_the_wobble_goal_do/shelved.patch" />
+  <option name="DESCRIPTION" value="added function to move the shooter motor in autonomous, that and moving the wobble goal don't work because of a null pointer exception, need to figure out where we didn't initialize the motors" />
+</changelist>
