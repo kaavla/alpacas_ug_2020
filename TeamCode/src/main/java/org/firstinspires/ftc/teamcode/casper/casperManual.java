@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.casper;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.TestBot.testBotUtility;
-
 
 @TeleOp(name = "Casper - Manual Control", group = "Linear Opmode")
 public class casperManual extends casperAutonomousBase {
@@ -64,7 +62,8 @@ public class casperManual extends casperAutonomousBase {
                 robot.collectMotor.setPower(0);
             }
             else if (gamepad1.right_bumper){
-                robot.collectMotor.setPower(0.6);
+                robot.collectMotor.setPower(0.8);
+                robot.shootMotorLeft.setPower(0.7);
                 //robot.grabber.setPosition(0);
             }
             else if (gamepad1.left_bumper){
