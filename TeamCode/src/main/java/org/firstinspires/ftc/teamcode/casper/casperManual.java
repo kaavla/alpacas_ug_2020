@@ -64,13 +64,15 @@ public class casperManual extends casperAutonomousBase {
                 //robot.grabber.setPosition(0);
             }
             else if (gamepad2.left_bumper){
-                robot.shootMotorLeft.setPower(0.7);
+                robot.shootMotorLeft.setPower(0.8);
             }
             else if (gamepad2.x) {
                 robot.closeWobbleClaw();
+                //robot.shootMotorLeft.setPower(0.8);
             }
             else if (gamepad2.b) {
                 robot.openWobbleClaw();
+                //robot.shootMotorLeft.setPower(0.8);
             }
             else if (gamepad2.y){
                 //robot.collectMotor.setPower(0.8);
@@ -78,10 +80,11 @@ public class casperManual extends casperAutonomousBase {
             }
             else if (gamepad2.a) {
                 //robot.collectMotor.setPower(-0.5);
-                robot.wobbleMotor.setPower(-0.4);
+                //robot.wobbleMotor.setPower(-0.4);
+                robot.stopAllMotors();
             }
             else {
-                robot.stopAllMotors();
+                //robot.stopAllMotors();
             }
             telemetry.update();
         }

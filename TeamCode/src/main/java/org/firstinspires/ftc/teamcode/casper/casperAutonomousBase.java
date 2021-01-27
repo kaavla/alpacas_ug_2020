@@ -84,14 +84,13 @@ public class casperAutonomousBase extends LinearOpMode {
         runtime.reset();
         while (opModeIsActive() && (runtime.milliseconds() < timeoutmS))
         {
-            RobotLog.ii("CASPER", "enter - getnumrings");
+            //RobotLog.ii("CASPER", "enter - getnumrings");
             if (robot.tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
                 List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
                     // step through the list of recognitions and display boundary info.
-                    int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
                         RobotLog.ii("CASPER", "size = %d", updatedRecognitions.size());
                         if (recognition.getLabel().equals(robot.LABEL_FIRST_ELEMENT)) {
@@ -105,6 +104,7 @@ public class casperAutonomousBase extends LinearOpMode {
                     }
                 }
             }
+            sleep(50);
         }
         return 0;
     }
