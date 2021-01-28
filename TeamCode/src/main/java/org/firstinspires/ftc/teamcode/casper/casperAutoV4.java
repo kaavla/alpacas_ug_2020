@@ -30,7 +30,8 @@ public class casperAutoV4 extends casperAutonomousBase {
 
         waitForStart();
 //going forward to detect rings
-        .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
+        Trajectory traj0 = robot.trajectoryBuilder(startPose)
+       .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
                 .build();
         //int position = 4;
         int pos = getNumRings(1500); //ms
