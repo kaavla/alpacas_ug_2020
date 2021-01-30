@@ -19,6 +19,7 @@ public class casperAutoV3 extends casperAutonomousBase {
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
 
+
         Pose2d startPose = new Pose2d(-63, -48, Math.toRadians(90));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
@@ -33,12 +34,12 @@ public class casperAutoV3 extends casperAutonomousBase {
 
         waitForStart();
 
-        robot.followTrajectory(traj0);
+        //robot.followTrajectory(traj0);
         //int position = 4;
-        int pos = getNumRings(1500); //ms
+        int pos = getNumRings(1000); //ms
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
-
+        
         if (pos == 4)
         {
             telemetry.addData(">", "Running 4 ring path");
@@ -218,7 +219,7 @@ public class casperAutoV3 extends casperAutonomousBase {
 
 
         }
-
+        robot.deinitTfod();
 
     }
 
