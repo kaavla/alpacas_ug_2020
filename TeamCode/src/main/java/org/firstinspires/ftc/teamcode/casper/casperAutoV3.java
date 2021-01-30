@@ -20,7 +20,7 @@ public class casperAutoV3 extends casperAutonomousBase {
         robot.initTfod(hardwareMap);
 
 
-        Pose2d startPose = new Pose2d(-63, -48, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
         //starting position down red (-60, -48, 90)
@@ -28,18 +28,20 @@ public class casperAutoV3 extends casperAutonomousBase {
         //rings red located at (-24, -36)
         //position for shooting at (-12, -51)
         // position 4 square at (58, -58)
-        Trajectory traj0 = robot.trajectoryBuilder(startPose)
-                .strafeRight(18)
-                .build();
 
         waitForStart();
 
-        //robot.followTrajectory(traj0);
+        Trajectory traj0 = robot.trajectoryBuilder(startPose)
+                .splineTo(new Vector2d(-27, -57), Math.toRadians(0))
+                // .forward(35)
+                //.lineToConstantHeading(new Vector2d(-26, -57))
+                .build();
+        robot.followTrajectory(traj0);
         //int position = 4;
         int pos = getNumRings(1000); //ms
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
-        
+/**
         if (pos == 4)
         {
             telemetry.addData(">", "Running 4 ring path");
@@ -219,6 +221,8 @@ public class casperAutoV3 extends casperAutonomousBase {
 
 
         }
+
+ */
         robot.deinitTfod();
 
     }
