@@ -42,16 +42,20 @@ public class casperAutoV4 extends casperAutonomousBase {
             telemetry.addData(">", "Running 4 ring path");
             telemetry.update();
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-//going to drop wobble goal in furtherst red box
+//going to drop wobble goal in furthest red box
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj1);
+//////////new TrajectoryBuilder(new Pose2d())
+//  .lineToConstantHeading(new Vector2d(50, -50))
+//  .build()
 //dropping wobble goal
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
 //going to shooting position
+//////////add in powershot
                     .splineTo(new Vector2d(-12, -51), Math.toRadians(170))
                     .build();
             robot.shootMotorLeft.setPower(0.7);
