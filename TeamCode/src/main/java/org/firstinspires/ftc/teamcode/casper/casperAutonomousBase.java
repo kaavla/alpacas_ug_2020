@@ -84,28 +84,46 @@ public class casperAutonomousBase extends LinearOpMode {
         runtime.reset();
         while (opModeIsActive() && (runtime.milliseconds() < timeoutmS))
         {
-            RobotLog.ii("CASPER", "enter - getnumrings");
+            //RobotLog.ii("CASPER", "enter - getnumrings");
             if (robot.tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
                 // the last time that call was made.
                 List<Recognition> updatedRecognitions = robot.tfod.getUpdatedRecognitions();
                 if (updatedRecognitions != null) {
                     // step through the list of recognitions and display boundary info.
+                    String strLabel;
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
                         RobotLog.ii("CASPER", "size = %d", updatedRecognitions.size());
-                        if (recognition.getLabel().equals(robot.LABEL_FIRST_ELEMENT)) {
+                        strLabel = recognition.getLabel();
+                        telemetry.addData(String.format("label %d", i), strLabel);
+
+                        telemetry.addData(String.format("  left,top %d", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom %d", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+
+                        if (strLabel.equals(robot.LABEL_FIRST_ELEMENT)) {
                             RobotLog.ii("CASPER", "4 rings");
+                            telemetry.addData("numRings = 4", "ddd");
+                            telemetry.update();
                             return 4;
                         }
-                        if (recognition.getLabel().equals(robot.LABEL_SECOND_ELEMENT)) {
+                        if (strLabel.equals(robot.LABEL_SECOND_ELEMENT)) {
+                            telemetry.addData("numRings = 1", "ddd");
+                            telemetry.update();
                             RobotLog.ii("CASPER", "1 rings");
                             return 1;
                         }
+                        telemetry.update();
                     }
                 }
             }
+            sleep(50);
         }
+        telemetry.addData("numRings = 0", "ddd");
+        telemetry.update();
+
         return 0;
     }
 
