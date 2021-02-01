@@ -106,6 +106,7 @@ public class casperMecanumDrive extends MecanumDrive {
     //
     public DcMotor wobbleMotor    = null;
     public Servo wobbleServo      = null;
+    public Servo ringServo        = null;
 
     ///TFOD related stuff
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -223,6 +224,7 @@ public class casperMecanumDrive extends MecanumDrive {
         shootMotorLeft = hardwareMap.get(DcMotor.class, "M7");
         wobbleMotor = hardwareMap.get(DcMotor.class, "M8");
         wobbleServo = hardwareMap.get(Servo.class, "wobbleServo");
+        ringServo = hardwareMap.get(Servo.class, "wobbleServo");
 
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

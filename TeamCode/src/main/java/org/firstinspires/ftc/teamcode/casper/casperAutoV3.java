@@ -41,6 +41,7 @@ public class casperAutoV3 extends casperAutonomousBase {
         int pos = getNumRings(1000); //ms
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
+
 /**
         if (pos == 4)
         {

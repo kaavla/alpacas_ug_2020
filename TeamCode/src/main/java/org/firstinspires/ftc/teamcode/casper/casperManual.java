@@ -84,7 +84,7 @@ public class casperManual extends casperAutonomousBase {
                 robot.stopAllMotors();
             }
             else {
-                //robot.stopAllMotors();
+                robot.stopAllMotors();
             }
             telemetry.update();
         }

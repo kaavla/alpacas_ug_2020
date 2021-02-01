@@ -21,6 +21,7 @@ public class casperAuto0rings extends casperAutonomousBase {
         //origin at middle of full field(0,0)
         //starting position down red (-60, -48, 90)
 
+
         //rings red located at (-24, -36)
         //position for shooting at (-12, -51)
         // position 4 square at (58, -58)
@@ -30,6 +31,7 @@ public class casperAuto0rings extends casperAutonomousBase {
         //int position = 4;
 
         if (isStopRequested()) return;
+
 
 
         Trajectory traj1 = robot.trajectoryBuilder(startPose)
