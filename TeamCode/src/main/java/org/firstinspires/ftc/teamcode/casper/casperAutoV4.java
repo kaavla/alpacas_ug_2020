@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
+
 @Autonomous(group = "robot")
 
 public class casperAutoV4 extends casperAutonomousBase {
@@ -18,21 +19,22 @@ public class casperAutoV4 extends casperAutonomousBase {
 
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
+
 //start position
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
-        //starting position down red (-60, -48, 90)
-
-        //rings red located at (-24, -36)
+        // Rings red located at (-24, -36)
         //position for shooting at (-12, -51)
         // position 4 square at (58, -58)
 
         waitForStart();
-//going forward to detect rings
+
+        //going forward to detect rings
         Trajectory traj0 = robot.trajectoryBuilder(startPose)
-       .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
+                .splineTo(new Vector2d(-25, -57), Math.toRadians(0))
                 .build();
+        robot.followTrajectory(traj0);
         //int position = 4;
         int pos = getNumRings(1500); //ms
         telemetry.addData(">", "Num of rings = %d", pos);
@@ -42,58 +44,37 @@ public class casperAutoV4 extends casperAutonomousBase {
             telemetry.addData(">", "Running 4 ring path");
             telemetry.update();
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-//going to drop wobble goal in furthest red box
-                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
+//going to start line
+                    .splineTo(new Vector2d(12, -57), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj1);
-//////////new TrajectoryBuilder(new Pose2d())
-//  .lineToConstantHeading(new Vector2d(50, -50))
-//  .build()
+//going to wobble goal
+            Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
+                    .strafeTo(new Vector2d(50, -50))
+                    .build();
+            robot.followTrajectory(traj2);
 //dropping wobble goal
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
-            Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-//going to shooting position
-//////////add in powershot
-                    .splineTo(new Vector2d(-12, -51), Math.toRadians(170))
+//going to shooting position (0,-35)
+
+//shooting power power shots
+            Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
+                    .splineTo(new Vector2d(0, -35), Math.toRadians(180))
                     .build();
-            robot.shootMotorLeft.setPower(0.7);
+            robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj2);
             robot.autonomousShoot();
             sleep(5000);
             robot.stopAllMotors();
-
-            Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-//picking up second wobble goal
-                    .lineToSplineHeading(new Pose2d(-46, -24, Math.toRadians(270)))
-                    .build();
             robot.followTrajectory(traj3);
-
-            moveWobbleGoal(WOBBLE_GOAL_DOWN);
-
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
+
+//parking position
+                    .splineTo(new Vector2d(12, -35), Math.toRadians(180))
                     .build();
             robot.followTrajectory(traj4);
-
-            robot.closeWobbleClaw();
-            sleep(1000);
-            moveWobbleGoal(WOBBLE_GOAL_UP);
-            sleep(500);
-            Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
-//dropping second wobble goal, going back to same position in traj1
-                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
-                    .build();
-            robot.followTrajectory(traj5);
-            moveWobbleGoal(WOBBLE_GOAL_DOWN);
-            moveWobbleGoal(WOBBLE_GOAL_UP);
-
-            Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
-//parking position
-                    .lineToSplineHeading(new Pose2d(12, -50, Math.toRadians(0)))
-                    .build();
-            robot.followTrajectory(traj6);
-
         }
 
         /* else if (pos == 1) {
