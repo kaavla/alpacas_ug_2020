@@ -41,14 +41,14 @@ public class testBotOdometryCalibration extends testBotUtility{
 
         while(getZAngle() < 90 && opModeIsActive()){
 
-            robot.setPowerAll(1*PIVOT_SPEED, -1*PIVOT_SPEED, 1*PIVOT_SPEED, -1*PIVOT_SPEED);
+            //robot.setPowerAll(1*PIVOT_SPEED, -1*PIVOT_SPEED, 1*PIVOT_SPEED, -1*PIVOT_SPEED);
 
             telemetry.addData("IMU Angle", getZAngle());
             telemetry.update();
         }
 
         //Stop the robot
-        robot.setPowerAll(0, 0, 0, 0);
+        //robot.setPowerAll(0, 0, 0, 0);
         timer.reset();
         while(timer.milliseconds() < 3000 && opModeIsActive()){
             telemetry.addData("IMU Angle", getZAngle());
