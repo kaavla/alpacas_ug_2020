@@ -59,14 +59,15 @@ public class casperAutoV4 extends casperAutonomousBase {
 
 //going to shooting position (0,-35)
 
-//shooting power power shots
+//shooting power shots
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                     .splineTo(new Vector2d(0, -35), Math.toRadians(180))
                     .build();
+            robot.followTrajectory(traj3);
             robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj2);
             robot.autonomousShoot();
-            sleep(5000);
+            //sleep(5000);
             robot.stopAllMotors();
             robot.followTrajectory(traj3);
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
@@ -75,6 +76,7 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .splineTo(new Vector2d(12, -35), Math.toRadians(180))
                     .build();
             robot.followTrajectory(traj4);
+            robot.trajectoryBuilder(traj3.end());
         }
 
         /* else if (pos == 1) {
