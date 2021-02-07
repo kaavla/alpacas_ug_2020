@@ -224,7 +224,7 @@ public class casperMecanumDrive extends MecanumDrive {
         shootMotorLeft = hardwareMap.get(DcMotor.class, "M7");
         wobbleMotor = hardwareMap.get(DcMotor.class, "M8");
         wobbleServo = hardwareMap.get(Servo.class, "wobbleServo");
-        ringServo = hardwareMap.get(Servo.class, "wobbleServo");
+        ringServo = hardwareMap.get(Servo.class, "ringServo");
 
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -494,5 +494,9 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setPower(0.6);
 
     }
+
+    public void openRing() {ringServo.setPosition(-0.25);}
+
+    public void closeRing() {ringServo.setPosition(0);}
 
 }

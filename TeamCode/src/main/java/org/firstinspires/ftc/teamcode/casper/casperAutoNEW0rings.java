@@ -38,6 +38,7 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
 
+
         if (pos == 0) {
             telemetry.addData(">", "running 0 ring path");
             telemetry.update();
@@ -48,6 +49,7 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
                     .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                     .build();
             robot.followTrajectory(traj1);
+
 
 //dropping wobble goal
             robot.shootMotorLeft.setPower(0.8);

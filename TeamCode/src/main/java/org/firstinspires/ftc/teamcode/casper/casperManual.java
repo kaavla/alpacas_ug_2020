@@ -83,6 +83,12 @@ public class casperManual extends casperAutonomousBase {
                 //robot.wobbleMotor.setPower(-0.4);
                 robot.stopAllMotors();
             }
+            else if (gamepad2.dpad_left) {
+                robot.openRing();
+            }
+            else if (gamepad2.dpad_right) {
+                robot.closeRing();
+            }
             else {
                 robot.stopAllMotors();
             }

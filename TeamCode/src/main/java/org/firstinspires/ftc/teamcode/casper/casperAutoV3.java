@@ -42,18 +42,20 @@ public class casperAutoV3 extends casperAutonomousBase {
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
 
-/**
-        if (pos == 4)
+          if (pos == 4)
         {
             telemetry.addData(">", "Running 4 ring path");
             telemetry.update();
-            Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
+            /**Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
+
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                    .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
-                    .splineTo(new Vector2d(50, -50), Math.toRadians(45))
-                    .build();
+                    //.splineTo(new Vector2d(-36, -55), Math.toRadians(0))
+                    //.splineTo(new Vector2d(50, -50), Math.toRadians(45))
+                    //.build();
+
             robot.followTrajectory(traj1);
 
+/**
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
@@ -228,5 +230,6 @@ public class casperAutoV3 extends casperAutonomousBase {
 
     }
 
+}
 }
 
