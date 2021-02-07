@@ -127,6 +127,44 @@ public class casperAutonomousBase extends LinearOpMode {
         return 0;
     }
 
+    public void shooterMotorAuto() {
+        int newTargetPosition = 0;
+
+        double speed   = 0.8;  //Speed with which to move the wobble goal
+        double Inches   = 10;   //Inches to move the goal
+        double timeoutS = 3;   //Timeout
+
+        //Reset the encoder
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Ensure that the op mode is still active
+        if (opModeIsActive() && !isStopRequested()) {
+                newTargetPosition = robot.shootMotorLeft.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
+
+            robot.shootMotorLeft.setTargetPosition(newTargetPosition);
+            robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            runtime.reset();
+            robot.shootMotorLeft.setPower(Math.abs(speed));
+
+            while (opModeIsActive() && !isStopRequested() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.shootMotorLeft.isBusy())) {
+                // Display it for the driver.
+                telemetry.addData("Path2", "Running at %7d :%7d",
+                        robot.shootMotorLeft.getCurrentPosition(),
+                        robot.shootMotorLeft.getCurrentPosition());
+                telemetry.update();
+            }
+        }
+
+        // Stop all motion;
+        robot.shootMotorLeft.setPower(0);
+        // Turn off RUN_TO_POSITION
+        robot.shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
 
 }
 

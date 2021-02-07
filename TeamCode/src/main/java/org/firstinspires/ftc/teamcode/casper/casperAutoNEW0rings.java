@@ -58,8 +58,6 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             robot.shootMotorLeft.setPower(0.8);
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             sleep(400);
-            moveWobbleGoal(WOBBLE_GOAL_UP);
-            sleep(400);
 
 //going to shooting position + shooting
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
@@ -67,14 +65,12 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
                     .splineTo(new Vector2d(-12, -51), Math.toRadians(163))
                     .build();
             robot.followTrajectory(traj2);
-            moveWobbleGoal(WOBBLE_GOAL_DOWN);
-
+            robot.autonomousShoot();
             sleep(2000);
             //move servo
             //robot.autonomousShoot();
             sleep(1000);
             robot.stopAllMotors();
-            moveWobbleGoal(WOBBLE_GOAL_UP);
 
 //replace above with powershot stuff
 
@@ -87,8 +83,6 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
                     .lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
                     .build();
             robot.followTrajectory(traj3);
-
-            moveWobbleGoal(WOBBLE_GOAL_DOWN);
 
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
