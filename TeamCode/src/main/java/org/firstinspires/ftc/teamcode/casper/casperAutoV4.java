@@ -36,7 +36,7 @@ public class casperAutoV4 extends casperAutonomousBase {
                 .build();
         robot.followTrajectory(traj0);
         //int position = 4;
-        int pos = getNumRings(1500); //ms
+        int pos = getNumRings(1500); //ms`
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
 
@@ -54,15 +54,17 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .build();
             robot.followTrajectory(traj2);
 //dropping wobble goal
+//not working, wobble goal will not go tup or down
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
 //going to shooting position (0,-35)
 
-//shooting power power shots
+//shooting power s.hots
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                    .splineTo(new Vector2d(0, -35), Math.toRadians(180))
+                    .splineTo(new Vector2d(0, -35), Math.toRadians(-180))
                     .build();
+            robot.followTrajectory(traj3);
             robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj2);
             robot.autonomousShoot();
