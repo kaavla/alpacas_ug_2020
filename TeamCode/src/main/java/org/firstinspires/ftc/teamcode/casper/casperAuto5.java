@@ -65,18 +65,17 @@ public class casperAuto5 extends casperAutonomousBase {
 
 //going to shoot position and shooting
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-             .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(180))
+             .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(170))
                     .build();
             robot.shootMotorLeft.setPower(0.7);
-            robot.followTrajectory(traj2);
+            robot.followTrajectory(traj3);
             robot.autonomousShoot();
             sleep(5000);
             robot.stopAllMotors();
-            robot.followTrajectory(traj3);
 
             //parking position
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                    .strafeTo(new Vector2d(12, -51))
+                    .splineTo(new Vector2d(12, -51))
                     .build();
             robot.followTrajectory(traj4);
  /*
