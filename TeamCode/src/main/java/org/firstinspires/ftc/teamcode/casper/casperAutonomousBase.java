@@ -15,10 +15,6 @@ public class casperAutonomousBase extends LinearOpMode {
         WOBBLE_GOAL_UP,
         WOBBLE_GOAL_DOWN
     }
-    public enum ringServoMode {
-        OPEN_RING,
-        CLOSE_RING
-    }
     static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
 
     public casperMecanumDrive robot;
@@ -84,14 +80,13 @@ public class casperAutonomousBase extends LinearOpMode {
         }
 
     }
-    public void moveRingServo (ringServoMode m) {
-        if (m == ringServoMode.OPEN_RING) {
-            robot.openRing();
-        }
-        else if (m == ringServoMode.CLOSE_RING) {
-            robot.closeRing();
-        }
-    }
+   public void OPEN_RING (){
+        robot.openRing();
+   }
+   public void CLOSE_RING (){
+        robot.closeRing();
+   }
+
 
 
     public int getNumRings(double timeoutmS) {

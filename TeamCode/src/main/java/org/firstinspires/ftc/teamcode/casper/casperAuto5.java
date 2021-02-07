@@ -75,7 +75,7 @@ public class casperAuto5 extends casperAutonomousBase {
 
             //parking position
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(12, -51))
+                    .splineTo(new Vector2d(12, -51),Math.toRadians(170))
                     .build();
             robot.followTrajectory(traj4);
  /*
