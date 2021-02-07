@@ -13,7 +13,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 public class casperAutoV4 extends casperAutonomousBase {
     @Override
-
+    //powershot auto - incomplete
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 

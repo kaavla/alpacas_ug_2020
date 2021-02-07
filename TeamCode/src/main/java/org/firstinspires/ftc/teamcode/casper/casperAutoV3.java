@@ -5,14 +5,11 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
-import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
-
 
 @Autonomous(group = "robot")
 public class casperAutoV3 extends casperAutonomousBase {
     @Override
-
+    //using first camera to detect rings, diff start position, high goal
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 

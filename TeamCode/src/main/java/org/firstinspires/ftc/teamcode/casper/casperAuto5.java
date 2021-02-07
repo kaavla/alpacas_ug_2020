@@ -12,7 +12,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 @Autonomous(group = "robot")
 public class casperAuto5 extends casperAutonomousBase {
     @Override
-
+    //high goal, second camera position
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 
@@ -75,7 +75,7 @@ public class casperAuto5 extends casperAutonomousBase {
 
             //parking position
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(12, -51))
+                    .splineTo(new Vector2d(12, -51), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj4);
  /*
