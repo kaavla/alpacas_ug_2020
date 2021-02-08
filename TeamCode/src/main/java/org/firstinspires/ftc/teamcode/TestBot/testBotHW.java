@@ -18,8 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 
-public class eiihcckgbrrrvkiubjuiutchgbjvtgnvjbhrltnbekin
-        testBotHW {
+public class testBotHW {
     public BNO055IMU imu = null;
     DcMotorEx verticalLeft, verticalRight, horizontal;
 
