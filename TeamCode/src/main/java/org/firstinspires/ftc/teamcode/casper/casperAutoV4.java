@@ -50,7 +50,7 @@ public class casperAutoV4 extends casperAutonomousBase {
             robot.followTrajectory(traj1);
 //going to wobble goal
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                    .strafeTo(new Vector2d(50, -50))
+                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj2);
 //dropping wobble goal
@@ -66,11 +66,9 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .build();
             robot.followTrajectory(traj3);
             robot.shootMotorLeft.setPower(0.9);
-            robot.followTrajectory(traj2);
             robot.autonomousShoot();
             sleep(5000);
             robot.stopAllMotors();
-            robot.followTrajectory(traj3);
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
 
 //parking position
