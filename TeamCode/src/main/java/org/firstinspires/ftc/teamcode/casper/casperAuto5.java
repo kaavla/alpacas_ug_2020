@@ -19,7 +19,6 @@ public class casperAuto5 extends casperAutonomousBase {
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
 
-
         //start position
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
@@ -52,7 +51,7 @@ public class casperAuto5 extends casperAutonomousBase {
 
 //going to wobble goal
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                    .strafeTo(new Vector2d(50, -50))
+                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj2);
 
@@ -65,9 +64,9 @@ public class casperAuto5 extends casperAutonomousBase {
 
 //going to shoot position and shooting
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-             .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(170))
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(170))
                     .build();
-            robot.shootMotorLeft.setPower(0.7);
+            robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj3);
             robot.autonomousShoot();
             sleep(5000);
@@ -75,9 +74,10 @@ public class casperAuto5 extends casperAutonomousBase {
 
             //parking position
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(12, -51), Math.toRadians(0))
+                    .splineTo(new Vector2d(12, -51), Math.toRadians(170))
                     .build();
             robot.followTrajectory(traj4);
+
  /*
  //second wobble goal
  Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
@@ -134,7 +134,7 @@ public class casperAuto5 extends casperAutonomousBase {
  //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
  .splineTo(new Vector2d(-12, -51), Math.toRadians(170))
  .build();
- robot.shootMotorLeft.setPower(0.8);
+ robot.shootMotorLeft.setPower(0.9);
  robot.followTrajectory(traj2);
  robot.autonomousShoot();
  sleep(5000);
