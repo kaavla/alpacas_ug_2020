@@ -13,7 +13,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 public class casperAutoV4 extends casperAutonomousBase {
     @Override
-
+    //powershot auto - incomplete
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 
@@ -36,7 +36,7 @@ public class casperAutoV4 extends casperAutonomousBase {
                 .build();
         robot.followTrajectory(traj0);
         //int position = 4;
-        int pos = getNumRings(1500); //ms
+        int pos = getNumRings(1500); //ms`
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
 
@@ -54,20 +54,21 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .build();
             robot.followTrajectory(traj2);
 //dropping wobble goal
+//not working, wobble goal will not go tup or down
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
 //going to shooting position (0,-35)
 
-//shooting power shots
+//shooting power s.hots
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                    .splineTo(new Vector2d(0, -35), Math.toRadians(180))
+                    .splineTo(new Vector2d(0, -35), Math.toRadians(-180))
                     .build();
             robot.followTrajectory(traj3);
             robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj2);
             robot.autonomousShoot();
-            //sleep(5000);
+            sleep(5000);
             robot.stopAllMotors();
             robot.followTrajectory(traj3);
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
@@ -76,7 +77,6 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .splineTo(new Vector2d(12, -35), Math.toRadians(180))
                     .build();
             robot.followTrajectory(traj4);
-            robot.trajectoryBuilder(traj3.end());
         }
 
         /* else if (pos == 1) {
