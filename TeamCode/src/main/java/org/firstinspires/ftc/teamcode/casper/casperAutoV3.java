@@ -5,6 +5,9 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
+import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
+
 
 @Autonomous(group = "robot")
 public class casperAutoV3 extends casperAutonomousBase {
@@ -38,14 +41,14 @@ public class casperAutoV3 extends casperAutonomousBase {
         int pos = getNumRings(1000); //ms
         telemetry.addData(">", "Num of rings = %d", pos);
         telemetry.update();
-/**
+
         if (pos == 4)
         {
             telemetry.addData(">", "Running 4 ring path");
             telemetry.update();
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                    .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
+                    //.splineTo(new Vector2d(-36, -55), Math.toRadians(0))
                     .splineTo(new Vector2d(50, -50), Math.toRadians(45))
                     .build();
             robot.followTrajectory(traj1);
@@ -103,7 +106,7 @@ public class casperAutoV3 extends casperAutonomousBase {
 
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                    .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
+                    //.splineTo(new Vector2d(-36, -55), Math.toRadians(0))
                     .splineTo(new Vector2d(24, -27), Math.toRadians(45))
                     .build();
             robot.followTrajectory(traj1);
@@ -164,7 +167,7 @@ public class casperAutoV3 extends casperAutonomousBase {
 
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                    .splineTo(new Vector2d(-36, -55), Math.toRadians(0))
+                    //.splineTo(new Vector2d(-36, -55), Math.toRadians(0))
                     .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                     .build();
             robot.followTrajectory(traj1);
@@ -219,7 +222,6 @@ public class casperAutoV3 extends casperAutonomousBase {
 
         }
 
- */
         robot.deinitTfod();
 
     }

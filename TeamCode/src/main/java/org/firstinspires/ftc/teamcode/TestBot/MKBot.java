@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class MKBot extends LinearOpMode {
 
 
-    private DcMotorEx m1;
+    private DcMotorEx m1, m2;
     public Servo kick = null;
     public Servo turn = null;
 
@@ -26,9 +27,10 @@ public class MKBot extends LinearOpMode {
 
         // Important Step 1:  Make sure you use DcMotorEx when you instantiate your motors.
         m1 = hardwareMap.get(DcMotorEx.class, "m1");  // Configure the robot to use these 4 motor names,
+        m2 = hardwareMap.get(DcMotorEx.class, "m2");
         kick = hardwareMap.get(Servo.class, "kick");
         turn = hardwareMap.get(Servo.class, "turn");
-
+        m2.setDirection(DcMotorSimple.Direction.REVERSE);
         // Important Step 2: Get access to a list of Expansion Hub Modules to enable changing caching methods.
 
         ElapsedTime timer = new ElapsedTime();
@@ -43,6 +45,7 @@ public class MKBot extends LinearOpMode {
                 m1.setPower(0.7);
             } else if (gamepad1.a) {
                 m1.setPower(0);
+                m2.setPower(0);
             } else if (gamepad1.left_bumper) {
                 pos += 0.1;
                 turn.setPosition(0);
@@ -53,13 +56,38 @@ public class MKBot extends LinearOpMode {
                 kick.setPosition(0.1);
             }else if (gamepad1.x) {
                 for (int i = 0; i < 3; i++) {
-                    kick.setPosition(0.1);
-                    sleep(500);
+                    kick.setPosition(0.15);
+                    sleep(250);
                     kick.setPosition(0.35);
-                    sleep(500);
+                    sleep(250);
                 }
-                kick.setPosition(0.1);
-            }else if (gamepad1.right_stick_button) {
+                kick.setPosition(0.15);
+            }else if (gamepad1.left_stick_button) {
+                kick.setPosition(0.15);
+                turn.setPosition(0.6);
+                m1.setPower(0.6);
+                m2.setPower(0.6);
+                sleep(500);
+
+                kick.setPosition(0.35);
+                sleep(250);
+                kick.setPosition(0.15);
+                sleep(250);
+                turn.setPosition(0.8);
+
+                sleep(400);
+                kick.setPosition(0.35);
+                sleep(250);
+                kick.setPosition(0.15);
+                sleep(250);
+                turn.setPosition(1);
+
+                sleep(400);
+                kick.setPosition(0.35);
+                sleep(250);
+                kick.setPosition(0.15);
+            }
+            else if (gamepad1.right_stick_button) {
                 kick.setPosition(0.35);
             }
         }

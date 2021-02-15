@@ -20,6 +20,12 @@ public class casperAutonomousBase extends LinearOpMode {
     public casperMecanumDrive robot;
     public ElapsedTime runtime = new ElapsedTime();
 
+    public void logTiming(String S, ElapsedTime T)
+    {
+        RobotLog.ii(S, "Timing  = %.03f", T.milliseconds());
+        T.reset();
+
+    }
     @Override
     public void runOpMode() throws InterruptedException {
         //Empty Function

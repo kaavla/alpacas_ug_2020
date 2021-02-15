@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive;
+        package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.trajectory.constraints.DriveConstraints;
@@ -45,7 +45,8 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 1.9685; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 17.66; // in
+    //public static double TRACK_WIDTH = 17.66; // in
+    public static double TRACK_WIDTH = 5; // in
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -53,9 +54,18 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.012;
-    public static double kA = 0.00001;
-    public static double kStatic = 0.12;
+
+    //kV = 0.01235, kStatic = 0.09545 (R^2 = 0.98)kA = 0.00001 (R^2 = 0.00)
+    public static double kV = 0.01235;
+     public static double kA = 0.00001;
+    public static double kStatic = 0.09545;
+
+    //public static double kV = 0.01314;
+   // public static double kA = 0.00001;
+    //public static double kStatic = 0.10617;
+    //public static double kV = 0.012;
+    //public static double kA = 0.00005;
+    //public static double kStatic = 0.12;
         //public static double kV      = 0.013;
     //public static double kA      = 0.00012;
     //public static double kStatic = 0.1104;
@@ -70,8 +80,8 @@ public class DriveConstants {
      * forces acceleration-limited profiling). All distance units are inches.
      */
     public static DriveConstraints BASE_CONSTRAINTS = new DriveConstraints(
-            40.0, 40.0, 0.0,
-            Math.toRadians(180.0), Math.toRadians(180.0), 0.0
+            30.0, 30.0, 0.0,
+            Math.toRadians(90.0), Math.toRadians(90.0), 0.0
     );
 
 
