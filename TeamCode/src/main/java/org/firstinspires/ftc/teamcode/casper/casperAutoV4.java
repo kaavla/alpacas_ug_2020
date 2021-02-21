@@ -57,7 +57,9 @@ public class casperAutoV4 extends casperAutonomousBase {
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
 //dropping wobble goal
+            robot.shootMotorLeft.setPower(0.8);
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
+            sleep(400);
             moveWobbleGoal(WOBBLE_GOAL_UP);
 
             robot.followTrajectory(traj2);
