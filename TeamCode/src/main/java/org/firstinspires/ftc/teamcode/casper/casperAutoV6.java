@@ -8,11 +8,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
-public class casperAutoV6 {
+public class casperAutoV6 extends casperAutonomousBase {
 
     @Autonomous(group = "robot")
 
-    public class casperAutoNEW0rings extends casperAutonomousBase {
+
         @Override
 
         public void runOpMode() throws InterruptedException {
@@ -122,4 +122,4 @@ public class casperAutoV6 {
         }
 
     }
-}
+
