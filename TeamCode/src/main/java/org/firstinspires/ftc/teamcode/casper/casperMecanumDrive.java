@@ -21,6 +21,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MecanumConstraints;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -106,6 +107,7 @@ public class casperMecanumDrive extends MecanumDrive {
     //
     public DcMotor wobbleMotor    = null;
     public Servo wobbleServo      = null;
+    public CRServo ringServo = null;
 
     ///TFOD related stuff
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -223,6 +225,7 @@ public class casperMecanumDrive extends MecanumDrive {
         shootMotorLeft = hardwareMap.get(DcMotor.class, "M7");
         wobbleMotor = hardwareMap.get(DcMotor.class, "M8");
         wobbleServo = hardwareMap.get(Servo.class, "wobbleServo");
+        ringServo = hardwareMap.get(CRServo.class, "ringServo");
 
         collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -477,12 +480,12 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setPower(0);
     }
 
-    public void openWobbleClaw() {
-        wobbleServo.setPosition(-0.4);
+    public void closeWobbleClaw() {
+        wobbleServo.setPosition(0.3);
     }
 
-    public void  closeWobbleClaw() {
-        wobbleServo.setPosition(0.4);
+    public void  openWobbleClaw() {
+        wobbleServo.setPosition(-0.5);
         //set to 0.2
 
     }
@@ -492,5 +495,7 @@ public class casperMecanumDrive extends MecanumDrive {
         collectMotor.setPower(0.6);
 
     }
+    public void openRing() {ringServo.setPower(-0.55);}
+    public void closeRing() {ringServo.setPower(-0.1);}
 
 }

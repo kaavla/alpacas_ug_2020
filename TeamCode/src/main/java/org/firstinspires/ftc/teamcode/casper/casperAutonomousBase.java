@@ -132,6 +132,8 @@ public class casperAutonomousBase extends LinearOpMode {
 
         return 0;
     }
+    public void OPEN_RING() {robot.openRing();}
+    public void CLOSE_RING() {robot.closeRing();}
 
     public void shooterMotorAuto() {
         int newTargetPosition = 0;

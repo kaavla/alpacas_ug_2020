@@ -113,7 +113,7 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
         t1.reset();
         robot.deinitTfod();
 
-        if (pos == 0) {
+
             //telemetry.addData(">", "running 0 ring path");
             //telemetry.update();
 
@@ -197,13 +197,13 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             t1.reset();
 
 //park on white line
-            robot.followTrajectory(traj6);
+           /* robot.followTrajectory(traj6);
             //1.9
             timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
             RobotLog.ii("CASPER", timing);
-            t1.reset();
+            t1.reset();*/
 
-        }
+
         telemetry.addData(">", timing);
         telemetry.update();
 

@@ -84,6 +84,10 @@ public class casperManual extends casperAutonomousBase {
                 robot.stopAllMotors();
             } else if (gamepad2.right_stick_button) {
                 shooterMotorAuto();
+            }else if (gamepad2.dpad_right) {
+                robot.closeRing();
+            } else if (gamepad2.dpad_left) {
+                robot.openRing();
             }
             else {
                 robot.stopAllMotors();
