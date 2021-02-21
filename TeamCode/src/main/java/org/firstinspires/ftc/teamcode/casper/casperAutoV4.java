@@ -13,7 +13,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 public class casperAutoV4 extends casperAutonomousBase {
     @Override
-    //powershot auto - incomplete
+
     public void runOpMode() throws InterruptedException {
         robot = new casperMecanumDrive(hardwareMap);
 
@@ -35,6 +35,7 @@ public class casperAutoV4 extends casperAutonomousBase {
                 .splineTo(new Vector2d(-25, -57), Math.toRadians(0))
                 .build();
         robot.followTrajectory(traj0);
+
         //int position = 4;
         int pos = getNumRings(1500); //ms`
         telemetry.addData(">", "Num of rings = %d", pos);
@@ -43,24 +44,29 @@ public class casperAutoV4 extends casperAutonomousBase {
         if (pos == 4) {
             telemetry.addData(">", "Running 4 ring path");
             telemetry.update();
+
+
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
 //going to start line
-                    .splineTo(new Vector2d(12, -57), Math.toRadians(0))
+                    .splineTo(new Vector2d(12, -50), Math.toRadians(0))
                     .build();
             robot.followTrajectory(traj1);
-//going to wobble goal
+
+            //going to wobble goal
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
-            robot.followTrajectory(traj2);
 //dropping wobble goal
-//not working, wobble goal will not go tup or down
+            robot.shootMotorLeft.setPower(0.8);
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
+            sleep(400);
             moveWobbleGoal(WOBBLE_GOAL_UP);
+
+            robot.followTrajectory(traj2);
 
 //going to shooting position (0,-35)
 
-//shooting power s.hots
+//shooting power shots
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                     .splineTo(new Vector2d(0, -35), Math.toRadians(-180))
                     .build();
@@ -72,7 +78,7 @@ public class casperAutoV4 extends casperAutonomousBase {
             Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
 
 //parking position
-                    .splineTo(new Vector2d(12, -35), Math.toRadians(180))
+                    .splineTo(new Vector2d(12, -35), Math.toRadians(-180))
                     .build();
             robot.followTrajectory(traj4);
         }

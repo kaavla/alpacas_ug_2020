@@ -10,7 +10,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 
 @Autonomous(group = "robot")
-public class casperAuto5 extends casperAutonomousBase {
+public class casperAutoV5 extends casperAutonomousBase {
     @Override
     //high goal, second camera position
     public void runOpMode() throws InterruptedException {
@@ -31,7 +31,7 @@ public class casperAuto5 extends casperAutonomousBase {
 
         //going forward to detect rings
         Trajectory traj0 = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(-25, -57), Math.toRadians(0))
+                .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
                 .build();
         robot.followTrajectory(traj0);
         //int position = 4;
@@ -64,19 +64,13 @@ public class casperAuto5 extends casperAutonomousBase {
 
 //going to shoot position and shooting
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(170))
+                    .splineTo(new Vector2d(-12, -51), Math.toRadians(-170))
                     .build();
             robot.shootMotorLeft.setPower(0.9);
             robot.followTrajectory(traj3);
             robot.autonomousShoot();
             sleep(5000);
             robot.stopAllMotors();
-
-            //parking position
-            Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                    .splineTo(new Vector2d(12, -51), Math.toRadians(170))
-                    .build();
-            robot.followTrajectory(traj4);
 
  /*
  //second wobble goal

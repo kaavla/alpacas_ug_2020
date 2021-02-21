@@ -20,7 +20,7 @@ import java.util.List;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
-//origin at middle of full field(0,0)
+//origin at0 middle of full field(0,0)
 //starting position down red (-60, -48, 90)
 //rings red located at (-24, -36)
 //position for shooting at (-12, -51)
