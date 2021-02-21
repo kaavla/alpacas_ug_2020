@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.casper;
 
-public class casperAutoV6 { package org.firstinspires.ftc.teamcode.casper;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -9,6 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
+
+public class casperAutoV6 {
 
     @Autonomous(group = "robot")
 
