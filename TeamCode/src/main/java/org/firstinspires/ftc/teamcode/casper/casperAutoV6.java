@@ -8,10 +8,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
+@Autonomous (group = "robot")
 public class casperAutoV6 extends casperAutonomousBase {
-
-    @Autonomous(group = "robot")
-
 
         @Override
 
@@ -31,12 +29,12 @@ public class casperAutoV6 extends casperAutonomousBase {
             //position for shooting at (-12, -51)
             // position 4 square at (58, -58)
             Trajectory traj0 = robot.trajectoryBuilder(startPose)
-                    .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
+                    .splineTo(new Vector2d(-25, -57), Math.toRadians(0))
                     .build();
 
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                    .splineTo(new Vector2d(0, -50), Math.toRadians(45))
+                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
 
 
@@ -48,8 +46,8 @@ public class casperAutoV6 extends casperAutonomousBase {
             telemetry.addData(">", "Num of rings = %d", pos);
             telemetry.update();
 
-            if (pos == 0) {
-                telemetry.addData(">", "running 0 ring path");
+            if (pos == 4) {
+                telemetry.addData(">", "running 4 ring path");
                 telemetry.update();
 
 //going to drop wobble goal
@@ -64,7 +62,7 @@ public class casperAutoV6 extends casperAutonomousBase {
 //going to shooting position + shooting
                 Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
                         //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                        .splineTo(new Vector2d(-12, -51), Math.toRadians(163))
+                        .splineTo(new Vector2d(0, -35), Math.toRadians(-180))
                         .build();
                 robot.followTrajectory(traj2);
                 robot.autonomousShoot();
@@ -76,16 +74,14 @@ public class casperAutoV6 extends casperAutonomousBase {
 
 //replace above with powershot stuff
 
-
-
 //picking up second wobble goal
                 Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                         //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                         //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                        .lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
+                        .lineToSplineHeading(new Pose2d(12, -35, Math.toRadians(-180)))
                         .build();
                 robot.followTrajectory(traj3);
-
+///ends here
                 Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
                         //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                         .strafeRight(4)
