@@ -69,6 +69,8 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             robot.followTrajectory(traj2);
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             robot.autonomousShoot();
+            sleep (300);
+            CLOSE_RING();
             sleep(2000);
             //move servo
             //robot.autonomousShoot();
@@ -109,15 +111,17 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             sleep(400);
             moveWobbleGoal(WOBBLE_GOAL_UP);
             sleep(300);
+            OPEN_RING();
 
 
 //park on white line
+            /*
             Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
                     //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                     //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
                     .lineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)))
                     .build();
-            //robot.followTrajectory(traj6);
+            //robot.followTrajectory(traj6); */
         }
 
 
