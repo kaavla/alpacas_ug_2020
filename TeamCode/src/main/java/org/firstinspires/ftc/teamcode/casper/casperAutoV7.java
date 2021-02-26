@@ -45,22 +45,26 @@ public class casperAutoV7 extends casperAutonomousBase {
         //rings red located at (-24, -36)
         //position for shooting at (-12, -51)
         // position 4 square at (58, -58)
+
+//going to detect rings
         Trajectory traj0 = robot.trajectoryBuilder(startPose)
                 //.splineTo(new Vector2d(-24, -57), Math.toRadians(0))
                 .forward(39)
                 .build();
 
+//going to deliver wobble goal
         Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                 .build();
 
+//shooting to high goal
         Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
                 //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
                 //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
                 .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
                 .build();
 
+//second wobble goal
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
@@ -68,17 +72,20 @@ public class casperAutoV7 extends casperAutonomousBase {
                 //.splineTo(new Vector2d(-27, -24), Math.toRadians(270))
                 .build();
 
+//aligning to pick second wobble goal
         Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .strafeRight(5)
                 //.splineTo(new Vector2d(-31, -24), Math.toRadians(270))
                 .build();
 
+//delivering second wobble goal
         Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                 .build();
 
+//parking
         Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
@@ -97,7 +104,7 @@ public class casperAutoV7 extends casperAutonomousBase {
         timing = String.format("After waitfor start = %.03f\n", t1.milliseconds());
         RobotLog.ii("CASPER", timing);
         t1.reset();
-        //going forward to detect rings
+//going forward to detect rings
         robot.followTrajectory(traj0);
 
         //2.3
