@@ -37,6 +37,7 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
 
 
 //start position
+        CLOSE_RING();
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
@@ -64,13 +65,15 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                .lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
-                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270))
+                //.lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
+                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270)) <-- position before but the one above is more accurate and picks up the second wobble goal every time
                 .build();
 
         Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .strafeRight(5)
+                .strafeRight(4.8)
+                //was 5 before
                 //.splineTo(new Vector2d(-31, -24), Math.toRadians(270))
                 .build();
 
@@ -191,6 +194,7 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             sleep(400);
             moveWobbleGoal(WOBBLE_GOAL_UP);
             sleep(300);
+            OPEN_RING();
             //3.6
             timing = String.format("After drop sencond  goal= %.03f\n", t1.milliseconds());
             RobotLog.ii("CASPER", timing);
