@@ -69,7 +69,6 @@ public class testBotOdometryCalibration extends testBotUtility{
 
         double wheelBaseSeparation = (2*90*verticalEncoderTickOffsetPerDegree)/(Math.PI*COUNTS_PER_INCH);
 
-        horizontalTickOffset = robot.horizontal.getCurrentPosition()/Math.toRadians(getZAngle());
 
         //Write the constants to text files
         ReadWriteFile.writeFile(wheelBaseSeparationFile, String.valueOf(wheelBaseSeparation));
@@ -85,7 +84,6 @@ public class testBotOdometryCalibration extends testBotUtility{
             telemetry.addData("IMU Angle", getZAngle());
             telemetry.addData("Vertical Left Position", robot.verticalLeft.getCurrentPosition());
             telemetry.addData("Vertical Right Position", robot.verticalRight.getCurrentPosition());
-            telemetry.addData("Horizontal Position", robot.horizontal.getCurrentPosition());
             telemetry.addData("Vertical Encoder Offset", verticalEncoderTickOffsetPerDegree);
 
             //Update values

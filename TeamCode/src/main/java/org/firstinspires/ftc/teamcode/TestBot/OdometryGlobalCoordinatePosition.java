@@ -38,10 +38,9 @@ public class OdometryGlobalCoordinatePosition implements Runnable{
      * Constructor for GlobalCoordinatePosition Thread
      * @param verticalEncoderLeft left odometry encoder, facing the vertical direction
      * @param verticalEncoderRight right odometry encoder, facing the vertical direction
-     * @param horizontalEncoder horizontal odometry encoder, perpendicular to the other two odometry encoder wheels
      * @param threadSleepDelay delay in milliseconds for the GlobalPositionUpdate thread (50-75 milliseconds is suggested)
      */
-    public OdometryGlobalCoordinatePosition(DcMotor verticalEncoderLeft, DcMotor verticalEncoderRight, DcMotor horizontalEncoder, double COUNTS_PER_INCH, int threadSleepDelay){
+    public OdometryGlobalCoordinatePosition(DcMotor verticalEncoderLeft, DcMotor verticalEncoderRight, double COUNTS_PER_INCH, int threadSleepDelay){
         this.verticalEncoderLeft = verticalEncoderLeft;
         this.verticalEncoderRight = verticalEncoderRight;
         this.horizontalEncoder = horizontalEncoder;

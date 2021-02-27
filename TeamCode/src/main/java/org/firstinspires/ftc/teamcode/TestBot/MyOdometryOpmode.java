@@ -10,27 +10,18 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.TestBot.OdometryGlobalCoordinatePosition;
 
-/**
- * Created by Sarthak on 10/4/2019.
- */
 @TeleOp(name = "Manav's Odometry OpMode")
 //@Disabled
 public class MyOdometryOpmode extends testBotUtility {
-    final double PIVOT_SPEED = 0.4;
 
-    //The amount of encoder ticks for each inch the robot moves. THIS WILL CHANGE FOR EACH ROBOT AND NEEDS TO BE UPDATED HERE
-    //final double COUNTS_PER_INCH = 307.699557;
-
+    //number of counts the encoder reads per revolution
     final double COUNTS_PER_ENC_REV  = 8192;
+    //diameter of wheel conected to encoder
     final double WHEEL_DIAMETER_INCHES = 1.37795;
-
+    //counts per inch is calculated by taking your counts given by the encoder and dividing it by the circumference of the wheel
     final double COUNTS_PER_INCH       = (COUNTS_PER_ENC_REV ) / (WHEEL_DIAMETER_INCHES * 3.1415);
 
     OdometryGlobalCoordinatePosition globalPositionUpdate;
-
-    double motor_power = 0.3;
-
-    float leftX, leftY, rightZ;
 
     @Override
     public void runOpMode() {
@@ -42,18 +33,10 @@ public class MyOdometryOpmode extends testBotUtility {
         waitForStart();
 
         //Create and start GlobalCoordinatePosition thread to constantly update the global coordinate positions
-        globalPositionUpdate = new OdometryGlobalCoordinatePosition(robot.verticalLeft, robot.verticalRight, robot.horizontal, COUNTS_PER_INCH, 75);
+        globalPositionUpdate = new OdometryGlobalCoordinatePosition(robot.verticalLeft, robot.verticalRight, COUNTS_PER_INCH, 75);
         Thread positionThread = new Thread(globalPositionUpdate);
         positionThread.start();
 
-        //globalPositionUpdate.reverseRightEncoder();
-        //globalPositionUpdate.reverseNormalEncoder();
-
-        //gotoPosition(24*COUNTS_PER_INCH, 0*COUNTS_PER_INCH, 0.3,0,1);
-        //sleep(2000);
-        //gotoPosition(24*COUNTS_PER_INCH, 24*COUNTS_PER_INCH, 0.3,0,1);
-        //sleep(2000);
-        //gotoPosition(0*COUNTS_PER_INCH, 0*COUNTS_PER_INCH, 0.3,0,1);
 
         while(opModeIsActive()){
             //Display Global (x, y, theta) coordinates
@@ -63,7 +46,6 @@ public class MyOdometryOpmode extends testBotUtility {
 
             telemetry.addData("Vertical left encoder position", robot.verticalLeft.getCurrentPosition());
             telemetry.addData("Vertical right encoder position", robot.verticalRight.getCurrentPosition());
-            telemetry.addData("horizontal encoder position", robot.horizontal.getCurrentPosition());
 
             telemetry.addData("Thread Active", positionThread.isAlive());
             telemetry.update();

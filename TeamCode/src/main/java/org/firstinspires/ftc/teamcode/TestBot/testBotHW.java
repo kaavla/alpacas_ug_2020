@@ -20,17 +20,13 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
 public class testBotHW {
     public BNO055IMU imu = null;
-    DcMotorEx verticalLeft, verticalRight, horizontal;
-
-    Orientation lastAngles = new Orientation();  //?
-    double globalAngle, power = .40, correction;  //?
+    DcMotorEx verticalLeft, verticalRight;
 
     /* Initialize standard Hardware interfaces */
     public void init(HardwareMap ahwMap) {
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
         verticalRight = ahwMap.get(DcMotorEx.class, "M2");
-        horizontal = ahwMap.get(DcMotorEx.class, "M3");
-        //verticalRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        verticalRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = ahwMap.get(BNO055IMU.class, "imu 1");
 
@@ -44,18 +40,6 @@ public class testBotHW {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
         RobotLog.ii("CAL", "Enter - IMU  Initialized");
-
-        verticalRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        verticalLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //Reset the encoders
-        verticalRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        verticalLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        verticalRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        verticalLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        horizontal.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RobotLog.ii("CAL", "Exit - init");
 
