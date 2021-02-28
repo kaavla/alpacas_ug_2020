@@ -115,8 +115,7 @@ public class casperMecanumDrive extends MecanumDrive {
     public static final String LABEL_SECOND_ELEMENT = "one";
 
     private static final String VUFORIA_KEY =
-            "AY/AUN//////AAABmVbi/b+9l03Ztj22S8r5KL51YUKjzeHFFVTztDTYL4ZnIgmpuhfzO0h5kq8zWekYvuW0dgzs4RERLM1p90fWs9qjrwuky3AsghiBUiyOxfJgTEPK41svlx+shPOes+hDlFA97dhsFi7Jdj0PfQj/kzj846HP3TEDBVmJ+KM/C6TjYjd756+Rd726MeyfZmQqXV8o/tXwsVNl/rRAN3LdVe0R/cFsBSVXGKjoid3n29xMkXJv7BT5mR/nQWATQY1VYrEkm1r8FfYZXUveCRzCPPdjEMjY+g/kz13p+kVmjJZjSgwucF5Yq33Idwj1ACabCwBTDGYWp5EPjYY0AeBK28wxZBiukQyDTNVns515t5ku";
-
+        "AdUZmdz/////AAABmcKq/8niZ02Xva4A4Np/T0RRDa6qyO5wdaJzRXu8ilq6Z/25GDF/LD5qzz9raAfsan86C2Dh78DWuyPGLPB6rW21905quzAxU/QznqFRD8t/GR6D4Em0fYq4jiW5345MPPofjLJEpi8bgBHLno2B6hhLeulPfauhc2j6cekyCfbhe91kV1pvBChSUCJsRk57g31ghYC+mLklRDOLyhDcXmUi6P8TlZ1y8BcfNdqnsNPKrgpz3tno2YxZykDBlfuyL+KwQiAKbwSh+byP6gKn71N2Vzl2OUuqP2yKW4vVwMWeL2D3uLbVxU+95XBj+Yx6COCCthq90EANM3RugqtdUy1xjmLexi9QM5aJyRgQTAai";
     private VuforiaLocalizer vuforia;
     public TFObjectDetector tfod;
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.casper;
+package org.firstinspires.ftc.teamcode.TestBot;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.casper.casperAutonomousBase;
+import org.firstinspires.ftc.teamcode.casper.casperMecanumDrive;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 // position 4 square at (58, -58)
 
 @Autonomous(group = "robot")
+@Disabled
 public class casperAutoV2 extends casperAutonomousBase {
 
     public Trajectory traj0, traj1, traj2, traj3, traj4,traj5, traj6;

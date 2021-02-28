@@ -1,16 +1,22 @@
-package org.firstinspires.ftc.teamcode.casper;
+package org.firstinspires.ftc.teamcode.TestBot;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
+import org.firstinspires.ftc.teamcode.casper.casperAutonomousBase;
+import org.firstinspires.ftc.teamcode.casper.casperMecanumDrive;
 
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
 
 @Autonomous(group = "robot")
-public class casperAutoV5 extends casperAutonomousBase {
+@Disabled
+
+public class casperAuto5 extends casperAutonomousBase {
     @Override
     //high goal, second camera position
     public void runOpMode() throws InterruptedException {
@@ -18,6 +24,7 @@ public class casperAutoV5 extends casperAutonomousBase {
 
         robot.initVuforia(hardwareMap);
         robot.initTfod(hardwareMap);
+
 
         //start position
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
@@ -31,7 +38,7 @@ public class casperAutoV5 extends casperAutonomousBase {
 
         //going forward to detect rings
         Trajectory traj0 = robot.trajectoryBuilder(startPose)
-                .splineTo(new Vector2d(-24, -57), Math.toRadians(0))
+                .splineTo(new Vector2d(-25, -57), Math.toRadians(0))
                 .build();
         robot.followTrajectory(traj0);
         //int position = 4;
@@ -51,7 +58,7 @@ public class casperAutoV5 extends casperAutonomousBase {
 
 //going to wobble goal
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
+                    .strafeTo(new Vector2d(50, -50))
                     .build();
             robot.followTrajectory(traj2);
 
@@ -64,14 +71,19 @@ public class casperAutoV5 extends casperAutonomousBase {
 
 //going to shoot position and shooting
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                    .splineTo(new Vector2d(-12, -51), Math.toRadians(-170))
+             .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(0)), Math.toRadians(170))
                     .build();
-            robot.shootMotorLeft.setPower(0.9);
+            robot.shootMotorLeft.setPower(0.7);
             robot.followTrajectory(traj3);
             robot.autonomousShoot();
             sleep(5000);
             robot.stopAllMotors();
 
+            //parking position
+            Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
+                    .splineTo(new Vector2d(12, -51), Math.toRadians(0))
+                    .build();
+            robot.followTrajectory(traj4);
  /*
  //second wobble goal
  Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
@@ -128,7 +140,7 @@ public class casperAutoV5 extends casperAutonomousBase {
  //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
  .splineTo(new Vector2d(-12, -51), Math.toRadians(170))
  .build();
- robot.shootMotorLeft.setPower(0.9);
+ robot.shootMotorLeft.setPower(0.8);
  robot.followTrajectory(traj2);
  robot.autonomousShoot();
  sleep(5000);
