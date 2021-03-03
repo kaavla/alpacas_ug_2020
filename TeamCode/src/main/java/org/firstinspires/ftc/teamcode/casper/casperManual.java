@@ -1,4 +1,7 @@
 package org.firstinspires.ftc.teamcode.casper;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -12,6 +15,10 @@ public class casperManual extends casperAutonomousBase {
 
         float leftX, leftY, rightZ;
 
+        robot.setPoseEstimate(PoseStorage.currentPose);
+
+
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -24,6 +31,23 @@ public class casperManual extends casperAutonomousBase {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            robot.update();
+
+            Pose2d myPose = robot.getPoseEstimate();
+
+            Trajectory traj2 = robot.trajectoryBuilder(myPose)
+                    //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
+                    //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(150)), Math.toRadians(0))
+                    .build();
+
+            // Print your pose to telemetry
+            telemetry.addData("x", myPose.getX());
+            telemetry.addData("y", myPose.getY());
+            telemetry.addData("heading", myPose.getHeading());
+            telemetry.update();
+
+
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
             //all of the code bellow is setting a power to each button on the gamepad
@@ -50,7 +74,7 @@ public class casperManual extends casperAutonomousBase {
             } else if(gamepad1.left_bumper) {
                 //strafe left
             } else if (gamepad1.right_bumper) {
-                //strafe right
+                robot.followTrajectory(traj2);
             }
 
             else if (gamepad2.dpad_up) {

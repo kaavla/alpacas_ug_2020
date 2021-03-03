@@ -211,6 +211,8 @@ public class casperAuto1ring extends casperAutonomousBase {
         telemetry.addData(">", timing);
         telemetry.update();
 
+        PoseStorage.currentPose = robot.getPoseEstimate();
+
     }
 
 }
