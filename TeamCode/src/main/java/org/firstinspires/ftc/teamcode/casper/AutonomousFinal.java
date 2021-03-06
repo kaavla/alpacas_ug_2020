@@ -40,6 +40,8 @@ public class AutonomousFinal extends casperAutonomousBase {
         CLOSE_RING();
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
+
+
         //origin at middle of full field(0,0)
         //starting position down red (-60, -48, 90)
 
@@ -50,93 +52,62 @@ public class AutonomousFinal extends casperAutonomousBase {
 
 //TRAJECTORIES 0-6 ARE FOR 0 RINGS
         Trajectory traj0 = robot.trajectoryBuilder(startPose)
-                //.splineTo(new Vector2d(-24, -57), Math.toRadians(0))
                 .forward(39)
                 .build();
 
         Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
         Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
-                //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
                 .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
                 .build();
 
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                //.lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
                 .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
-                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270)) <-- position before but the one above is more accurate and picks up the second wobble goal every time
                 .build();
 
         Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .strafeRight(4.8)
-                //was 5 before
-                //.splineTo(new Vector2d(-31, -24), Math.toRadians(270))
                 .build();
 
         Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
         Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                //.lineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)))
                 .splineTo(new Vector2d(12, -40), Math.toRadians(90))
                 .build();
 
 
-
 //TRAJECTORIES 7-12 ARE FOR 1 RING
-
         Trajectory traj7 = robot.trajectoryBuilder(traj0.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(24, -35), Math.toRadians(45))
                 .build();
 
         Trajectory traj8 = robot.trajectoryBuilder(traj7.end())
-                //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
-                //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
                 .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
                 .build();
 
         Trajectory traj9 = robot.trajectoryBuilder(traj8.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
                 .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
-                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270)) <-- position before but the one above is more accurate and picks up the second wobble goal every time
                 .build();
 
         Trajectory traj10 = robot.trajectoryBuilder(traj9.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .strafeRight(4.8)
-                //changed from 5 to 4.8
-                //.splineTo(new Vector2d(-31, -24), Math.toRadians(270))
                 .build();
 
         Trajectory traj11 = robot.trajectoryBuilder(traj10.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 .splineTo(new Vector2d(24, -35), Math.toRadians(45))
                 .build();
 
         Trajectory traj12 = robot.trajectoryBuilder(traj11.end())
-                //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                //.lineToSplineHeading(new Pose2d(12, -40, Math.toRadians(90)))
                 .splineTo(new Vector2d(12, -40), Math.toRadians(90))
                 .build();
 
 
 //TRAJECTORIES 14-19 ARE FOR 4 RINGS
         Trajectory traj14 = robot.trajectoryBuilder(traj0.end())
-                //.splineToLinearHeading(new Pose2d(50, -50, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                 .build();
         Trajectory traj15 = robot.trajectoryBuilder(traj14.end(), true)
@@ -149,14 +120,11 @@ public class AutonomousFinal extends casperAutonomousBase {
                 .strafeRight(5)
                 .build();
         Trajectory traj18 = robot.trajectoryBuilder(traj17.end())
-                //.splineToLinearHeading(new Pose2d(50, -50, Math.toRadians(0)), Math.toRadians(0))
                 .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                 .build();
         Trajectory traj19 = robot.trajectoryBuilder(traj18.end())
                 .splineTo(new Vector2d(12, -40), Math.toRadians(90))
                 .build();
-
-
 
 
 
@@ -168,7 +136,6 @@ public class AutonomousFinal extends casperAutonomousBase {
         telemetry.addData(">", "Waiting to start....");
         telemetry.update();
         waitForStart();
-
 
         //program starts
 
@@ -183,7 +150,6 @@ public class AutonomousFinal extends casperAutonomousBase {
         timing = String.format("After trac0 = %.03f\n", t1.milliseconds());
         RobotLog.ii("CASPER", timing);
         t1.reset();
-        //int position = 4;
         int rings = getNumRings(1500); //ms
         //telemetry.addData(">", "Num of rings = %d", pos);
         //1.5
@@ -193,17 +159,15 @@ public class AutonomousFinal extends casperAutonomousBase {
         robot.deinitTfod();
 
 
-
         if(rings==0) {
             //going to drop wobble goal
-
             robot.followTrajectory(traj1);
             //1.8
             timing = String.format("After tracj1= %.03f\n", t1.milliseconds());
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
-//dropping wobble goal
+            //dropping wobble goal
             robot.shootMotorLeft.setPower(0.8);
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             sleep(400);
@@ -212,7 +176,7 @@ public class AutonomousFinal extends casperAutonomousBase {
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
-//going to shooting position + shooting
+            //going to shooting position + shooting
             robot.followTrajectory(traj2);
             //1.8
             timing = String.format("After trajj2..move to shoot pos= %.03f\n", t1.milliseconds());
@@ -224,14 +188,14 @@ public class AutonomousFinal extends casperAutonomousBase {
             robot.stopAllMotors();
 
 
-//replace above with powershot stuff
+            //replace above with powershot stuff in the future sometime
 
             //3.0
             timing = String.format("After shooting = %.03f\n", t1.milliseconds());
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
-//picking up second wobble goal
+            //picking up second wobble goal
             robot.followTrajectory(traj3);
             //2.5
             timing = String.format("After traj3..move to pick next goal= %.03f\n", t1.milliseconds());
@@ -254,7 +218,7 @@ public class AutonomousFinal extends casperAutonomousBase {
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
-//dropping second wobble goal, going back to same position in traj1
+            //dropping second wobble goal, going back to same position in traj1
             robot.followTrajectory(traj5);
             //3.2
             timing = String.format("After trcj5 sencond  goal= %.03f\n", t1.milliseconds());
@@ -272,7 +236,7 @@ public class AutonomousFinal extends casperAutonomousBase {
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
-//park on white line
+            //park on white line
            /* robot.followTrajectory(traj6);
             //1.9
             timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
