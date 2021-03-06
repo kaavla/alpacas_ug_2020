@@ -491,7 +491,7 @@ public class casperMecanumDrive extends MecanumDrive {
 
     public void  autonomousShoot() {
         shootMotorLeft.setPower(0.7);
-        collectMotor.setPower(0.6);
+        collectMotor.setPower(0.7);
 
     }
     public void openRing() {ringServo.setPower(-0.55);}
