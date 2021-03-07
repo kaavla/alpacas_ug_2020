@@ -72,13 +72,14 @@ public class MyOdometryOpmode extends testBotUtility {
             } else if (gamepad1.dpad_right) {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
-            } else if (gamepad1.b){
-                    robot.shootMotorLeft.setPower(0.6);
-                    robot.shootMotorRight.setPower(0.6);
-                    robot.collectMotor.setPower(0.8);
             } else {
                 robot.stopAllMotors();
             }
+            double xPos = globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH;
+            double yPos = globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH;
+            double heading = globalPositionUpdate.returnOrientation();
+
+            double[] pose = new double[3]{xPos, yPos, heading};
 
             //Display Global (x, y, theta) coordinates
             telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
@@ -121,9 +122,12 @@ public class MyOdometryOpmode extends testBotUtility {
 
             distance = Math.hypot(distanceToXTarget, distanceToYTarget);
         }
+
+
         telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);
         telemetry.addData("Y Position", globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH);
         telemetry.addData("Orientation (Degrees)", globalPositionUpdate.returnOrientation());
+
         telemetry.addData("Vertical left encoder position", robot.verticalLeft.getCurrentPosition());
         telemetry.addData("Vertical right encoder position", robot.verticalRight.getCurrentPosition());
         telemetry.addData("horizontal encoder position", robot.horizontal.getCurrentPosition());

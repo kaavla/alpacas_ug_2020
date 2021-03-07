@@ -4,6 +4,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -31,6 +32,12 @@ public class MKBot extends LinearOpMode {
         kick = hardwareMap.get(Servo.class, "kick");
         turn = hardwareMap.get(Servo.class, "turn");
         m2.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        m1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        m1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        m2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        m2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // Important Step 2: Get access to a list of Expansion Hub Modules to enable changing caching methods.
 
         ElapsedTime timer = new ElapsedTime();
@@ -42,7 +49,8 @@ public class MKBot extends LinearOpMode {
         double pos = 0.0;
         while (opModeIsActive()) {
             if (gamepad1.y) {
-                m1.setPower(0.7);
+                m1.setPower(0.75);
+                //m1.setVelocity(1);
             } else if (gamepad1.a) {
                 m1.setPower(0);
                 m2.setPower(0);

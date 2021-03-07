@@ -46,7 +46,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 
 //going to drop wobble goal
-
+/*
             Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                     //.splineToLinearHeading(new Pose2d(50, -50, Math.toRadians(0)), Math.toRadians(0))
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
@@ -68,15 +68,13 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
                 .line
                 .build();
         robot.followTrajectory(traj11);
-*/
+
 
 //going to shooting position + shooting
 
-            Trajectory traj3 = robot.trajectoryBuilder(traj2.end(), true)
                     .splineToLinearHeading(new Pose2d(0, -30, Math.toRadians(163)), Math.toRadians(0))
                     .build();
 
-            robot.followTrajectory(traj2);
             //1.8
 
             robot.autonomousShoot();
@@ -86,7 +84,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             sleep(1000);
             robot.stopAllMotors();
 
-/*
+z
             //3.0
 //picking up second wobble goal
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
@@ -122,14 +120,14 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             moveWobbleGoal(WOBBLE_GOAL_UP);
             sleep(300);
             OPEN_RING();
-*/
+
             //3.6
 
 //park on white line
 
-            Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                    .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-                    .build();
+            //Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
+            //        .splineTo(new Vector2d(12, -40), Math.toRadians(90))
+             //       .build();
             //robot.followTrajectory(traj6);
             //1.9
             //timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
@@ -141,7 +139,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             telemetry.update();
             robot.deinitTfod();
 
-
+*/
         }
 
     }

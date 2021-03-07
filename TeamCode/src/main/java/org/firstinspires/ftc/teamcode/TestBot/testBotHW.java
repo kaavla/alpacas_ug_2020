@@ -23,16 +23,13 @@ public class testBotHW {
     public DcMotor rightMotor = null;
     public DcMotor backrightMotor = null;
     public DcMotor backleftMotor = null;
-    public DcMotor collectMotor = null;
-    public DcMotor shootMotorRight = null;
-    public DcMotor shootMotorLeft = null;
-    public DcMotor wobbleMotor = null;
-    public Servo wobbleServo = null;
+
+    public CRServo servoTurret = null;
 
     //public Servo grabber = null;
     public BNO055IMU imu = null;
 
-    DcMotorEx verticalLeft, verticalRight, horizontal;
+    DcMotorEx verticalLeft, verticalRight, horizontal, servoEncoder;
 
     Orientation lastAngles = new Orientation();  //?
     double globalAngle, power = .40, correction;  //?
@@ -48,21 +45,16 @@ public class testBotHW {
         rightMotor = ahwMap.get(DcMotor.class, "M2");
         backleftMotor = ahwMap.get(DcMotor.class, "M3");
         backrightMotor = ahwMap.get(DcMotor.class, "M4");
-        collectMotor = ahwMap.get(DcMotor.class, "M5");
-        shootMotorRight = ahwMap.get(DcMotor.class, "M6");
-        shootMotorLeft = ahwMap.get(DcMotor.class, "M7");
-        wobbleMotor = ahwMap.get(DcMotor.class, "M8");
-        wobbleServo = ahwMap.get(Servo.class, "wobbleServo");
-        //grabber = ahwMap.get(Servo.class, "grabber");
+
+        servoTurret = ahwMap.get(CRServo.class, "servoTurret");
         RobotLog.ii("CAL", "Enter - DC Motor Initialized");
 
         verticalLeft = ahwMap.get(DcMotorEx.class, "M1");
         verticalRight = ahwMap.get(DcMotorEx.class, "M2");
         horizontal = ahwMap.get(DcMotorEx.class, "M3");
+        servoEncoder = ahwMap.get(DcMotorEx.class, "M4");
         RobotLog.ii("CAL", "Enter - Encoder  Initialized");
-        //verticalRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        //eiihcckgbrrrbreucrhbfdiigeenglcfehcefhcjfegn
-        // horizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         imu = ahwMap.get(BNO055IMU.class, "imu 1");
 
@@ -80,33 +72,21 @@ public class testBotHW {
         //Invert direction for left motors
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backleftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        shootMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        verticalLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         RobotLog.ii("CAL", "Enter -Directions reversed");
 
         // Set all motors to zero power
-        stopAllMotors();
-        RobotLog.ii("CAL", "Stop all motors");
-
-        initMotorNoEncoders();
-        RobotLog.ii("CAL", "No encoders");
-
-        initOdodmetryEncoders();
-        RobotLog.ii("CAL", "init  encoders");
-
-        RobotLog.ii("CAL", "Exit - init");
-
     }
+
 
     //resets the power to zero before starting the action
     public void stopAllMotors() {
         RobotLog.ii("CAL", "Stopping All motors");
         leftMotor.setPower(0);
         rightMotor.setPower(0);
-      backleftMotor.setPower(0); collectMotor.setPower(0);
-        backrightMotor.setPower(0);
-        shootMotorLeft.setPower(0);
-        shootMotorRight.setPower(0);
-        wobbleMotor.setPower(0);
+      backleftMotor.setPower(0);
+      backrightMotor.setPower(0);
+      servoTurret.setPower(0);
     }
 
     public void initMotorNoEncoders() {
@@ -118,20 +98,12 @@ public class testBotHW {
         backleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        collectMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //shootMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shootMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        wobbleMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //Set zero power behavior to braking
         leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backrightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //shootMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shootMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        wobbleMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
         RobotLog.ii("CAL", "Exit -  initMotorNoEncoders");
     }
@@ -142,14 +114,17 @@ public class testBotHW {
         verticalRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         verticalLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        servoEncoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Reset the encoders
         verticalRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         verticalLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         horizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        servoEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         verticalRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         verticalLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        servoEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         RobotLog.ii("CAL", "Exit -  initOdodmetryEncoders");
     }
