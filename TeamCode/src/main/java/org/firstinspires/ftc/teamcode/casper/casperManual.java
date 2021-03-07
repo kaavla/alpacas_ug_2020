@@ -1,4 +1,7 @@
 package org.firstinspires.ftc.teamcode.casper;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
@@ -12,6 +15,10 @@ public class casperManual extends casperAutonomousBase {
 
         float leftX, leftY, rightZ;
 
+        robot.setPoseEstimate(PoseStorage.currentPose);
+
+
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -24,6 +31,18 @@ public class casperManual extends casperAutonomousBase {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            robot.update();
+
+            Pose2d myPose = robot.getPoseEstimate();
+
+
+            // Print your pose to telemetry
+            telemetry.addData("x", myPose.getX());
+            telemetry.addData("y", myPose.getY());
+            telemetry.addData("heading", myPose.getHeading());
+            telemetry.update();
+
+
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
             //all of the code bellow is setting a power to each button on the gamepad
@@ -46,13 +65,19 @@ public class casperManual extends casperAutonomousBase {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
             } else if(gamepad1.right_stick_button) {
-                //insert code to make the robot align to shooting position
-            } else if(gamepad1.left_bumper) {
-                //strafe left
-            } else if (gamepad1.right_bumper) {
-                //strafe right
-            }
 
+            } else if(gamepad1.left_bumper) {
+                //st
+            } else if (gamepad1.right_bumper) {
+                //aligns to position for shooting
+                robot.shootMotorLeft.setPower(0.7);
+                Trajectory traj2 = robot.trajectoryBuilder(myPose)
+                        //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
+                        //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
+                        .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(150)), Math.toRadians(0))
+                        .build();
+                robot.followTrajectory(traj2);
+            }
             else if (gamepad2.dpad_up) {
                 robot.collectMotor.setPower(0.7);
             } else if (gamepad2.dpad_down) {
@@ -64,7 +89,7 @@ public class casperManual extends casperAutonomousBase {
                 //robot.grabber.setPosition(0);
             }
             else if (gamepad2.left_bumper){
-                robot.shootMotorLeft.setPower(0.8);
+                robot.shootMotorLeft.setPower(0.7);
             }
             else if (gamepad2.x) {
                 robot.closeWobbleClaw();
@@ -79,15 +104,17 @@ public class casperManual extends casperAutonomousBase {
                 robot.wobbleMotor.setPower(0.4);
             }
             else if (gamepad2.a) {
-                //robot.collectMotor.setPower(-0.5);
-                //robot.wobbleMotor.setPower(-0.4);
-                robot.stopAllMotors();
+                robot.wobbleMotor.setPower(-0.5);
             } else if (gamepad2.right_stick_button) {
                 shooterMotorAuto();
             }else if (gamepad2.dpad_right) {
                 robot.closeRing();
+                robot.collectMotor.setPower(0.7);
+                robot.shootMotorLeft.setPower(0.7);
             } else if (gamepad2.dpad_left) {
                 robot.openRing();
+                robot.collectMotor.setPower(0.7);
+                robot.shootMotorLeft.setPower(0.7);
             }
             else {
                 robot.stopAllMotors();

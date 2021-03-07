@@ -145,10 +145,9 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
             t1.reset();
 
             robot.autonomousShoot();
-            sleep(2000);
+            sleep(2500);
             //move servo
             //robot.autonomousShoot();
-            sleep(1000);
             robot.stopAllMotors();
 
 
@@ -210,6 +209,8 @@ public class casperAutoNEW0rings extends casperAutonomousBase {
 
         telemetry.addData(">", timing);
         telemetry.update();
+
+        PoseStorage.currentPose = robot.getPoseEstimate();
 
    }
 
