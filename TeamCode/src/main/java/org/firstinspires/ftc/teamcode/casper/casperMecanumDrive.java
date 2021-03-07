@@ -496,5 +496,6 @@ public class casperMecanumDrive extends MecanumDrive {
     }
     public void openRing() {ringServo.setPower(-0.55);}
     public void closeRing() {ringServo.setPower(-0.1);}
+    public void closeRingMore() {ringServo.setPower(0.1);}
 
 }

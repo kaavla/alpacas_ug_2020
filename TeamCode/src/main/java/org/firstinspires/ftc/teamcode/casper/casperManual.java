@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class casperManual extends casperAutonomousBase {
     @Override
     public void runOpMode() {
+
+
         robot = new casperMecanumDrive(hardwareMap);
         //This is where we set our motor powers
         double motor_power = 0.3;
@@ -16,6 +18,8 @@ public class casperManual extends casperAutonomousBase {
         float leftX, leftY, rightZ;
 
         robot.setPoseEstimate(PoseStorage.currentPose);
+        //Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(-0));
+        //robot.setPoseEstimate(startPose);
 
 
 
@@ -74,17 +78,17 @@ public class casperManual extends casperAutonomousBase {
                 Trajectory traj2 = robot.trajectoryBuilder(myPose)
                         //.lineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)))
                         //.splineTo(new Vector2d(-12, -51), Math.toRadians(163))
-                        .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(150)), Math.toRadians(0))
+                        .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
                         .build();
                 robot.followTrajectory(traj2);
             }
             else if (gamepad2.dpad_up) {
-                robot.collectMotor.setPower(0.7);
+                robot.collectMotor.setPower(0.9);
             } else if (gamepad2.dpad_down) {
-                robot.collectMotor.setPower(-0.);
+                robot.collectMotor.setPower(-0.9);
             }
             else if (gamepad2.right_bumper){
-                robot.collectMotor.setPower(0.8);
+                robot.collectMotor.setPower(0.9);
                 robot.shootMotorLeft.setPower(0.7);
                 //robot.grabber.setPosition(0);
             }
@@ -100,7 +104,6 @@ public class casperManual extends casperAutonomousBase {
                 //robot.shootMotorLeft.setPower(0.8);
             }
             else if (gamepad2.y){
-                //robot.collectMotor.setPower(0.8);
                 robot.wobbleMotor.setPower(0.4);
             }
             else if (gamepad2.a) {
@@ -108,12 +111,12 @@ public class casperManual extends casperAutonomousBase {
             } else if (gamepad2.right_stick_button) {
                 shooterMotorAuto();
             }else if (gamepad2.dpad_right) {
-                robot.closeRing();
-                robot.collectMotor.setPower(0.7);
+                robot.closeRingMore();
+                robot.collectMotor.setPower(0.9);
                 robot.shootMotorLeft.setPower(0.7);
             } else if (gamepad2.dpad_left) {
                 robot.openRing();
-                robot.collectMotor.setPower(0.7);
+                robot.collectMotor.setPower(0.9);
                 robot.shootMotorLeft.setPower(0.7);
             }
             else {

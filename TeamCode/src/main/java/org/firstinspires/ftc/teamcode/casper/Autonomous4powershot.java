@@ -58,8 +58,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             sleep(400);
 
-            Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-            robot.collectMotor.setPower(0.7);
+
             //1.3
         /*
         Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
@@ -71,7 +70,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
 
 
 //going to shooting position + shooting
-
+            Trajectory traj2 = robot.trajectoryBuilder(traj1.end(), true)
                     .splineToLinearHeading(new Pose2d(0, -30, Math.toRadians(163)), Math.toRadians(0))
                     .build();
 
@@ -84,7 +83,22 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             sleep(1000);
             robot.stopAllMotors();
 
-z
+            Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
+                    .strafeLeft(14)
+                    .build();
+
+            robot.followTrajectory(traj3);
+            Trajectory traj31 = robot.trajectoryBuilder(traj3.end())
+                    .forward(18)
+                    .build();
+            OPEN_RING();
+            robot.collectMotor.setPower(0.7);
+            sleep(500);
+
+            robot.followTrajectory(traj31);
+
+
+/*
             //3.0
 //picking up second wobble goal
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
@@ -125,10 +139,10 @@ z
 
 //park on white line
 
-            //Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-            //        .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-             //       .build();
-            //robot.followTrajectory(traj6);
+            Trajectory traj4 = robot.trajectoryBuilder(traj31.end())
+                    .splineTo(new Vector2d(12, -40), Math.toRadians(90))
+                    .build();
+            robot.followTrajectory(traj4);
             //1.9
             //timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
             //RobotLog.ii("CASPER", timing);

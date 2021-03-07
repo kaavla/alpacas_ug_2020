@@ -55,76 +55,8 @@ public class AutonomousFinal extends casperAutonomousBase {
                 .forward(39)
                 .build();
 
-        Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
-                .build();
-
-        Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
-                .build();
-
-        Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
-                .build();
-
-        Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                .strafeRight(4.8)
-                .build();
-
-        Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
-                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
-                .build();
-
-        Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
-                .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-                .build();
-
-
-//TRAJECTORIES 7-12 ARE FOR 1 RING
-        Trajectory traj7 = robot.trajectoryBuilder(traj0.end())
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
-                .build();
-
-        Trajectory traj8 = robot.trajectoryBuilder(traj7.end())
-                .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
-                .build();
-
-        Trajectory traj9 = robot.trajectoryBuilder(traj8.end())
-                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
-                .build();
-
-        Trajectory traj10 = robot.trajectoryBuilder(traj9.end())
-                .strafeRight(4.8)
-                .build();
-
-        Trajectory traj11 = robot.trajectoryBuilder(traj10.end())
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
-                .build();
-
-        Trajectory traj12 = robot.trajectoryBuilder(traj11.end())
-                .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-                .build();
-
 
 //TRAJECTORIES 14-19 ARE FOR 4 RINGS
-        Trajectory traj14 = robot.trajectoryBuilder(traj0.end())
-                .splineTo(new Vector2d(50, -50), Math.toRadians(0))
-                .build();
-        Trajectory traj15 = robot.trajectoryBuilder(traj14.end(), true)
-                .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
-                .build();
-        Trajectory traj16 = robot.trajectoryBuilder(traj15.end())
-                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
-                .build();
-        Trajectory traj17 = robot.trajectoryBuilder(traj16.end())
-                .strafeRight(5)
-                .build();
-        Trajectory traj18 = robot.trajectoryBuilder(traj17.end())
-                .splineTo(new Vector2d(50, -50), Math.toRadians(0))
-                .build();
-        Trajectory traj19 = robot.trajectoryBuilder(traj18.end())
-                .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-                .build();
 
 
 
@@ -160,6 +92,31 @@ public class AutonomousFinal extends casperAutonomousBase {
 
 
         if(rings==0) {
+            Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
+                    .splineTo(new Vector2d(0, -50), Math.toRadians(45))
+                    .build();
+
+            Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .build();
+
+            Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
+                    .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                    .build();
+
+            Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
+                    .strafeRight(4.8)
+                    .build();
+
+            Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
+                    .splineTo(new Vector2d(0, -50), Math.toRadians(45))
+                    .build();
+
+            Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
+                    .splineTo(new Vector2d(12, -40), Math.toRadians(90))
+                    .build();
+
+
             //going to drop wobble goal
             robot.followTrajectory(traj1);
             //1.8
@@ -250,6 +207,31 @@ public class AutonomousFinal extends casperAutonomousBase {
             PoseStorage.currentPose = robot.getPoseEstimate();
         } else if (rings==1) {
             //going to drop wobble goal
+//TRAJECTORIES 7-12 ARE FOR 1 RING
+            Trajectory traj7 = robot.trajectoryBuilder(traj0.end())
+                    .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                    .build();
+
+            Trajectory traj8 = robot.trajectoryBuilder(traj7.end())
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .build();
+
+            Trajectory traj9 = robot.trajectoryBuilder(traj8.end())
+                    .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                    .build();
+
+            Trajectory traj10 = robot.trajectoryBuilder(traj9.end())
+                    .strafeRight(4.8)
+                    .build();
+
+            Trajectory traj11 = robot.trajectoryBuilder(traj10.end())
+                    .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                    .build();
+
+            Trajectory traj12 = robot.trajectoryBuilder(traj11.end())
+                    .splineTo(new Vector2d(12, -40), Math.toRadians(90))
+                    .build();
+
 
             robot.followTrajectory(traj7);
             //1.8
@@ -341,6 +323,25 @@ public class AutonomousFinal extends casperAutonomousBase {
             PoseStorage.currentPose = robot.getPoseEstimate();
 
         } else if (rings==4) {
+            Trajectory traj14 = robot.trajectoryBuilder(traj0.end())
+                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
+                    .build();
+            Trajectory traj15 = robot.trajectoryBuilder(traj14.end(), true)
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .build();
+            Trajectory traj16 = robot.trajectoryBuilder(traj15.end())
+                    .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                    .build();
+            Trajectory traj17 = robot.trajectoryBuilder(traj16.end())
+                    .strafeRight(5)
+                    .build();
+            Trajectory traj18 = robot.trajectoryBuilder(traj17.end())
+                    .splineTo(new Vector2d(50, -50), Math.toRadians(0))
+                    .build();
+            Trajectory traj19 = robot.trajectoryBuilder(traj18.end())
+                    .splineTo(new Vector2d(12, -40), Math.toRadians(90))
+                    .build();
+
             robot.followTrajectory(traj14);
 
 //dropping wobble goal
