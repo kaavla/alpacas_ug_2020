@@ -83,8 +83,6 @@ public class casperAuto4rings extends casperAutonomousBase {
         robot.stopAllMotors();
 
 
-//replace above with powershot stuff
-
         //3.0
 //picking up second wobble goal
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
