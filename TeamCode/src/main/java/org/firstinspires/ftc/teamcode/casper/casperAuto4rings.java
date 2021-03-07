@@ -112,6 +112,7 @@ public class casperAuto4rings extends casperAutonomousBase {
                 .splineTo(new Vector2d(50, -50), Math.toRadians(0))
 
                 .build();
+
         robot.followTrajectory(traj5);
         //3.2
         moveWobbleGoal(WOBBLE_GOAL_DOWN);
