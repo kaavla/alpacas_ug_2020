@@ -79,7 +79,7 @@ public class MyOdometryOpmode extends testBotUtility {
             double yPos = globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH;
             double heading = globalPositionUpdate.returnOrientation();
 
-            double[] pose = new double[3]{xPos, yPos, heading};
+            //double[] pose = new double[3]{xPos, yPos, heading};
 
             //Display Global (x, y, theta) coordinates
             telemetry.addData("X Position", globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH);

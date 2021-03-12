@@ -47,6 +47,7 @@ public class testBotManual extends testBotUtility {
                 //rotate clockwise
                 robot.moveHolonomic(0, 0, motor_power * -1);
             }
+            /*
             else if (gamepad1.y){
                 //robot.collectMotor.setPower(0.8);
                 robot.wobbleMotor.setPower(0.4);
@@ -71,7 +72,7 @@ public class testBotManual extends testBotUtility {
             }
             else if (gamepad1.b) {
                 robot.wobbleServo.setPosition(0.2);
-            }
+            }*/
             else {
                 robot.stopAllMotors();
             }

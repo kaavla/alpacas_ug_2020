@@ -97,7 +97,7 @@ public class AutonomousFinal extends casperAutonomousBase {
                     .build();
 
             Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(164)), Math.toRadians(0))
                     .build();
 
             Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
@@ -140,10 +140,13 @@ public class AutonomousFinal extends casperAutonomousBase {
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
+            robot.shootMotorLeft.setPower(0.8);
+            sleep(1000);
             robot.autonomousShoot();
-            sleep(3000);
+            sleep(2000);
+            robot.closeRingMore();
+            sleep(1000);
             robot.stopAllMotors();
-
 
             //replace above with powershot stuff in the future sometime
 
@@ -213,7 +216,7 @@ public class AutonomousFinal extends casperAutonomousBase {
                     .build();
 
             Trajectory traj8 = robot.trajectoryBuilder(traj7.end())
-                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(165)), Math.toRadians(0))
                     .build();
 
             Trajectory traj9 = robot.trajectoryBuilder(traj8.end())
@@ -255,8 +258,12 @@ public class AutonomousFinal extends casperAutonomousBase {
             RobotLog.ii("CASPER", timing);
             t1.reset();
 
+            robot.shootMotorLeft.setPower(0.8);
+            sleep(1000);
             robot.autonomousShoot();
-            sleep(3000);
+            sleep(2000);
+            robot.closeRingMore();
+            sleep(1000);
             robot.stopAllMotors();
 
 
@@ -327,8 +334,9 @@ public class AutonomousFinal extends casperAutonomousBase {
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
             Trajectory traj15 = robot.trajectoryBuilder(traj14.end(), true)
-                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(163)), Math.toRadians(0))
+                    .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(164)), Math.toRadians(0))
                     .build();
+            /*
             Trajectory traj16 = robot.trajectoryBuilder(traj15.end())
                     .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
                     .build();
@@ -338,7 +346,9 @@ public class AutonomousFinal extends casperAutonomousBase {
             Trajectory traj18 = robot.trajectoryBuilder(traj17.end())
                     .splineTo(new Vector2d(50, -50), Math.toRadians(0))
                     .build();
-            Trajectory traj19 = robot.trajectoryBuilder(traj18.end())
+
+             */
+            Trajectory traj19 = robot.trajectoryBuilder(traj15.end())
                     .splineTo(new Vector2d(12, -40), Math.toRadians(90))
                     .build();
 
@@ -363,21 +373,26 @@ public class AutonomousFinal extends casperAutonomousBase {
             robot.followTrajectory(traj15);
             //1.8
 
+            robot.shootMotorLeft.setPower(0.8);
+            sleep(1000);
             robot.autonomousShoot();
-            sleep(3000);
+            sleep(2000);
+            robot.closeRingMore();
+            sleep(1000);
             robot.stopAllMotors();
+            robot.followTrajectory(traj19);
 
 
 //replace above with powershot stuff
 
             //3.0
 //picking up second wobble goal
-            robot.followTrajectory(traj16);
+            //robot.followTrajectory(traj16);
             //2.5
 
-            robot.followTrajectory(traj17);
+            //robot.followTrajectory(traj17);
             //0.8
-
+            /*
             sleep(100);
             robot.closeWobbleClaw();
             sleep(1000);
@@ -385,8 +400,10 @@ public class AutonomousFinal extends casperAutonomousBase {
             sleep(500);
             //2.7
 
+
 //dropping second wobble goal, going back to same position in traj1
             robot.followTrajectory(traj18);
+
             //3.2
             moveWobbleGoal(WOBBLE_GOAL_DOWN);
             sleep(200);
@@ -394,6 +411,8 @@ public class AutonomousFinal extends casperAutonomousBase {
             sleep(400);
             moveWobbleGoal(WOBBLE_GOAL_UP);
             sleep(300);
+
+             */
             OPEN_RING();
 
             //3.6
