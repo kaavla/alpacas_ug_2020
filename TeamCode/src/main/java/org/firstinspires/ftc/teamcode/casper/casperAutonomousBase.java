@@ -5,9 +5,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 import java.util.List;
+
+import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
+import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
+import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 
 public class casperAutonomousBase extends LinearOpMode {
 
@@ -16,9 +25,15 @@ public class casperAutonomousBase extends LinearOpMode {
         WOBBLE_GOAL_DOWN
     }
     static final double PULLEY_COUNTS_PER_INCH = (50.9 * 28) / (1 * 3.1415); //gobilda 5202 117 rpm motors
+    static final double SHOOT_MOTOR_POWER = 0.4; //gobilda 5202 117 rpm motors
+
+    public boolean targetVisible = false;
 
     public casperMecanumDrive robot;
     public ElapsedTime runtime = new ElapsedTime();
+
+    public VectorF translation;
+    public Orientation rotation;
 
     public void logTiming(String S, ElapsedTime T)
     {
@@ -29,6 +44,42 @@ public class casperAutonomousBase extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         //Empty Function
+    }
+
+    public boolean getVuforiaRefPos(double timeoutmS)
+    {
+        runtime.reset();
+        while (opModeIsActive() && !isStopRequested() && (runtime.milliseconds() < timeoutmS)) {
+            // check all the trackable targets to see which one (if any) is visible.
+            targetVisible = false;
+            for (VuforiaTrackable trackable : robot.allTrackables) {
+                if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+                    telemetry.addData("Visible Target", trackable.getName());
+                    targetVisible = true;
+
+                    // getUpdatedRobotLocation() will return null if no new information is available since
+                    // the last time that call was made, or if the trackable is not currently visible.
+                    OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                    if (robotLocationTransform != null) {
+                        robot.lastLocation = robotLocationTransform;
+                        // express position (translation) of robot in inches.
+                        translation = robot.lastLocation.getTranslation();
+                        telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                                translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, translation.get(2) / robot.mmPerInch);
+
+                        // express the rotation of the robot in degrees.
+                        rotation = Orientation.getOrientation(robot.lastLocation, EXTRINSIC, XYZ, DEGREES);
+                        telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                        telemetry.update();
+                    }
+                    return true;
+                } else {
+                    telemetry.addData("Visible Target", "none");
+                    telemetry.update();
+                }
+            }
+        }
+        return false;
     }
 
     public void moveWobbleGoal (wobbleGoalMode m) {

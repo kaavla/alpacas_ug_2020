@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.casper;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
@@ -21,28 +23,13 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MecanumConstraints;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.util.RobotLog;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 
@@ -51,13 +38,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
-import static java.lang.Thread.sleep;
-import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XZY;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.BASE_CONSTRAINTS;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.RUN_USING_ENCODER;
@@ -68,14 +48,15 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 
 /*
- * Casper mecanum drive hardware implementation for REV hardware.
+ * This is a modified SampleMecanumDrive class that implements the ability to cancel a trajectory
+ * following. Essentially, it just forces the mode to IDLE.
  */
 @Config
-public class casperMecanumDrive extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0.0001);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(26.5, 0.00005, 0.0005);
+public class SampleMecanumDriveCancelable extends MecanumDrive {
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
 
-    public static double LATERAL_MULTIPLIER = 2;
+    public static double LATERAL_MULTIPLIER = 1;
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -92,13 +73,14 @@ public class casperMecanumDrive extends MecanumDrive {
     private FtcDashboard dashboard;
     private NanoClock clock;
 
-    private org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode mode;
+    private Mode mode;
 
     private PIDFController turnController;
     private MotionProfile turnProfile;
     private double turnStart;
 
     private DriveConstraints constraints;
+
     private TrajectoryFollower follower;
 
     private LinkedList<Pose2d> poseHistory;
@@ -111,140 +93,21 @@ public class casperMecanumDrive extends MecanumDrive {
 
     private Pose2d lastPoseOnTurn;
 
-    //Casper Attachments to be added here
-    public DcMotor collectMotor   = null;
-    public DcMotor shootMotorLeft = null;
-
-    //
-    public DcMotor wobbleMotor    = null;
-    public Servo wobbleServo      = null;
-    public CRServo ringServo = null;
-
-    ///TFOD related stuff
-    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
-    public static final String LABEL_FIRST_ELEMENT = "four";
-    public static final String LABEL_SECOND_ELEMENT = "one";
-
-    private static final String VUFORIA_KEY =
-        "AdUZmdz/////AAABmcKq/8niZ02Xva4A4Np/T0RRDa6qyO5wdaJzRXu8ilq6Z/25GDF/LD5qzz9raAfsan86C2Dh78DWuyPGLPB6rW21905quzAxU/QznqFRD8t/GR6D4Em0fYq4jiW5345MPPofjLJEpi8bgBHLno2B6hhLeulPfauhc2j6cekyCfbhe91kV1pvBChSUCJsRk57g31ghYC+mLklRDOLyhDcXmUi6P8TlZ1y8BcfNdqnsNPKrgpz3tno2YxZykDBlfuyL+KwQiAKbwSh+byP6gKn71N2Vzl2OUuqP2yKW4vVwMWeL2D3uLbVxU+95XBj+Yx6COCCthq90EANM3RugqtdUy1xjmLexi9QM5aJyRgQTAai";
-    private VuforiaLocalizer vuforia;
-    public TFObjectDetector tfod;
-
-    // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
-    // We will define some constants and conversions here
-    public static final float mmPerInch        = 25.4f;
-    public static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
-
-    // Constants for perimeter targets
-    public static final float halfField = 72 * mmPerInch;
-    public static final float quadField  = 36 * mmPerInch;
-    public static final float remoteWallBlue  = 24 * mmPerInch;
-
-    // Class Members
-    public OpenGLMatrix lastLocation = null;
-    private boolean targetVisible = false;
-    public List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-
-    public void initVuforia(HardwareMap hardwareMap) {
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
-
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        // Make sure extended tracking is disabled for this example.
-        parameters.useExtendedTracking = false;
-        //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Load the data sets for the trackable objects. These particular data
-        // sets are stored in the 'assets' part of our application.
-        VuforiaTrackables targetsUltimateGoal = this.vuforia.loadTrackablesFromAsset("UltimateGoal");
-        VuforiaTrackable blueTowerGoalTarget = targetsUltimateGoal.get(0);
-        blueTowerGoalTarget.setName("Blue Tower Goal Target");
-        VuforiaTrackable redTowerGoalTarget = targetsUltimateGoal.get(1);
-        redTowerGoalTarget.setName("Red Tower Goal Target");
-        VuforiaTrackable redAllianceTarget = targetsUltimateGoal.get(2);
-        redAllianceTarget.setName("Red Alliance Target");
-        VuforiaTrackable blueAllianceTarget = targetsUltimateGoal.get(3);
-        blueAllianceTarget.setName("Blue Alliance Target");
-        VuforiaTrackable frontWallTarget = targetsUltimateGoal.get(4);
-        frontWallTarget.setName("Front Wall Target");
-
-        // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        //List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(targetsUltimateGoal);
-        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
-
-        //Set the position of the perimeter targets with relation to origin (center of field)
-        redAllianceTarget.setLocation(OpenGLMatrix
-                .translation(0, -halfField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180)));
-
-        blueAllianceTarget.setLocation(OpenGLMatrix
-                .translation(0, remoteWallBlue, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0)));
-        frontWallTarget.setLocation(OpenGLMatrix
-                .translation(-halfField, 0, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 90)));
-
-        // The tower goal targets are located a quarter field length from the ends of the back perimeter wall.
-        //blueTowerGoalTarget.setLocation(OpenGLMatrix
-        //        .translation(halfField, quadField, mmTargetHeight)
-        //        .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
-        redTowerGoalTarget.setLocation(OpenGLMatrix
-                .translation(halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
-
-
-        final float CAMERA_FORWARD_DISPLACEMENT  = 4.0f * mmPerInch;   // eg: Camera is 4 Inches in front of robot-center
-        final float CAMERA_VERTICAL_DISPLACEMENT = 8.0f * mmPerInch;   // eg: Camera is 8 Inches above ground
-        final float CAMERA_LEFT_DISPLACEMENT     = 4.0f * mmPerInch;     // eg: Camera is ON the robot's center line
-
-        OpenGLMatrix cameraLocationOnRobot = OpenGLMatrix
-                .translation(CAMERA_FORWARD_DISPLACEMENT, CAMERA_LEFT_DISPLACEMENT, CAMERA_VERTICAL_DISPLACEMENT)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XZY, DEGREES, 90, 180, 0));
-
-        /**  Let all the trackable listeners know where the phone is.  */
-        for (VuforiaTrackable trackable : allTrackables) {
-            ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(parameters.cameraName, cameraLocationOnRobot);
-        }
-
-        targetsUltimateGoal.activate();
-    }
-
-    public void deinitTfod() {
-        if (tfod != null) {
-            tfod.shutdown();
-        }
-    }
-    public void initTfod(HardwareMap hardwareMap) {
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.8f;
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
-        if (tfod != null) {
-            tfod.activate();
-        }
-
-    }
-
-    public casperMecanumDrive(HardwareMap hardwareMap) {
+    public SampleMecanumDriveCancelable(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
-        RobotLog.ii("CASPER", "Enter - casperMecanumDrive");
 
         dashboard = FtcDashboard.getInstance();
         dashboard.setTelemetryTransmissionInterval(25);
 
         clock = NanoClock.system();
 
-        mode = org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.IDLE;
+        mode = Mode.IDLE;
 
         turnController = new PIDFController(HEADING_PID);
         turnController.setInputBounds(0, 2 * Math.PI);
 
         constraints = new MecanumConstraints(BASE_CONSTRAINTS, TRACK_WIDTH);
+
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
 
@@ -258,9 +121,8 @@ public class casperMecanumDrive extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-
         // TODO: adjust the names of the following hardware devices to match your configuration
-        imu = hardwareMap.get(BNO055IMU.class, "imu 1");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
@@ -269,10 +131,10 @@ public class casperMecanumDrive extends MecanumDrive {
         // upward (normal to the floor) using a command like the following:
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "M1");
-        rightFront = hardwareMap.get(DcMotorEx.class, "M2");
-        leftRear = hardwareMap.get(DcMotorEx.class, "M3");
-        rightRear = hardwareMap.get(DcMotorEx.class, "M4");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -292,27 +154,10 @@ public class casperMecanumDrive extends MecanumDrive {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
 
-
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftFront.setDirection(DcMotorEx.Direction.REVERSE);
-        leftRear.setDirection(DcMotorEx.Direction.REVERSE);
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap));
-
-        //Attachement initialization
-        collectMotor = hardwareMap.get(DcMotor.class, "M5");
-        shootMotorLeft = hardwareMap.get(DcMotor.class, "M7");
-        wobbleMotor = hardwareMap.get(DcMotor.class, "M8");
-        wobbleServo = hardwareMap.get(Servo.class, "wobbleServo");
-        ringServo = hardwareMap.get(CRServo.class, "ringServo");
-
-        collectMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shootMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        RobotLog.ii("CASPER", "...");
-
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -340,8 +185,9 @@ public class casperMecanumDrive extends MecanumDrive {
                 constraints.maxAngJerk
         );
 
+
         turnStart = clock.seconds();
-        mode = org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.TURN;
+        mode = Mode.TURN;
     }
 
     public void turn(double angle) {
@@ -351,12 +197,16 @@ public class casperMecanumDrive extends MecanumDrive {
 
     public void followTrajectoryAsync(Trajectory trajectory) {
         follower.followTrajectory(trajectory);
-        mode = org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.FOLLOW_TRAJECTORY;
+        mode = Mode.FOLLOW_TRAJECTORY;
     }
 
     public void followTrajectory(Trajectory trajectory) {
         followTrajectoryAsync(trajectory);
         waitForIdle();
+    }
+
+    public void cancelFollowing() {
+        mode = Mode.IDLE;
     }
 
     public Pose2d getLastError() {
@@ -390,11 +240,11 @@ public class casperMecanumDrive extends MecanumDrive {
 
         packet.put("x", currentPose.getX());
         packet.put("y", currentPose.getY());
-        packet.put("heading", currentPose.getHeading());
+        packet.put("heading (deg)", Math.toDegrees(currentPose.getHeading()));
 
         packet.put("xError", lastError.getX());
         packet.put("yError", lastError.getY());
-        packet.put("headingError", lastError.getHeading());
+        packet.put("headingError (deg)", Math.toDegrees(lastError.getHeading()));
 
         switch (mode) {
             case IDLE:
@@ -423,14 +273,14 @@ public class casperMecanumDrive extends MecanumDrive {
                 DashboardUtil.drawRobot(fieldOverlay, newPose);
 
                 if (t >= turnProfile.duration()) {
-                    mode = org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.IDLE;
+                    mode = Mode.IDLE;
                     setDriveSignal(new DriveSignal());
                 }
 
                 break;
             }
             case FOLLOW_TRAJECTORY: {
-                setDriveSignal(follower.update(currentPose));
+                setDriveSignal(follower.update(currentPose, getPoseVelocity()));
 
                 Trajectory trajectory = follower.getTrajectory();
 
@@ -444,7 +294,7 @@ public class casperMecanumDrive extends MecanumDrive {
                 DashboardUtil.drawPoseHistory(fieldOverlay, poseHistory);
 
                 if (!follower.isFollowing()) {
-                    mode = org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.IDLE;
+                    mode = Mode.IDLE;
                     setDriveSignal(new DriveSignal());
                 }
 
@@ -465,7 +315,7 @@ public class casperMecanumDrive extends MecanumDrive {
     }
 
     public boolean isBusy() {
-        return mode != org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive.Mode.IDLE;
+        return mode != Mode.IDLE;
     }
 
     public void setMode(DcMotor.RunMode runMode) {
@@ -520,7 +370,7 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelPositions;
     }
 
-
+    @Override
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (DcMotorEx motor : motors) {
@@ -529,6 +379,7 @@ public class casperMecanumDrive extends MecanumDrive {
         return wheelVelocities;
     }
 
+    @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
         leftFront.setPower(v);
         leftRear.setPower(v1);
@@ -541,44 +392,26 @@ public class casperMecanumDrive extends MecanumDrive {
         return imu.getAngularOrientation().firstAngle;
     }
 
-    public void moveHolonomic(double x, double y , double z)
-    {
-        double max_power = 0.6;
-        double min_power = -1*max_power;
+    @Override
+    public Double getExternalHeadingVelocity() {
+        // TODO: This must be changed to match your configuration
+        //                           | Z axis
+        //                           |
+        //     (Motor Port Side)     |   / X axis
+        //                       ____|__/____
+        //          Y axis     / *   | /    /|   (IO Side)
+        //          _________ /______|/    //      I2C
+        //                   /___________ //     Digital
+        //                  |____________|/      Analog
+        //
+        //                 (Servo Port Side)
+        //
+        // The positive x axis points toward the USB port(s)
+        //
+        // Adjust the axis rotation rate as necessary
+        // Rotate about the z axis is the default assuming your REV Hub/Control Hub is laying
+        // flat on a surface
 
-        double fl_power = Range.clip(y + x - z, min_power, max_power);
-        double fr_power = Range.clip(y - x + z, min_power, max_power);
-        double br_power = Range.clip(y + x + z, min_power, max_power);
-        double bl_power = Range.clip(y - x - z, min_power, max_power);
-        setMotorPowers(fl_power, bl_power, br_power, fr_power);
+        return (double) imu.getAngularVelocity().zRotationRate;
     }
-
-    public void stopAllMotors() {
-        RobotLog.ii("CAL", "Stopping All motors");
-        setMotorPowers(0,0,0,0);
-        shootMotorLeft.setPower(0);
-        wobbleMotor.setPower(0);
-        collectMotor.setPower(0);
-    }
-
-    public void closeWobbleClaw() {
-        wobbleServo.setPosition(0.3);
-    }
-
-    public void  openWobbleClaw() {
-        wobbleServo.setPosition(-0.5);
-        //set to 0.2
-
-    }
-
-    public void  autonomousShoot() {
-        shootMotorLeft.setPower(0.7);
-        collectMotor.setPower(0.7);
-
-    }
-    public void openRing() {ringServo.setPower(-0.55);}
-    public void closeRing() {ringServo.setPower(-0.1);}
-    public void closeRingMore() {ringServo.setPower(0.1);}
-
-
 }

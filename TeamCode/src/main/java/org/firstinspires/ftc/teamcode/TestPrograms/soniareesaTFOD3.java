@@ -75,7 +75,7 @@ public class soniareesaTFOD3 extends LinearOpMode {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
-        //waitForStart();
+        waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
