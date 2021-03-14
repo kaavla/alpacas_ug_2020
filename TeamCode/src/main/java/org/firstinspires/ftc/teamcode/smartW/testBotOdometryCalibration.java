@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TestBot;
+package org.firstinspires.ftc.teamcode.smartW;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -11,7 +11,7 @@ import java.io.File;
 
 @TeleOp(name = "testBotOdometryCalibration", group = "Linear Opmode")
 @Disabled
-public class testBotOdometryCalibration extends testBotUtility{
+public class testBotOdometryCalibration extends smartWUtility {
     final double PIVOT_SPEED = 0.4;
 
     //The amount of encoder ticks for each inch the robot moves.
@@ -41,14 +41,14 @@ public class testBotOdometryCalibration extends testBotUtility{
 
         while(getZAngle() < 90 && opModeIsActive()){
 
-            robot.setPowerAll(1*PIVOT_SPEED, -1*PIVOT_SPEED, 1*PIVOT_SPEED, -1*PIVOT_SPEED);
+            //robot.setPowerAll(1*PIVOT_SPEED, -1*PIVOT_SPEED, 1*PIVOT_SPEED, -1*PIVOT_SPEED);
 
             telemetry.addData("IMU Angle", getZAngle());
             telemetry.update();
         }
 
         //Stop the robot
-        robot.setPowerAll(0, 0, 0, 0);
+        //robot.setPowerAll(0, 0, 0, 0);
         timer.reset();
         while(timer.milliseconds() < 3000 && opModeIsActive()){
             telemetry.addData("IMU Angle", getZAngle());
