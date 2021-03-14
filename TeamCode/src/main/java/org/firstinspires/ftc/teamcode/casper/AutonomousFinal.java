@@ -54,10 +54,7 @@ public class AutonomousFinal extends casperAutonomousBase {
         } else if (rings==4) {
             runFourRings();
         }
-
-
         PoseStorage.currentPose = robot.getPoseEstimate();
-
     }
 
     public void runZeroRings(){

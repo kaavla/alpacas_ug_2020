@@ -36,6 +36,9 @@ public class casperAutonomousBase extends LinearOpMode {
 
     public VectorF translation;
     public Orientation rotation;
+    public float refPosX;
+    public float refPosY;
+    public float refHead;
 
     public void logTiming(String S, ElapsedTime T)
     {
@@ -66,12 +69,20 @@ public class casperAutonomousBase extends LinearOpMode {
                         robot.lastLocation = robotLocationTransform;
                         // express position (translation) of robot in inches.
                         translation = robot.lastLocation.getTranslation();
-                        telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                                translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, translation.get(2) / robot.mmPerInch);
+                        rotation = Orientation.getOrientation(robot.lastLocation, EXTRINSIC, XYZ, DEGREES);
+                        refPosX = translation.get(0) / robot.mmPerInch;
+                        refPosY = translation.get(1) / robot.mmPerInch;
+                        refHead = rotation.thirdAngle;
+                        if (refHead < 0){
+                            refHead = refHead + 360;
+                        }
+
+                        //telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
+                        //        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, translation.get(2) / robot.mmPerInch);
 
                         // express the rotation of the robot in degrees.
-                        rotation = Orientation.getOrientation(robot.lastLocation, EXTRINSIC, XYZ, DEGREES);
-                        telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                        //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
+                        telemetry.addData("Ref Pos:", "{X, Y, Head(deg), Head(Rad)} = %.1f, %.1f, %.1f, %.1f", refPosX, refPosY, refHead, Math.toRadians(refHead));
                         telemetry.update();
                     }
                     return true;
@@ -119,6 +130,7 @@ public class casperAutonomousBase extends LinearOpMode {
             Inches = 0;
             newTargetPosition = robot.wobbleMotor.getCurrentPosition() + (int) (Inches * PULLEY_COUNTS_PER_INCH);
         }
+
         robot.wobbleMotor.setTargetPosition(newTargetPosition);
         robot.wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleMotor.setPower(Math.abs(speed));
@@ -142,7 +154,7 @@ public class casperAutonomousBase extends LinearOpMode {
 
     public int getNumRings(double timeoutmS) {
         runtime.reset();
-        while (opModeIsActive() && (runtime.milliseconds() < timeoutmS))
+        while (opModeIsActive() && !isStopRequested() && (runtime.milliseconds() < timeoutmS))
         {
             //RobotLog.ii("CASPER", "enter - getnumrings");
             if (robot.tfod != null) {
@@ -188,6 +200,7 @@ public class casperAutonomousBase extends LinearOpMode {
     }
     public void openPushRing() {robot.openPushRing();}
     public void closePushRing() {robot.closePushRing();}
+
     public void startShootMotor() {
         robot.shootMotorLeft.setPower(SHOOT_MOTOR_POWER);
     }

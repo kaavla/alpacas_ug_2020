@@ -49,12 +49,15 @@ public class casperManual extends casperAutonomousBase {
             telemetry.addData("x", myPose.getX());
             telemetry.addData("y", myPose.getY());
             telemetry.addData("heading", myPose.getHeading());
+
             if (targetVisible) {
                 //telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
                 //        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, translation.get(2) / robot.mmPerInch);
                 //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                telemetry.addData("Pos (in)", "{X, Y, Head} = %.1f, %.1f, %.1f",
-                        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, Math.toRadians(-1*rotation.thirdAngle));
+                //telemetry.addData("Pos (in)", "{X, Y, Head} = %.1f, %.1f, %.1f",
+                //        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, Math.toRadians(-1*rotation.thirdAngle));
+                telemetry.addData("Ref Pos:", "{X, Y, Head(deg), Head(Rad)} = %.1f, %.1f, %.1f, %.1f", refPosX, refPosY, refHead, Math.toRadians(refHead));
+
                 //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
 
             }
@@ -105,20 +108,12 @@ public class casperManual extends casperAutonomousBase {
                 robot.followTrajectory(traj2);
             }
             else if (gamepad1.a) {
-                boolean visible = getVuforiaRefPos(1000);
-                if (visible)
+                if (getVuforiaRefPos(1000))
                 {
-                    //telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
-                    //        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, translation.get(2) / robot.mmPerInch);
-                    //telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                    //telemetry.addData("Pos (in)", "{X, Y, Head} = %.1f, %.1f, %.1f",
-                    //` 11111                                               ````        translation.get(0) / robot.mmPerInch, translation.get(1) / robot.mmPerInch, Math.toRadians(rotation.thirdAngle));
-                    Pose2d vPos= new Pose2d(translation.get(0) / robot.mmPerInch, translation.get(1)/ robot.mmPerInch, Math.toRadians(-1*rotation.thirdAngle));
-                    //eiihcckgbrrrgfkhhgctunftkrkejnhrudnhftilgicc
-                    // robot.setPoseEstimate(vPos);
-
+                    //Pose2d vPos= new Pose2d(translation.get(0) / robot.mmPerInch, translation.get(1)/ robot.mmPerInch, Math.toRadians(heading));
+                    Pose2d vPos= new Pose2d(refPosX, refPosY, Math.toRadians(refHead));
+                    robot.setPoseEstimate(vPos);
                 }
-
             }
             else if (gamepad2.dpad_up) {
                 robot.collectMotor.setPower(0.9);
