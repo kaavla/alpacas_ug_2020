@@ -1,10 +1,13 @@
-package org.firstinspires.ftc.teamcode.casper;
+package org.firstinspires.ftc.teamcode.TestBot;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.casper.casperAutonomousBase;
+import org.firstinspires.ftc.teamcode.casper.casperMecanumDrive;
 
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
@@ -24,7 +27,7 @@ import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleG
             robot.initVuforia(hardwareMap);
             robot.initTfod(hardwareMap);
 
-            CLOSE_RING();
+            closePushRing();
             Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
             robot.setPoseEstimate(startPose);
 

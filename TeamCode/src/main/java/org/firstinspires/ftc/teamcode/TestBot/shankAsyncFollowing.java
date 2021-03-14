@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.casper;
+package org.firstinspires.ftc.teamcode.TestBot;
 
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -8,6 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.casper.PoseStorage;
+import org.firstinspires.ftc.teamcode.casper.casperAutonomousBase;
+import org.firstinspires.ftc.teamcode.casper.casperMecanumDrive;
 
 
 /**
@@ -61,7 +65,7 @@ public class shankAsyncFollowing extends casperAutonomousBase {
         robot.initTfod(hardwareMap);
 
 
-        CLOSE_RING();
+        closePushRing();
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
 

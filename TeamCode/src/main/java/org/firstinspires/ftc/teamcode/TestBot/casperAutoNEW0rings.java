@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.casper;
+package org.firstinspires.ftc.teamcode.TestBot;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -7,12 +7,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.RobotLog;
 
+import org.firstinspires.ftc.teamcode.casper.PoseStorage;
+import org.firstinspires.ftc.teamcode.casper.casperAutonomousBase;
+import org.firstinspires.ftc.teamcode.casper.casperMecanumDrive;
+
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_DOWN;
 import static org.firstinspires.ftc.teamcode.casper.casperAutonomousBase.wobbleGoalMode.WOBBLE_GOAL_UP;
 
 @Autonomous(group = "robot")
 
-public class testcasperAuto1ring extends casperAutonomousBase {
+public class casperAutoNEW0rings extends casperAutonomousBase {
 
     public ElapsedTime t1 = new ElapsedTime();
     String timing;
@@ -37,7 +41,7 @@ public class testcasperAuto1ring extends casperAutonomousBase {
 
 
 //start position
-        CLOSE_RING();
+        closePushRing();
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
         //origin at middle of full field(0,0)
@@ -53,7 +57,7 @@ public class testcasperAuto1ring extends casperAutonomousBase {
 
         Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
         Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
@@ -65,19 +69,21 @@ public class testcasperAuto1ring extends casperAutonomousBase {
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
                 //.splineTo(new Vector2d(-28, -24), Math.toRadians(270))
-                .splineToLinearHeading(new Pose2d(-27, -24, Math.toRadians(270)), Math.toRadians(0))
-                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270))
+                //.lineToSplineHeading(new Pose2d(-27, -24, Math.toRadians(270)))
+                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                //.splineTo(new Vector2d(-27, -24), Math.toRadians(270)) <-- position before but the one above is more accurate and picks up the second wobble goal every time
                 .build();
 
         Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .strafeRight(5)
+                .strafeRight(4.8)
+                //was 5 before
                 //.splineTo(new Vector2d(-31, -24), Math.toRadians(270))
                 .build();
 
         Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
                 //.lineToLinearHeading(new Pose2d(-36, -55, Math.toRadians(0)))
-                .splineTo(new Vector2d(24, -35), Math.toRadians(45))
+                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
         Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
@@ -115,107 +121,101 @@ public class testcasperAuto1ring extends casperAutonomousBase {
         robot.deinitTfod();
 
 
-        //telemetry.addData(">", "running 0 ring path");
-        //telemetry.update();
+            //telemetry.addData(">", "running 0 ring path");
+            //telemetry.update();
 
+//going to drop wobble goal
 
-//shoot first
-        robot.shootMotorLeft.setPower(0.8);
-        robot.followTrajectory(traj2);
-        moveWobbleGoal(WOBBLE_GOAL_DOWN);
-        sleep(400);
-        robot.autonomousShoot();
-        sleep(2000);
-        //move servo
-        //robot.autonomousShoot();
-        sleep(1000);
-        robot.stopAllMotors();
-        moveWobbleGoal(WOBBLE_GOAL_UP);
-
-        //1.8
-        timing = String.format("After tracj1= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            robot.followTrajectory(traj1);
+            //1.8
+            timing = String.format("After tracj1= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
 //dropping wobble goal
-        robot.followTrajectory(traj1);
-        moveWobbleGoal(WOBBLE_GOAL_DOWN);
-        sleep(400);
-        //1.3
-        timing = String.format("After shoot motors= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            robot.shootMotorLeft.setPower(0.8);
+            moveWobbleGoal(WOBBLE_GOAL_DOWN);
+            sleep(400);
+            //1.3
+            timing = String.format("After shoot motors= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
 //going to shooting position + shooting
-       // robot.followTrajectory(traj2);
-        //1.8
-        //timing = String.format("After trajj2..move to shoot pos= %.03f\n", t1.milliseconds());
-        //RobotLog.ii("CASPER", timing);
-        //t1.reset();
+            robot.followTrajectory(traj2);
+            //1.8
+            timing = String.format("After trajj2..move to shoot pos= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
-
+            robot.autonomousShoot();
+            sleep(2500);
+            //move servo
+            //robot.autonomousShoot();
+            robot.stopAllMotors();
 
 
 //replace above with powershot stuff
 
-        //3.0
-        timing = String.format("After shooting = %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            //3.0
+            timing = String.format("After shooting = %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
 //picking up second wobble goal
-        robot.followTrajectory(traj3);
-        //2.5
-        timing = String.format("After traj3..move to pick next goal= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            robot.followTrajectory(traj3);
+            //2.5
+            timing = String.format("After traj3..move to pick next goal= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
-        robot.followTrajectory(traj4);
-        //0.8
-        timing = String.format("After traj4..strafe to goal= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            robot.followTrajectory(traj4);
+            //0.8
+            timing = String.format("After traj4..strafe to goal= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
-        sleep(100);
-        robot.closeWobbleClaw();
-        sleep(1000);
-        moveWobbleGoal(WOBBLE_GOAL_UP);
-        sleep(500);
-        //2.7
-        timing = String.format("After picj sencond  goal= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            sleep(100);
+            robot.closeWobbleClaw();
+            sleep(1000);
+            moveWobbleGoal(WOBBLE_GOAL_UP);
+            sleep(500);
+            //2.7
+            timing = String.format("After picj sencond  goal= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
 //dropping second wobble goal, going back to same position in traj1
-        robot.followTrajectory(traj5);
-        //3.2
-        timing = String.format("After trcj5 sencond  goal= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
-        moveWobbleGoal(WOBBLE_GOAL_DOWN);
-        sleep(200);
-        robot.openWobbleClaw();
-        sleep(400);
-        moveWobbleGoal(WOBBLE_GOAL_UP);
-        sleep(300);
-        OPEN_RING();
-
-        //3.6
-        timing = String.format("After drop sencond  goal= %.03f\n", t1.milliseconds());
-        RobotLog.ii("CASPER", timing);
-        t1.reset();
+            robot.followTrajectory(traj5);
+            //3.2
+            timing = String.format("After trcj5 sencond  goal= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
+            moveWobbleGoal(WOBBLE_GOAL_DOWN);
+            sleep(200);
+            robot.openWobbleClaw();
+            sleep(400);
+            moveWobbleGoal(WOBBLE_GOAL_UP);
+            sleep(300);
+            openPushRing();
+            //3.6
+            timing = String.format("After drop sencond  goal= %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();
 
 //park on white line
-        //robot.followTrajectory(traj6);
-        //1.9
-        //timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
-        //RobotLog.ii("CASPER", timing);
-        //t1.reset();
+           /* robot.followTrajectory(traj6);
+            //1.9
+            timing = String.format("After traj6 = %.03f\n", t1.milliseconds());
+            RobotLog.ii("CASPER", timing);
+            t1.reset();*/
 
 
         telemetry.addData(">", timing);
         telemetry.update();
 
-    }
+        PoseStorage.currentPose = robot.getPoseEstimate();
+
+   }
 
 }
