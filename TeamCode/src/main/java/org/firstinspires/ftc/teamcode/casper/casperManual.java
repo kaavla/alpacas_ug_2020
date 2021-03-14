@@ -108,7 +108,7 @@ public class casperManual extends casperAutonomousBase {
                 robot.followTrajectory(traj2);
             }
             else if (gamepad1.a) {
-                if (getVuforiaRefPos(1000))
+                if (getVuforiaRefPos(1000) )
                 {
                     //Pose2d vPos= new Pose2d(translation.get(0) / robot.mmPerInch, translation.get(1)/ robot.mmPerInch, Math.toRadians(heading));
                     Pose2d vPos= new Pose2d(refPosX, refPosY, Math.toRadians(refHead));
