@@ -28,6 +28,7 @@ public class AutonomousFinal extends casperAutonomousBase {
 
         //start position
         closePushRing();
+        operateWobbleClaw(WOBBLE_GOAL_CLAW_CLOSE);
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(0));
         robot.setPoseEstimate(startPose);
 
@@ -58,60 +59,56 @@ public class AutonomousFinal extends casperAutonomousBase {
     }
 
     public void runZeroRings(){
+
+
         Trajectory traj1 = robot.trajectoryBuilder(traj0.end())
-                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
+                .splineToLinearHeading(new Pose2d(-6, -48, Math.toRadians(165)), Math.toRadians(0))
                 .build();
 
         Trajectory traj2 = robot.trajectoryBuilder(traj1.end())
-                .splineToLinearHeading(new Pose2d(-12, -51, Math.toRadians(164)), Math.toRadians(0))
+                .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
         Trajectory traj3 = robot.trajectoryBuilder(traj2.end())
-                .splineToLinearHeading(new Pose2d(-25, -25, Math.toRadians(265)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(-25, -26, Math.toRadians(265)), Math.toRadians(0))
                 .build();
-
+        // y was -25 changed to -26 make sure to change for other paths
+        // cant not merge traj 3 and 4 because a PathContinuation error will occur
         Trajectory traj4 = robot.trajectoryBuilder(traj3.end())
-                .strafeRight(4.8)
+                .strafeRight(5)
                 .build();
 
         Trajectory traj5 = robot.trajectoryBuilder(traj4.end())
                 .splineTo(new Vector2d(0, -50), Math.toRadians(45))
                 .build();
 
-        Trajectory traj6 = robot.trajectoryBuilder(traj5.end())
-                .splineTo(new Vector2d(12, -40), Math.toRadians(90))
-                .build();
-
-        //Move to point to drop wobble goal
-        robot.followTrajectory(traj1);
-
-        //Start Motore to get a lead time to reach given speed
+        //Start Motor to get a lead time to reach given speed
         startShootMotor();
+        //move to shooting position + shooting
+        robot.followTrajectory(traj1);
+        PoseStorage.currentPose = robot.getPoseEstimate();
 
-        //Drop wobble goal
+        sleep(2000);
+        robot.autonomousShoot();
+        sleep(3000);
+        //robot.closePushRingMore();
+        //sleep(1000);
+        robot.stopAllMotors();
+
+        //drop first wobble goal
+        robot.followTrajectory(traj2);
+        PoseStorage.currentPose = robot.getPoseEstimate();
+
+        //Drop second wobble goal
         moveWobbleGoal(WOBBLE_GOAL_DOWN);
         operateWobbleClaw(WOBBLE_GOAL_CLAW_OPEN);
 
-        //move to shooting position + shooting
-        robot.followTrajectory(traj2);
-
-        //Start Motore to get a lead time to reach given speed
-        startShootMotor();
-
-        sleep(1000);
-        robot.autonomousShoot();
-        sleep(2000);
-        robot.closePushRingMore();
-        sleep(1000);
-        robot.stopAllMotors();
-
-        //replace above with powershot stuff in the future sometime
-
-        //Move to picking up second wobble goal
         robot.followTrajectory(traj3);
+        PoseStorage.currentPose = robot.getPoseEstimate();
 
-        //Strafe a bit forward to catch the wobble goal
+        //Strafe a bit forward to properly grab the the wobble goal
         robot.followTrajectory(traj4);
+        PoseStorage.currentPose = robot.getPoseEstimate();
 
         sleep(100);
         operateWobbleClaw(WOBBLE_GOAL_CLAW_CLOSE);
@@ -119,6 +116,7 @@ public class AutonomousFinal extends casperAutonomousBase {
 
         //Mopve to drop 2nd wobble goal
         robot.followTrajectory(traj5);
+        PoseStorage.currentPose = robot.getPoseEstimate();
 
         moveWobbleGoal(WOBBLE_GOAL_DOWN);
         operateWobbleClaw(WOBBLE_GOAL_CLAW_OPEN);

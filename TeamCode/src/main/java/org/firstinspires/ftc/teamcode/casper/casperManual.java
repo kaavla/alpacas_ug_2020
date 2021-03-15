@@ -27,6 +27,7 @@ public class casperManual extends casperAutonomousBase {
         //robot.setPoseEstimate(PoseStorage.currentPose);
         Pose2d startPose = new Pose2d(-63, -57, Math.toRadians(-0));
         robot.setPoseEstimate(startPose);
+        robot.openPushRing();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
