@@ -48,7 +48,7 @@ public class smartWHW {
         imu.initialize(parameters);
 
         //Invert direction for left motors
-        verticalLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //verticalLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 

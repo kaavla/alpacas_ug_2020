@@ -20,8 +20,8 @@ public class smartWOpmode extends smartWUtility {
         positionThread.start();
 
         while(opModeIsActive() && !isStopRequested()){
-            xPos    = globalPositionUpdate.returnXCoordinate() / COUNTS_PER_INCH;
-            yPos    = globalPositionUpdate.returnYCoordinate() / COUNTS_PER_INCH;
+            xPos    = globalPositionUpdate.returnXCoordinate() ;
+            yPos    = globalPositionUpdate.returnYCoordinate();
             heading = globalPositionUpdate.returnOrientation();
 
             //Display Global (x, y, theta) coordinates
